@@ -1,0 +1,16 @@
+overwrite: true
+schema: 'http://localhost:4000'
+documents:
+  - 'src/**/*.graphql'
+generates:
+  'src/generated/gmd22-api.ts':
+    schema: 'src/utils/libs/apollo/client-schema.graphql'
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      typesPrefix: I
+      operationResultSuffix: 'Data'
+      enumsAsTypes: true
+      reactApolloVersion: 3

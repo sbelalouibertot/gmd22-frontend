@@ -1,0 +1,9 @@
+query foodItems {
+  foodItems {
+    foodItems {
+      id
+      name
+      type
+    }
+  }
+}

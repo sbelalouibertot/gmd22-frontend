@@ -1,0 +1,7 @@
+mutation deleteFoodItem($id: String!) {
+  deleteFoodItem(id: $id) {
+    food {
+      id
+    }
+  }
+}
