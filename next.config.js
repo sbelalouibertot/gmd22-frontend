@@ -7,6 +7,9 @@ const withTranspileModule = require('next-transpile-modules')([])
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 }
 
 module.exports = nextConfig
@@ -20,15 +23,15 @@ module.exports = (phase, { defaultConfig }) => {
 }
 
 module.exports = {
-  webpack: (config) => {
+  webpack: config => {
     config.module.rules.push({
       test: /\.(graphql|gql)$/,
       exclude: /node_modules/,
       loader: 'graphql-tag/loader',
-    });
-    return config;
+    })
+    return config
   },
-  webpackDevMiddleware: (config) => {
-    return config;
+  webpackDevMiddleware: config => {
+    return config
   },
-};
+}

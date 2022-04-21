@@ -13,7 +13,7 @@ let client: ApolloClient<unknown> | undefined = undefined
 export const getApolloClient = (): ApolloClient<unknown> => {
   if (!client) {
     client = new ApolloClient({
-      uri: 'http://localhost:4000',
+      uri: process.env.NODE_ENV === 'production' ? 'http://77.192.114.110:4000' : 'http://localhost:4000',
       ssrMode: false,
       cache,
       name: packageInfo.name,
