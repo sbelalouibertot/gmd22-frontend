@@ -1,4 +1,4 @@
-FROM node:current-alpine3.12 as prod
+FROM node:16 as prod
 
 WORKDIR /app
 COPY package.json package-lock.json ./
