@@ -35,3 +35,5 @@ yarn-error.log*
 *.tsbuildinfo
 
 .env
+deploy-out.sh
+Dockerfile-out
