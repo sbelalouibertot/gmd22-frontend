@@ -9,13 +9,13 @@
     "start": "next start",
     "lint": "next lint",
     "graphql-codegen:generate": "graphql-codegen --config graphql-codegen.yml",
-    "deploy" : "envsub --env-file .env deploy.sh deploy-out.sh --syntax dollar-basic; bash ./deploy-out.sh; rm ./deploy-out.sh"
+    "deploy": "envsub --env-file .env deploy.sh deploy-out.sh --syntax dollar-basic; bash ./deploy-out.sh; rm ./deploy-out.sh"
   },
   "dependencies": {
     "@apollo/client": "^3.5.10",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
-    "graphql": "^16.3.0",
+    "graphql": "^14.7.0",
     "next": "12.1.5",
     "next-compose-plugins": "^2.2.1",
     "next-plugin-graphql": "^0.0.2",

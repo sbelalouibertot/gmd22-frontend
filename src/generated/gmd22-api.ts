@@ -28,7 +28,24 @@ export type IFoodOutput = {
 };
 
 export type IFoodType = 
-  'MEET';
+  'CEREALS_AND_DERIVED' |
+  'FRUIT' |
+  'INGREDIENT' |
+  'VEGETABLE' |
+  'LEGUME' |
+  'FATS' |
+  'OILS' |
+  'NUTS_AND_SEEDS' |
+  'FISH' |
+  'POTATOES' |
+  'AGRICULTURAL_PRODUCTS' |
+  'DAIRY_PRODUCTS' |
+  'SAUCES' |
+  'DRESSING' |
+  'SODAS' |
+  'DRINKS' |
+  'JUICES' |
+  'MEATS';
 
 export type IMutation = {
    __typename?: 'Mutation',
