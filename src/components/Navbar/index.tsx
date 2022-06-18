@@ -1,5 +1,5 @@
-import { FC } from "react";
+import { FC } from 'react'
 
-const Navbar: FC = () => <div>Navbar</div>;
+const Navbar: FC = () => <div>Navbar</div>
 
-export default Navbar;
+export default Navbar

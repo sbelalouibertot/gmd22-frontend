@@ -1,6 +1,6 @@
 import '@emotion/react'
 
-import { ITheme } from '@src/utils/libs/emotion/Theme'
+import { ITheme } from '@src/styles/design-system/theme'
 
 declare module '@emotion/react' {
   export interface Theme extends ITheme {}

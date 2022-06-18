@@ -1,7 +1,7 @@
 import { Page } from 'utils/libs/nextjs/types'
 
-import { MainLayout } from '@src/layouts/MainLayout'
 import FoodView from '@src/components/food/FoodView'
+import { MainLayout } from '@src/layouts/MainLayout'
 
 type Props = {}
 

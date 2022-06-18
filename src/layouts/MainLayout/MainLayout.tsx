@@ -1,6 +1,5 @@
-import Navbar from '@src/components/Navbar'
-import Header from '@src/components/Header'
-import React, { FC } from 'react'
+import Header from '@src/components/header'
+import Navbar from '@src/components/navbar'
 
 const MainLayout = ({ children }: { children?: React.ReactChild }) => {
   return (
