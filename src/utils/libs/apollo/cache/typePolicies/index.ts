@@ -1,6 +1,5 @@
 import { TypePolicies } from '@apollo/client'
 
-const typePolicies: TypePolicies = {
-}
+const typePolicies: TypePolicies = {}
 
 export default typePolicies

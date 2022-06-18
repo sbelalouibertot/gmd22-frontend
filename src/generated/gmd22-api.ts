@@ -8,7 +8,43 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
+  DateTime: any,
+  Date: any,
+  Time: any,
+  JSON: any,
+  JSONObject: any,
 };
+
+
+
+export type IEvent = {
+   __typename?: 'Event',
+  id?: Maybe<Scalars['String']>,
+  type?: Maybe<IEventType>,
+  userId?: Maybe<Scalars['String']>,
+  date?: Maybe<Scalars['DateTime']>,
+};
+
+export type IEventInput = {
+  id?: Maybe<Scalars['String']>,
+  type?: Maybe<IEventType>,
+  userId?: Maybe<Scalars['String']>,
+  date?: Maybe<Scalars['DateTime']>,
+};
+
+export type IEventOutput = {
+   __typename?: 'EventOutput',
+  event?: Maybe<IEvent>,
+};
+
+export type IEventsOutput = {
+   __typename?: 'EventsOutput',
+  events?: Maybe<Array<Maybe<IEvent>>>,
+};
+
+export type IEventType = 
+  'SHOPPING' |
+  'PREPARATION';
 
 export type IFood = {
    __typename?: 'Food',
@@ -17,13 +53,18 @@ export type IFood = {
   type?: Maybe<IFoodType>,
 };
 
+export type IFoodItemOutput = {
+   __typename?: 'FoodItemOutput',
+  foodItem?: Maybe<IFood>,
+};
+
 export type IFoodItemsOutput = {
-   __typename?: 'foodItemsOutput',
+   __typename?: 'FoodItemsOutput',
   foodItems: Array<IFood>,
 };
 
 export type IFoodOutput = {
-   __typename?: 'foodOutput',
+   __typename?: 'FoodOutput',
   food?: Maybe<IFood>,
 };
 
@@ -47,9 +88,16 @@ export type IFoodType =
   'JUICES' |
   'MEATS';
 
+
+
 export type IMutation = {
    __typename?: 'Mutation',
   deleteFoodItem?: Maybe<IFoodOutput>,
+  newRecipe?: Maybe<IRecipeOutput>,
+  replaceRecipe?: Maybe<IRecipeOutput>,
+  updateUserPreferences?: Maybe<IUserPreferencesOutput>,
+  updateEvent?: Maybe<IEventOutput>,
+  toggleCheckShoppingListFood?: Maybe<IFoodOutput>,
 };
 
 
@@ -57,10 +105,186 @@ export type IMutationDeleteFoodItemArgs = {
   id: Scalars['String']
 };
 
+
+export type IMutationNewRecipeArgs = {
+  recipeInput?: Maybe<IRecipeInput>
+};
+
+
+export type IMutationReplaceRecipeArgs = {
+  id: Scalars['ID'],
+  eventId: Scalars['ID']
+};
+
+
+export type IMutationUpdateUserPreferencesArgs = {
+  userPreferencesInput?: Maybe<Array<Maybe<IUserPreferenceInput>>>
+};
+
+
+export type IMutationUpdateEventArgs = {
+  id?: Maybe<Scalars['ID']>,
+  eventInput?: Maybe<IEventInput>
+};
+
+
+export type IMutationToggleCheckShoppingListFoodArgs = {
+  id?: Maybe<Scalars['ID']>
+};
+
+export type IPagination = {
+  first?: Maybe<Scalars['Int']>,
+  skip?: Maybe<Scalars['Int']>,
+};
+
+export type IPaginationInfos = {
+   __typename?: 'PaginationInfos',
+  total?: Maybe<Scalars['Int']>,
+  first?: Maybe<Scalars['Int']>,
+  skip?: Maybe<Scalars['Int']>,
+};
+
+export type IPaginationOutput = {
+   __typename?: 'PaginationOutput',
+  first?: Maybe<Scalars['Int']>,
+  skip?: Maybe<Scalars['Int']>,
+};
+
 export type IQuery = {
    __typename?: 'Query',
+  foodItem?: Maybe<IFoodItemOutput>,
   foodItems?: Maybe<IFoodItemsOutput>,
+  nextRecipe?: Maybe<IRecipeOutput>,
+  recipes?: Maybe<IRecipesOutput>,
+  recipe?: Maybe<IRecipeOutput>,
+  shoppingList?: Maybe<IShoppingListOutput>,
+  shoppingLists?: Maybe<IShoppingListsOutput>,
+  nextShoppingList?: Maybe<IShoppingListOutput>,
+  userPreferences?: Maybe<Array<Maybe<IUserPreferencesOutput>>>,
+  events?: Maybe<IEventsOutput>,
+  event?: Maybe<IEventOutput>,
+  nextEvent?: Maybe<IEventOutput>,
 };
+
+
+export type IQueryFoodItemArgs = {
+  id: Scalars['ID']
+};
+
+
+export type IQueryNextRecipeArgs = {
+  userId: Scalars['ID']
+};
+
+
+export type IQueryRecipeArgs = {
+  id: Scalars['ID']
+};
+
+
+export type IQueryShoppingListArgs = {
+  id: Scalars['ID']
+};
+
+
+export type IQueryShoppingListsArgs = {
+  userId: Scalars['ID']
+};
+
+
+export type IQueryNextShoppingListArgs = {
+  userId: Scalars['ID']
+};
+
+
+export type IQueryUserPreferencesArgs = {
+  userId?: Maybe<Scalars['ID']>
+};
+
+
+export type IQueryEventsArgs = {
+  userId?: Maybe<Scalars['ID']>
+};
+
+
+export type IQueryEventArgs = {
+  id?: Maybe<Scalars['ID']>
+};
+
+
+export type IQueryNextEventArgs = {
+  userId?: Maybe<Scalars['ID']>
+};
+
+export type IRecipe = {
+   __typename?: 'Recipe',
+  id?: Maybe<Scalars['String']>,
+  name?: Maybe<Scalars['String']>,
+  preparationDuration?: Maybe<Scalars['Int']>,
+  cookingDuration?: Maybe<Scalars['Int']>,
+};
+
+export type IRecipeInput = {
+  id?: Maybe<Scalars['String']>,
+  name?: Maybe<Scalars['String']>,
+  preparationDuration?: Maybe<Scalars['Int']>,
+  cookingDuration?: Maybe<Scalars['Int']>,
+};
+
+export type IRecipeOutput = {
+   __typename?: 'RecipeOutput',
+  recipe?: Maybe<IRecipe>,
+};
+
+export type IRecipesOutput = {
+   __typename?: 'RecipesOutput',
+  recipes?: Maybe<Array<Maybe<IRecipe>>>,
+};
+
+export type IShoppingList = {
+   __typename?: 'ShoppingList',
+  id?: Maybe<Scalars['String']>,
+  name?: Maybe<Scalars['String']>,
+};
+
+export type IShoppingListOutput = {
+   __typename?: 'ShoppingListOutput',
+  shoppingList?: Maybe<IShoppingList>,
+};
+
+export type IShoppingListsOutput = {
+   __typename?: 'ShoppingListsOutput',
+  shoppingLists?: Maybe<Array<Maybe<IShoppingList>>>,
+};
+
+export type ISortDirection = 
+  'asc' |
+  'desc';
+
+
+export type IUserPreference = {
+   __typename?: 'UserPreference',
+  id?: Maybe<Scalars['String']>,
+  userId?: Maybe<Scalars['String']>,
+  type?: Maybe<IUserPreferenceType>,
+  value?: Maybe<Scalars['Int']>,
+};
+
+export type IUserPreferenceInput = {
+  id?: Maybe<Scalars['String']>,
+  userId?: Maybe<Scalars['String']>,
+  type?: Maybe<IUserPreferenceType>,
+  value?: Maybe<Scalars['Int']>,
+};
+
+export type IUserPreferencesOutput = {
+   __typename?: 'UserPreferencesOutput',
+  userPreferences?: Maybe<Array<Maybe<IUserPreference>>>,
+};
+
+export type IUserPreferenceType = 
+  'MAX_RECIPES_PER_WEEK' |
+  'SHOPPING_WEEKS_INTERVAL';
 
 export type IDeleteFoodItemMutationVariables = {
   id: Scalars['String']
@@ -70,7 +294,7 @@ export type IDeleteFoodItemMutationVariables = {
 export type IDeleteFoodItemMutationData = (
   { __typename?: 'Mutation' }
   & { deleteFoodItem: Maybe<(
-    { __typename?: 'foodOutput' }
+    { __typename?: 'FoodOutput' }
     & { food: Maybe<(
       { __typename?: 'Food' }
       & Pick<IFood, 'id'>
@@ -84,7 +308,7 @@ export type IFoodItemsQueryVariables = {};
 export type IFoodItemsQueryData = (
   { __typename?: 'Query' }
   & { foodItems: Maybe<(
-    { __typename?: 'foodItemsOutput' }
+    { __typename?: 'FoodItemsOutput' }
     & { foodItems: Array<(
       { __typename?: 'Food' }
       & Pick<IFood, 'id' | 'name' | 'type'>

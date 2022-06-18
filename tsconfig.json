@@ -3,7 +3,9 @@
     "target": "es5",
     "module": "esnext",
     "paths": {
-      "@src/*": ["./*"]
+      "@src/*": [
+        "./*"
+      ]
     },
     "allowJs": true,
     "checkJs": true,
@@ -17,11 +19,23 @@
     "baseUrl": "./src",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "incremental": true
+    "incremental": true,
+    "downlevelIteration": true
   },
-  "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "package.json"]
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "package.json"
+  ]
 }

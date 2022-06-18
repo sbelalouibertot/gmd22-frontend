@@ -1,9 +1,9 @@
+/* eslint-disable no-console */
 import { DocumentNode } from 'graphql'
 import { useEffect } from 'react'
 
 import {
   ApolloError,
-  MutationFunctionOptions,
   MutationHookOptions,
   MutationTuple,
   QueryHookOptions,
