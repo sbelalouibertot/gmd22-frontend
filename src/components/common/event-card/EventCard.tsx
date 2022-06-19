@@ -6,12 +6,8 @@ import { IEvent } from '@src/generated/gmd22-api'
 import { getDiffDateDetails, isPastEvent } from '@src/utils/date'
 
 import { Skeleton } from '../skeleton/Skeleton.styled'
-import {
-  StyledCardSection,
-  StyledDescription,
-  StyledEventCard,
-  StyledHeader,
-} from './EventCard.styled'
+import Text from '../text/Text'
+import { StyledCardSection, StyledEventCard, StyledHeader } from './EventCard.styled'
 
 type TEventCardProps = {
   event: Pick<IEvent, 'id' | 'type' | 'date'>
@@ -19,13 +15,13 @@ type TEventCardProps = {
 }
 
 const EventCard: FC<TEventCardProps> = ({ event, onClick }) => {
-  const _isPastEvent = useMemo(() => isPastEvent(event.date), [event.date])
+  const isCompleted = useMemo(() => isPastEvent(event.date), [event.date])
   const eventDateDetails = useMemo(() => {
-    if (_isPastEvent) {
+    if (isCompleted) {
       return 'Terminé'
     }
     return getDiffDateDetails(event.date)
-  }, [_isPastEvent, event.date])
+  }, [isCompleted, event.date])
 
   const eventImage = useMemo(() => {
     if (!event.type) {
@@ -40,12 +36,14 @@ const EventCard: FC<TEventCardProps> = ({ event, onClick }) => {
 
   return (
     <StyledEventCard onClick={onClick} backgroundImage={`/img/${eventImage}`}>
-      <StyledCardSection isCompleted={_isPastEvent}>
+      <StyledCardSection isCompleted={isCompleted}>
         <StyledHeader>
           {!!event?.type ? <h4>{EVENT_TYPE_LABELS[event.type]}</h4> : <Skeleton />}
           <Image src="/img/icons/checkbox.svg" width={20} height={20} />
         </StyledHeader>
-        <StyledDescription>{eventDateDetails}</StyledDescription>
+        <Text size="very-small" color={isCompleted ? 'text-dark' : 'text-lighter'}>
+          {eventDateDetails}
+        </Text>
       </StyledCardSection>
     </StyledEventCard>
   )

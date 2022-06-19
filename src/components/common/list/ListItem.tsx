@@ -22,13 +22,15 @@ const ListItem: FC<TListItemProps> = ({
 }) => (
   <StyledListItem>
     <Div percentWidth={16}>
-      <StyledItemAvatar src={avatar} width={52} height={52} objectFit="cover" />
+      <StyledItemAvatar src={avatar} width={45} height={45} objectFit="cover" />
     </Div>
-    <Div spaceBetween percentWidth={60}>
-      <Text>{title}</Text>
-      <Text size="very-small">{details}</Text>
+    <Div spaceBetween percentWidth={60} gap="small">
+      <Text size="small">{title}</Text>
+      <Text size="very-small" color="text-lighter">
+        {details}
+      </Text>
     </Div>
-    <Div percentWidth={16}>
+    <Div percentWidth={8}>
       {!!actionIconPath && (
         <Image src={actionIconPath} onClick={onActionClick} width={16} height={16} />
       )}

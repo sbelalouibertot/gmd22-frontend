@@ -8,7 +8,7 @@ const Planning: FC = () => {
   return (
     <Div row spaceBetween fullWidth>
       <Image src="/img/icons/previous.svg" height={20} width={20} />
-      <Text bold>Planning</Text>
+      <Text weight="bold">Planning</Text>
       <Image src="/img/icons/edit.svg" height={25} width={25} />
     </Div>
   )

@@ -69,7 +69,7 @@ const Home: FC = () => {
         <Image src="/img/icons/alert.svg" height={25} width={25} />
       </Div>
       <Div spaceBetween fullWidth>
-        <Text bold size="regular">
+        <Text weight="bold" size="regular">
           😎 Samy
         </Text>
       </Div>
@@ -90,7 +90,7 @@ const Home: FC = () => {
               !!preference?.type && (
                 <Div key={preference.id} row spaceBetween>
                   <Text>{USER_PREFERENCES_LABELS[preference.type]}</Text>
-                  <Text bold>{preference.value}</Text>
+                  <Text weight="bold">{preference.value}</Text>
                 </Div>
               ),
           )}

@@ -1,0 +1,22 @@
+query CurrentShoppingListEvent {
+  events(onlyCurrentPeriod: true, type: SHOPPING) {
+    events {
+      id
+      shoppingList {
+        id
+        name
+        shoppingListItems {
+          id
+          shoppingListId
+          foodId
+          isChecked
+          food {
+            id
+            name
+            type
+        }
+        }
+      }
+    }
+  }
+}

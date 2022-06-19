@@ -10,11 +10,11 @@ export const StyledListItem = styled.div`
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.07);
   border-radius: ${p => p.theme.border.radius.large}px;
   width: 327px;
-  height: 84px;
+  min-height: 84px;
+  max-height: 95px;
   padding: ${p => p.theme.spacing.padding.medium}px;
 `
 
 export const StyledItemAvatar = styled(Image)`
   border-radius: ${p => p.theme.border.radius['very-large']}px;
-  width: 52px;
 `

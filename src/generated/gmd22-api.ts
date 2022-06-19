@@ -292,6 +292,7 @@ export type IShoppingListFood = {
   shoppingListId?: Maybe<Scalars['ID']>,
   foodId?: Maybe<Scalars['ID']>,
   isChecked?: Maybe<Scalars['Boolean']>,
+  food?: Maybe<IFood>,
 };
 
 export type IShoppingListFoodOutput = {
@@ -492,6 +493,32 @@ export type IMutationMutationData = (
   )> }
 );
 
+export type ICurrentShoppingListEventQueryVariables = {};
+
+
+export type ICurrentShoppingListEventQueryData = (
+  { __typename?: 'Query' }
+  & { events: Maybe<(
+    { __typename?: 'EventsOutput' }
+    & { events: Maybe<Array<Maybe<(
+      { __typename?: 'Event' }
+      & Pick<IEvent, 'id'>
+      & { shoppingList: Maybe<(
+        { __typename?: 'ShoppingList' }
+        & Pick<IShoppingList, 'id' | 'name'>
+        & { shoppingListItems: Maybe<Array<Maybe<(
+          { __typename?: 'ShoppingListFood' }
+          & Pick<IShoppingListFood, 'id' | 'shoppingListId' | 'foodId' | 'isChecked'>
+          & { food: Maybe<(
+            { __typename?: 'Food' }
+            & Pick<IFood, 'id' | 'name' | 'type'>
+          )> }
+        )>>> }
+      )> }
+    )>>> }
+  )> }
+);
+
 export type IShoppingListQueryVariables = {
   shoppingListId: Scalars['ID']
 };
@@ -507,6 +534,10 @@ export type IShoppingListQueryData = (
       & { shoppingListItems: Maybe<Array<Maybe<(
         { __typename?: 'ShoppingListFood' }
         & Pick<IShoppingListFood, 'id' | 'shoppingListId' | 'foodId' | 'isChecked'>
+        & { food: Maybe<(
+          { __typename?: 'Food' }
+          & Pick<IFood, 'id' | 'name' | 'type'>
+        )> }
       )>>> }
     )> }
   )> }
@@ -863,6 +894,55 @@ export function useMutationMutation(baseOptions?: Apollo.MutationHookOptions<IMu
 export type MutationMutationHookResult = ReturnType<typeof useMutationMutation>;
 export type MutationMutationResult = Apollo.MutationResult<IMutationMutationData>;
 export type MutationMutationOptions = Apollo.BaseMutationOptions<IMutationMutationData, IMutationMutationVariables>;
+export const CurrentShoppingListEventDocument = gql`
+    query CurrentShoppingListEvent {
+  events(onlyCurrentPeriod: true, type: SHOPPING) {
+    events {
+      id
+      shoppingList {
+        id
+        name
+        shoppingListItems {
+          id
+          shoppingListId
+          foodId
+          isChecked
+          food {
+            id
+            name
+            type
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCurrentShoppingListEventQuery__
+ *
+ * To run a query within a React component, call `useCurrentShoppingListEventQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCurrentShoppingListEventQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCurrentShoppingListEventQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCurrentShoppingListEventQuery(baseOptions?: Apollo.QueryHookOptions<ICurrentShoppingListEventQueryData, ICurrentShoppingListEventQueryVariables>) {
+        return Apollo.useQuery<ICurrentShoppingListEventQueryData, ICurrentShoppingListEventQueryVariables>(CurrentShoppingListEventDocument, baseOptions);
+      }
+export function useCurrentShoppingListEventLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ICurrentShoppingListEventQueryData, ICurrentShoppingListEventQueryVariables>) {
+          return Apollo.useLazyQuery<ICurrentShoppingListEventQueryData, ICurrentShoppingListEventQueryVariables>(CurrentShoppingListEventDocument, baseOptions);
+        }
+export type CurrentShoppingListEventQueryHookResult = ReturnType<typeof useCurrentShoppingListEventQuery>;
+export type CurrentShoppingListEventLazyQueryHookResult = ReturnType<typeof useCurrentShoppingListEventLazyQuery>;
+export type CurrentShoppingListEventQueryResult = Apollo.QueryResult<ICurrentShoppingListEventQueryData, ICurrentShoppingListEventQueryVariables>;
 export const ShoppingListDocument = gql`
     query ShoppingList($shoppingListId: ID!) {
   shoppingList(id: $shoppingListId) {
@@ -874,6 +954,11 @@ export const ShoppingListDocument = gql`
         shoppingListId
         foodId
         isChecked
+        food {
+          id
+          name
+          type
+        }
       }
     }
   }

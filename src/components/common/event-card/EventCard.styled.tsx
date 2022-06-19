@@ -42,9 +42,3 @@ export const StyledHeader = styled.header`
   flex-direction: row;
   justify-content: space-between;
 `
-
-export const StyledDescription = styled.span`
-  color: ${p => p.theme.color['text-lighter']};
-  font-size: ${p => p.theme.text.size['very-small']};
-  font-weight: ${p => p.theme.text.weight.light};
-`

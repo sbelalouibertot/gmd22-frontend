@@ -8,6 +8,11 @@ query ShoppingList($shoppingListId: ID!) {
         shoppingListId
         foodId
         isChecked
+        food {
+          id
+          name
+          type
+        }
       }
     }
   }
