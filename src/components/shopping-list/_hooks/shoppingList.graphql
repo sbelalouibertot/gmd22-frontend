@@ -1,0 +1,14 @@
+query ShoppingList($shoppingListId: ID!) {
+  shoppingList(id: $shoppingListId) {
+    shoppingList {
+      id
+      name
+      shoppingListItems {
+        id
+        shoppingListId
+        foodId
+        isChecked
+      }
+    }
+  }
+}

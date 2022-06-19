@@ -1,0 +1,9 @@
+mutation Mutation($recipeEventId: ID!) {
+  replaceRecipe(recipeEventId: $recipeEventId) {
+    recipeEvent {
+      id
+      recipeId
+      eventId
+    }
+  }
+}

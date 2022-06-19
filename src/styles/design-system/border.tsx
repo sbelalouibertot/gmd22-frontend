@@ -7,6 +7,9 @@ export const border = {
   radius: {
     small: 3,
     medium: 4,
-    large: 16,
+    large: 12,
+    'very-large': 16,
   },
 }
+
+export type TBorder = typeof border

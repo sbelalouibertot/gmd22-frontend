@@ -18,3 +18,5 @@ export const spacing = {
     large: 24,
   },
 }
+
+export type TSpacing = typeof spacing

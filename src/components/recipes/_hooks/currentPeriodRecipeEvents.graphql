@@ -1,0 +1,13 @@
+query CurrentPeriodRecipeEvents {
+  events(onlyCurrentPeriod: true, type: PREPARATION) {
+    events {
+        id
+      recipes {
+        id
+        name
+        preparationDuration
+        cookingDuration
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+query DateEvents($date: DateTime) {
+  events(date: $date) {
+    events {
+      id
+      type
+      date
+    }
+  }
+}

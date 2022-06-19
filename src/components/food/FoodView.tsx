@@ -2,7 +2,7 @@ import { useDeleteFoodItemMutation, useFoodItemsQuery } from 'generated/gmd22-ap
 import { FC } from 'react'
 
 import foodItemsQuery from './_hooks/graphql/foodItems.graphql'
-import { StyledFoodView } from './FoodView.styled'
+import { StyledFoodList, StyledFoodView } from './FoodView.styled'
 
 const FoodView: FC = () => {
   const { loading: queryLoading, data: queryData } = useFoodItemsQuery()
@@ -14,7 +14,7 @@ const FoodView: FC = () => {
 
   return (
     <StyledFoodView>
-      <ul>
+      <StyledFoodList>
         {loading
           ? 'Loading...'
           : queryData?.foodItems?.foodItems.map(({ id, name, type }) => (
@@ -23,7 +23,7 @@ const FoodView: FC = () => {
                 <button onClick={() => !!id && mutate({ variables: { id } })}>Supprimer</button>
               </li>
             ))}
-      </ul>
+      </StyledFoodList>
     </StyledFoodView>
   )
 }

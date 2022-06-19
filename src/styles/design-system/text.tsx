@@ -3,6 +3,7 @@ export const text = {
     default: "'Rubik', sans-serif",
   },
   weight: {
+    light: 300,
     regular: 400,
     medium: 600,
     bold: 700,
@@ -11,7 +12,9 @@ export const text = {
     'very-small': 14,
     small: 16,
     regular: 18,
-    big: 18,
-    'very-big': 24,
+    big: 24,
+    'very-big': 40,
   },
 }
+
+export type TText = typeof text

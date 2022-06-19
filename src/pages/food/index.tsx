@@ -5,8 +5,12 @@ import { MainLayout } from '@src/layouts/MainLayout'
 
 type Props = {}
 
-const Food: Page<Props> = () => <FoodView />
+const FoodContainer: Page<Props> = () => (
+  <MainLayout>
+    <FoodView />
+  </MainLayout>
+)
 
-Food.Layout = MainLayout
+FoodContainer.Layout = MainLayout
 
-export default Food
+export default FoodContainer

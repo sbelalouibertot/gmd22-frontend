@@ -10,4 +10,4 @@ export const theme = {
   text,
 }
 
-export type ITheme = typeof theme
+export type TTheme = typeof theme

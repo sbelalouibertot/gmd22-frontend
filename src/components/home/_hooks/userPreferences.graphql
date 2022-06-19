@@ -1,0 +1,9 @@
+query UserPreferences {
+  userPreferences {
+    userPreferences {
+      type
+      value
+      id
+    }
+  }
+}
