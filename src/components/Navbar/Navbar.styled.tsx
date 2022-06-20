@@ -1,8 +1,10 @@
+import Image from 'next/image'
+
 import styled from '@emotion/styled'
 
 export const StyledNavbarContainer = styled.nav`
   background-color: ${p => p.theme.color['background-light']};
-  height: 115px;
+  height: 65px;
   position: absolute;
   filter: drop-shadow(0px 4px 20px rgba(0, 0, 0, 0.1));
   bottom: 0;
@@ -25,9 +27,6 @@ export const StyledTab = styled.div`
   align-items: center;
 `
 
-export const StyledTabIcon = styled.img<{ selected: boolean }>`
+export const StyledTabIcon = styled(Image)<{ selected: boolean }>`
   ${p => p.selected && `filter: invert(1);`}
-
-  height: 30px;
-  width: 40px;
 `

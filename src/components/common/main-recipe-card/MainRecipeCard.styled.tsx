@@ -1,9 +1,12 @@
+import { StaticImageData } from 'next/image'
+
 import styled from '@emotion/styled'
 
 export const StyledMainRecipeCardContainer = styled.div`
   position: relative;
   width: 327px;
   height: 180px;
+  min-height: 180px;
   background-color: ${p => p.theme.color.primary};
   border-radius: ${p => p.theme.border.radius.large}px;
   overflow: hidden;
@@ -43,7 +46,11 @@ export const StyledDuration = styled.div`
   }
 `
 
-export const StyledImageBackground = styled.div`
+export type TStyledImageBackgroundProps = {
+  image: StaticImageData
+}
+
+export const StyledImageBackground = styled.div<TStyledImageBackgroundProps>`
   position: absolute;
   left: 175px;
   top: 69px;
@@ -51,7 +58,7 @@ export const StyledImageBackground = styled.div`
   width: 214px;
   border-radius: 120px;
 
-  background: url('/img/food.jpeg');
+  background: url(${p => p.image.src});
   background-repeat: no-repeat;
   background-size: 320px 272px;
   background-position: center;

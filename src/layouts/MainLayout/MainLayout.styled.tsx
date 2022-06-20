@@ -7,11 +7,11 @@ export const StyledMainContainer = styled.main`
   align-items: center;
 
   background-color: ${p => p.theme.color.background};
-  height: calc(100% - 115px);
+  height: calc(100% - 65px);
   position: absolute;
   overflow-y: scroll;
   width: 100%;
   top: 0;
   padding: ${p => p.theme.spacing.padding.large}px;
-  gap: ${p => p.theme.spacing.gap.large}px;
+  gap: ${p => p.theme.spacing.gap.medium}px;
 `

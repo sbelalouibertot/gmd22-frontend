@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import { FC, useMemo } from 'react'
 
+import CheckboxIcon from '@src/../public/img/icons/checkbox.svg'
+import UnknownImg from '@src/../public/img/unknown.jpeg'
 import { EVENT_TYPE_IMAGES, EVENT_TYPE_LABELS } from '@src/constants/events'
 import { IEvent } from '@src/generated/gmd22-api'
 import { getDiffDateDetails, isPastEvent } from '@src/utils/date'
@@ -25,7 +27,7 @@ const EventCard: FC<TEventCardProps> = ({ event, onClick }) => {
 
   const eventImage = useMemo(() => {
     if (!event.type) {
-      return 'unknown.jpeg'
+      return UnknownImg
     }
     const imageData = EVENT_TYPE_IMAGES[event.type]
     if (Array.isArray(imageData)) {
@@ -35,11 +37,11 @@ const EventCard: FC<TEventCardProps> = ({ event, onClick }) => {
   }, [event.type])
 
   return (
-    <StyledEventCard onClick={onClick} backgroundImage={`/img/${eventImage}`}>
+    <StyledEventCard onClick={onClick} backgroundImage={eventImage}>
       <StyledCardSection isCompleted={isCompleted}>
         <StyledHeader>
           {!!event?.type ? <h4>{EVENT_TYPE_LABELS[event.type]}</h4> : <Skeleton />}
-          <Image src="/img/icons/checkbox.svg" width={20} height={20} />
+          <Image src={CheckboxIcon} width={20} height={20} />
         </StyledHeader>
         <Text size="very-small" color={isCompleted ? 'text-dark' : 'text-lighter'}>
           {eventDateDetails}

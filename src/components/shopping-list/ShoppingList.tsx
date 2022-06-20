@@ -2,6 +2,11 @@ import Image from 'next/image'
 import router from 'next/router'
 import { FC } from 'react'
 
+import CheckboxIcon from '@src/../public/img/icons/checkbox.svg'
+import CheckboxCompletedIcon from '@src/../public/img/icons/checkbox-completed.svg'
+import EditIcon from '@src/../public/img/icons/edit.svg'
+import PreviousIcon from '@src/../public/img/icons/previous.svg'
+import PancakeImg from '@src/../public/img/pancake.jpeg'
 import { useCurrentShoppingListEventQuery } from '@src/generated/gmd22-api'
 
 import { Div } from '../common/div/Div.styled'
@@ -12,13 +17,13 @@ import { StyledList } from './ShoppingList.styled'
 const ShoppingList: FC = () => {
   const { /*loading,*/ data } = useCurrentShoppingListEventQuery()
   const currentShoppingList = data?.events?.events?.[0]?.shoppingList
-  console.log({ currentShoppingList })
+
   return (
     <>
       <Div row spaceBetween fullWidth>
-        <Image src="/img/icons/previous.svg" height={20} width={20} />
+        <Image src={PreviousIcon} height={20} width={20} />
         <Text weight="bold">Liste de courses</Text>
-        <Image src="/img/icons/edit.svg" height={25} width={25} />
+        <Image src={EditIcon} height={25} width={25} />
       </Div>
       <StyledList>
         {currentShoppingList?.shoppingListItems?.map(
@@ -27,11 +32,9 @@ const ShoppingList: FC = () => {
               <ListItem
                 key={item.food.id}
                 title={item.food.name ?? ''}
-                avatar={'/img/pancake.jpeg'}
+                avatar={PancakeImg}
                 details={`-`}
-                actionIconPath={`/img/icons/${
-                  item.isChecked ? 'checkbox-completed' : 'checkbox'
-                }.svg`}
+                actionIcon={item.isChecked ? CheckboxCompletedIcon : CheckboxIcon}
                 onClick={() => {
                   if (!!item?.food?.id) {
                     router.push(`/food/${item.food.id}`)

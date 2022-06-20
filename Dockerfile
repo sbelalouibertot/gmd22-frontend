@@ -1,5 +1,8 @@
 FROM node:16 as prod
 
+ENV PRODUCTION_HOST_IP $PRODUCTION_HOST_IP
+ENV PRODUCTION_API_PORT $PRODUCTION_API_PORT
+
 WORKDIR /app
 COPY package.json package-lock.json ./
 COPY .next ./.next

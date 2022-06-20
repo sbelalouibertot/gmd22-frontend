@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image, { StaticImageData } from 'next/image'
 import { FC } from 'react'
 
 import { Div } from '../div/Div.styled'
@@ -7,9 +7,9 @@ import { StyledItemAvatar, StyledListItem } from './ListItem.styled'
 
 export type TListItemProps = {
   title: string
-  avatar: string
+  avatar: StaticImageData
   details: string
-  actionIconPath: string
+  actionIcon: StaticImageData
   onClick: VoidFunction
   onActionClick: VoidFunction
 }
@@ -18,7 +18,7 @@ const ListItem: FC<TListItemProps> = ({
   title,
   avatar,
   details,
-  actionIconPath,
+  actionIcon,
   onClick,
   onActionClick,
 }) => (
@@ -33,9 +33,7 @@ const ListItem: FC<TListItemProps> = ({
       </Text>
     </Div>
     <Div percentWidth={8}>
-      {!!actionIconPath && (
-        <Image src={actionIconPath} onClick={onActionClick} width={16} height={16} />
-      )}
+      {!!actionIcon && <Image src={actionIcon} onClick={onActionClick} width={16} height={16} />}
     </Div>
   </StyledListItem>
 )

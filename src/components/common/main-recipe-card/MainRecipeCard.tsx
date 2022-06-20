@@ -1,5 +1,6 @@
 import { FC, useMemo } from 'react'
 
+import FoodImg from '@src/../public/img/food.jpeg'
 import { IRecipe } from '@src/generated/gmd22-api'
 
 import { Div } from '../div/Div.styled'
@@ -39,7 +40,7 @@ const MainRecipeCard: FC<TMainRecipeCardProps> = ({ title, recipe, loading, onCl
           <span>{loading ? <Skeleton height={30} width={50} /> : recipeDuration}</span> min
         </StyledDuration>
       </StyledMainRecipeCard>
-      <StyledImageBackground />
+      <StyledImageBackground image={FoodImg} />
     </StyledMainRecipeCardContainer>
   )
 }

@@ -1,10 +1,10 @@
 npm run build
 
 npx envsub --env-file .env Dockerfile Dockerfile-out --syntax dollar-basic
-scp -rp .next package.json package-lock.json rm Dockerfile-out $REMOTE_USER@$REMOTE_IP:$TARGET_PROJECT_ROOT_PATH/$TARGET_REPOSITORY_NAME
+scp -rp .next package.json package-lock.json rm Dockerfile-out $REMOTE_USER@$PRODUCTION_HOST_IP:$TARGET_PROJECT_ROOT_PATH/$TARGET_REPOSITORY_NAME
 rm ./Dockerfile-out
 
-ssh $REMOTE_USER@$REMOTE_IP  << 'EOSSH'
+ssh $REMOTE_USER@$PRODUCTION_HOST_IP  << 'EOSSH'
 sudo nohup sh -c '
 echo "\n --- [start] $(date -u) ---"
 cd $TARGET_PROJECT_ROOT_PATH/$TARGET_REPOSITORY_NAME

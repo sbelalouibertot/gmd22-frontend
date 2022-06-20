@@ -2,6 +2,10 @@ import Image from 'next/image'
 import router from 'next/router'
 import { FC } from 'react'
 
+import EditIcon from '@src/../public/img/icons/edit.svg'
+import NextIcon from '@src/../public/img/icons/next.svg'
+import PreviousIcon from '@src/../public/img/icons/previous.svg'
+import PancakeImg from '@src/../public/img/pancake.jpeg'
 import { useCurrentPeriodRecipeEventsQuery } from '@src/generated/gmd22-api'
 
 import { Div } from '../common/div/Div.styled'
@@ -16,9 +20,9 @@ const Recipes: FC = () => {
   return (
     <>
       <Div row spaceBetween fullWidth>
-        <Image src="/img/icons/previous.svg" height={20} width={20} />
+        <Image src={PreviousIcon} height={20} width={20} />
         <Text weight="bold">Recettes</Text>
-        <Image src="/img/icons/edit.svg" height={25} width={25} />
+        <Image src={EditIcon} height={25} width={25} />
       </Div>
       <StyledList>
         {recipes?.map(
@@ -27,9 +31,9 @@ const Recipes: FC = () => {
               <ListItem
                 key={recipe?.id}
                 title={recipe.name}
-                avatar={'/img/pancake.jpeg'}
+                avatar={PancakeImg}
                 details={`👨‍🍳 ${recipe.preparationDuration} min • 🔥 ${recipe.cookingDuration} min`}
-                actionIconPath={'/img/icons/next.svg'}
+                actionIcon={NextIcon}
                 onClick={() => {
                   if (!!recipe.id) {
                     router.push(`/recipes/${recipe.id}`)

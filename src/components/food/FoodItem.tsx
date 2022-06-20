@@ -3,6 +3,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FC } from 'react'
 
+import EditIcon from '@src/../public/img/icons/edit.svg'
+import PreviousIcon from '@src/../public/img/icons/previous.svg'
+import PancakeImg from '@src/../public/img/pancake.jpeg'
 import { FOOD_TYPE_TO_STR } from '@src/constants/food'
 import { useFoodItemQuery } from '@src/generated/gmd22-api'
 
@@ -22,9 +25,9 @@ const FoodItem: FC = () => {
   return (
     <>
       <Div row spaceBetween fullWidth>
-        <Image src="/img/icons/previous.svg" height={20} width={20} />
+        <Image src={PreviousIcon} height={20} width={20} />
         <Text weight="bold">Ingrédient</Text>
-        <Image src="/img/icons/edit.svg" height={25} width={25} />
+        <Image src={EditIcon} height={25} width={25} />
       </Div>
 
       <Div fullWidth>
@@ -45,13 +48,7 @@ const FoodItem: FC = () => {
               </Text>
             )}
           </Div>
-          <Image
-            src="/img/pancake.jpeg"
-            width={140}
-            height={140}
-            objectFit="cover"
-            layout="fixed"
-          />
+          <Image src={PancakeImg} width={140} height={140} objectFit="cover" layout="fixed" />
         </Div>
         <List>
           {foodItem?.recipes?.map(

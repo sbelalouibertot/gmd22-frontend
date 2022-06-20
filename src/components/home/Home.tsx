@@ -4,6 +4,8 @@ import Image from 'next/image'
 import router from 'next/router'
 import { FC, useMemo } from 'react'
 
+import AlertIcon from '@src/../public/img/icons/alert.svg'
+import SunIcon from '@src/../public/img/icons/sun.svg'
 import { USER_PREFERENCES_LABELS } from '@src/constants/userPreferences'
 import {
   ICurrentPeriodEventsQueryData,
@@ -64,15 +66,10 @@ const Home: FC = () => {
     <>
       <Div row spaceBetween fullWidth>
         <Div row center gap="large">
-          <Image src="/img/icons/sun.svg" height={20} width={20} />
+          <Image src={SunIcon} height={20} width={20} />
           <Text firstLetterUppercase>{dayName}</Text>
         </Div>
-        <Image src="/img/icons/alert.svg" height={25} width={25} />
-      </Div>
-      <Div spaceBetween fullWidth>
-        <Text weight="bold" size="regular">
-          😎 Samy
-        </Text>
+        <Image src={AlertIcon} height={25} width={25} />
       </Div>
       <MainRecipeCard
         title="Prochaine recette"
@@ -90,7 +87,7 @@ const Home: FC = () => {
         </List>
       </Section>
       <Section title="Préférences">
-        <List verticalPadding>
+        <List verticalPadding gap="xsmall">
           {userPreferences?.map(
             preference =>
               !!preference?.type && (

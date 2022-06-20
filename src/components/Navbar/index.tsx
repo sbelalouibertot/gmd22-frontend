@@ -2,6 +2,11 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FC, useMemo } from 'react'
 
+import CalendarIcon from '@src/../public/img/icons/calendar.svg'
+import FishIcon from '@src/../public/img/icons/fish.svg'
+import HomeIcon from '@src/../public/img/icons/home.svg'
+import ShoppingCartIcon from '@src/../public/img/icons/shopping-cart.svg'
+
 import {
   StyledNavbarContainer,
   StyledTab,
@@ -17,14 +22,14 @@ const Navbar: FC = () => {
         {
           id: 'home',
           label: 'Accueil',
-          icon: 'home',
+          icon: HomeIcon,
           selected: router.route.includes('home'),
           route: '/home',
         },
         {
           id: 'recipes',
           label: 'Recettes',
-          icon: 'fish',
+          icon: FishIcon,
           selected: router.route.includes('recipes'),
           route: '/recipes',
         },
@@ -33,14 +38,14 @@ const Navbar: FC = () => {
         {
           id: 'planning',
           label: 'Planning',
-          icon: 'calendar',
+          icon: CalendarIcon,
           selected: router.route.includes('planning'),
           route: '/planning',
         },
         {
           id: 'shoppingList',
           label: 'Liste de courses',
-          icon: 'shopping-cart',
+          icon: ShoppingCartIcon,
           selected: router.route.includes('shoppingList'),
           route: '/shoppingList',
         },
@@ -56,7 +61,13 @@ const Navbar: FC = () => {
           {tabs.map(({ id, icon, route, selected }) => (
             <StyledTab key={id}>
               <Link href={route}>
-                <StyledTabIcon src={`/img/icons/${icon}.svg`} selected={selected} />
+                <StyledTabIcon
+                  src={icon}
+                  selected={selected}
+                  height={30}
+                  width={40}
+                  layout="fixed"
+                />
               </Link>
             </StyledTab>
           ))}
