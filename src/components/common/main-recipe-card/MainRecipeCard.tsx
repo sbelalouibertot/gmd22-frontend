@@ -17,9 +17,10 @@ type TMainRecipeCardProps = {
   title: string
   recipe: Pick<IRecipe, 'name' | 'preparationDuration' | 'cookingDuration'> | null
   loading: boolean
+  onClick: VoidFunction
 }
 
-const MainRecipeCard: FC<TMainRecipeCardProps> = ({ title, recipe, loading }) => {
+const MainRecipeCard: FC<TMainRecipeCardProps> = ({ title, recipe, loading, onClick }) => {
   const recipeDuration = useMemo(() => {
     if (!recipe) {
       return 0
@@ -28,7 +29,7 @@ const MainRecipeCard: FC<TMainRecipeCardProps> = ({ title, recipe, loading }) =>
   }, [recipe])
 
   return (
-    <StyledMainRecipeCardContainer>
+    <StyledMainRecipeCardContainer onClick={onClick}>
       <StyledMainRecipeCard>
         <Div>
           <StyledTitle>{title}</StyledTitle>

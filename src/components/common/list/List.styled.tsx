@@ -1,15 +1,18 @@
 import styled from '@emotion/styled'
 
+import { TTheme } from '@src/styles/design-system/theme'
+
 export type TStyledListProps = {
   horizontal?: boolean
   forceScrollVisibility?: boolean
   verticalPadding?: boolean
   horizontalPadding?: boolean
+  gap?: keyof TTheme['spacing']['gap']
 }
 export const StyledList = styled.ul<TStyledListProps>`
   display: flex;
   flex-direction: ${p => (p.horizontal ? 'row' : 'column')};
-  gap: ${p => p.theme.spacing.gap.medium}px;
+  gap: ${p => p.theme.spacing.gap[p.gap ?? 'medium']}px;
 
   ${p =>
     p.verticalPadding &&

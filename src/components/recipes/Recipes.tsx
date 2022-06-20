@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import router from 'next/router'
 import { FC } from 'react'
 
 import { useCurrentPeriodRecipeEventsQuery } from '@src/generated/gmd22-api'
@@ -29,6 +30,11 @@ const Recipes: FC = () => {
                 avatar={'/img/pancake.jpeg'}
                 details={`👨‍🍳 ${recipe.preparationDuration} min • 🔥 ${recipe.cookingDuration} min`}
                 actionIconPath={'/img/icons/next.svg'}
+                onClick={() => {
+                  if (!!recipe.id) {
+                    router.push(`/recipes/${recipe.id}`)
+                  }
+                }}
                 onActionClick={() => console.log('onClick')}
               />
             ),

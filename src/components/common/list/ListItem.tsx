@@ -10,6 +10,7 @@ export type TListItemProps = {
   avatar: string
   details: string
   actionIconPath: string
+  onClick: VoidFunction
   onActionClick: VoidFunction
 }
 
@@ -18,11 +19,12 @@ const ListItem: FC<TListItemProps> = ({
   avatar,
   details,
   actionIconPath,
+  onClick,
   onActionClick,
 }) => (
-  <StyledListItem>
+  <StyledListItem onClick={onClick}>
     <Div percentWidth={16}>
-      <StyledItemAvatar src={avatar} width={45} height={45} objectFit="cover" />
+      <StyledItemAvatar src={avatar} width={45} height={45} objectFit="cover" layout="fixed" />
     </Div>
     <Div spaceBetween percentWidth={60} gap="small">
       <Text size="small">{title}</Text>

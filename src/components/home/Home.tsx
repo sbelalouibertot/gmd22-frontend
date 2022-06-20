@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import pick from 'lodash/pick'
 import Image from 'next/image'
+import router from 'next/router'
 import { FC, useMemo } from 'react'
 
 import { USER_PREFERENCES_LABELS } from '@src/constants/userPreferences'
@@ -22,10 +23,10 @@ import Text from '../common/text/Text'
 
 const formatNextRecipe = (
   nextRecipeEventData?: INextRecipeEventQueryData,
-): Pick<IRecipe, 'name' | 'preparationDuration' | 'cookingDuration'> | null => {
+): Pick<IRecipe, 'id' | 'name' | 'preparationDuration' | 'cookingDuration'> | null => {
   const nextRecipes = nextRecipeEventData?.nextEvent?.event?.recipes
   if (!!nextRecipes && nextRecipes.length > 0) {
-    return pick(nextRecipes[0], ['name', 'preparationDuration', 'cookingDuration'])
+    return pick(nextRecipes[0], ['id', 'name', 'preparationDuration', 'cookingDuration'])
   } else {
     return null
   }
@@ -77,6 +78,11 @@ const Home: FC = () => {
         title="Prochaine recette"
         recipe={nextRecipe}
         loading={nextRecipeEventLoading}
+        onClick={() => {
+          if (!!nextRecipe?.id) {
+            router.push(`/recipes/${nextRecipe.id}`)
+          }
+        }}
       />
       <Section title="Avancement" action="Voir plus">
         <List horizontal forceScrollVisibility verticalPadding>

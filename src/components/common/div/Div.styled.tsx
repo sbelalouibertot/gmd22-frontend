@@ -20,5 +20,5 @@ export const Div = styled.div<TDivProps>`
   ${p => p.center && `justify-items: center; align-items: center;`}
   ${p => p.percentWidth && `width: ${p.percentWidth}%;`}
   ${p => p.fullWidth && `width: 100%;`}
-  ${p => !!p.gap && `gap: ${p.theme.spacing.gap[p.gap]}px;`}
+  ${p => p.gap && `gap: ${p.theme.spacing.gap[p.gap]}px;`}
 `

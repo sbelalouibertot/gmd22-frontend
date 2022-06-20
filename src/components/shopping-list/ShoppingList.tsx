@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import router from 'next/router'
 import { FC } from 'react'
 
 import { useCurrentShoppingListEventQuery } from '@src/generated/gmd22-api'
@@ -31,6 +32,11 @@ const ShoppingList: FC = () => {
                 actionIconPath={`/img/icons/${
                   item.isChecked ? 'checkbox-completed' : 'checkbox'
                 }.svg`}
+                onClick={() => {
+                  if (!!item?.food?.id) {
+                    router.push(`/food/${item.food.id}`)
+                  }
+                }}
                 onActionClick={() => console.log('onClick')}
               />
             ),

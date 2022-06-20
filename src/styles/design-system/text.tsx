@@ -9,7 +9,7 @@ export const text = {
     bold: 700,
   },
   size: {
-    'very-small': 14,
+    'very-small': 12,
     small: 16,
     regular: 18,
     big: 24,

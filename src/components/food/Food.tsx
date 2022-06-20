@@ -1,5 +1,6 @@
 import { useFoodItemsQuery } from 'generated/gmd22-api'
 import Image from 'next/image'
+import router from 'next/router'
 import { FC } from 'react'
 
 import { FOOD_TYPE_TO_STR } from '@src/constants/food'
@@ -9,8 +10,8 @@ import ListItem from '../common/list/ListItem'
 import Text from '../common/text/Text'
 import { StyledList } from './Food.styled'
 
-const FoodView: FC = () => {
-  const { loading, data: foodItemsData } = useFoodItemsQuery()
+const Food: FC = () => {
+  const { /*loading,*/ data: foodItemsData } = useFoodItemsQuery()
   // const [mutate, { loading: deleteLoading }] = useDeleteFoodItemMutation({
   //   refetchQueries: [{ query: foodItemsQuery, variables: {} }],
   // })
@@ -20,7 +21,7 @@ const FoodView: FC = () => {
     <>
       <Div row spaceBetween fullWidth>
         <Image src="/img/icons/previous.svg" height={20} width={20} />
-        <Text weight="bold">Liste de courses</Text>
+        <Text weight="bold">Ingrédients</Text>
         <Image src="/img/icons/edit.svg" height={25} width={25} />
       </Div>
       <StyledList>
@@ -35,6 +36,7 @@ const FoodView: FC = () => {
                 avatar={'/img/pancake.jpeg'}
                 details={FOOD_TYPE_TO_STR[item.type]}
                 actionIconPath={`/img/icons/next.svg`}
+                onClick={() => router.push(`/food/${item.id}`)}
                 onActionClick={() => console.log('onClick')}
               />
             ),
@@ -44,4 +46,4 @@ const FoodView: FC = () => {
   )
 }
 
-export default FoodView
+export default Food

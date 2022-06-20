@@ -49,6 +49,7 @@ export type IFood = {
   id?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
   type?: Maybe<IFoodType>,
+  recipes?: Maybe<Array<Maybe<IRecipe>>>,
 };
 
 export type IFoodItemOutput = {
@@ -355,6 +356,26 @@ export type IDeleteFoodItemMutationData = (
   )> }
 );
 
+export type IFoodItemQueryVariables = {
+  foodItemId: Scalars['ID']
+};
+
+
+export type IFoodItemQueryData = (
+  { __typename?: 'Query' }
+  & { foodItem: Maybe<(
+    { __typename?: 'FoodItemOutput' }
+    & { foodItem: Maybe<(
+      { __typename?: 'Food' }
+      & Pick<IFood, 'id' | 'name' | 'type'>
+      & { recipes: Maybe<Array<Maybe<(
+        { __typename?: 'Recipe' }
+        & Pick<IRecipe, 'id' | 'name'>
+      )>>> }
+    )> }
+  )> }
+);
+
 export type IFoodItemsQueryVariables = {};
 
 
@@ -578,6 +599,47 @@ export function useDeleteFoodItemMutation(baseOptions?: Apollo.MutationHookOptio
 export type DeleteFoodItemMutationHookResult = ReturnType<typeof useDeleteFoodItemMutation>;
 export type DeleteFoodItemMutationResult = Apollo.MutationResult<IDeleteFoodItemMutationData>;
 export type DeleteFoodItemMutationOptions = Apollo.BaseMutationOptions<IDeleteFoodItemMutationData, IDeleteFoodItemMutationVariables>;
+export const FoodItemDocument = gql`
+    query FoodItem($foodItemId: ID!) {
+  foodItem(id: $foodItemId) {
+    foodItem {
+      id
+      name
+      type
+      recipes {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useFoodItemQuery__
+ *
+ * To run a query within a React component, call `useFoodItemQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFoodItemQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFoodItemQuery({
+ *   variables: {
+ *      foodItemId: // value for 'foodItemId'
+ *   },
+ * });
+ */
+export function useFoodItemQuery(baseOptions: Apollo.QueryHookOptions<IFoodItemQueryData, IFoodItemQueryVariables>) {
+        return Apollo.useQuery<IFoodItemQueryData, IFoodItemQueryVariables>(FoodItemDocument, baseOptions);
+      }
+export function useFoodItemLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IFoodItemQueryData, IFoodItemQueryVariables>) {
+          return Apollo.useLazyQuery<IFoodItemQueryData, IFoodItemQueryVariables>(FoodItemDocument, baseOptions);
+        }
+export type FoodItemQueryHookResult = ReturnType<typeof useFoodItemQuery>;
+export type FoodItemLazyQueryHookResult = ReturnType<typeof useFoodItemLazyQuery>;
+export type FoodItemQueryResult = Apollo.QueryResult<IFoodItemQueryData, IFoodItemQueryVariables>;
 export const FoodItemsDocument = gql`
     query foodItems {
   foodItems {
