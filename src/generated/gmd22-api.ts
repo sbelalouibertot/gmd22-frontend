@@ -564,6 +564,22 @@ export type IShoppingListQueryData = (
   )> }
 );
 
+export type IToggleCheckShoppingListFoodMutationVariables = {
+  toggleCheckShoppingListFoodId?: Maybe<Scalars['ID']>
+};
+
+
+export type IToggleCheckShoppingListFoodMutationData = (
+  { __typename?: 'Mutation' }
+  & { toggleCheckShoppingListFood: Maybe<(
+    { __typename?: 'ShoppingListFoodOutput' }
+    & { shoppingListFood: Maybe<(
+      { __typename?: 'ShoppingListFood' }
+      & Pick<IShoppingListFood, 'id' | 'shoppingListId' | 'isChecked'>
+    )> }
+  )> }
+);
+
 
 export const DeleteFoodItemDocument = gql`
     mutation deleteFoodItem($id: String!) {
@@ -1052,3 +1068,39 @@ export function useShoppingListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type ShoppingListQueryHookResult = ReturnType<typeof useShoppingListQuery>;
 export type ShoppingListLazyQueryHookResult = ReturnType<typeof useShoppingListLazyQuery>;
 export type ShoppingListQueryResult = Apollo.QueryResult<IShoppingListQueryData, IShoppingListQueryVariables>;
+export const ToggleCheckShoppingListFoodDocument = gql`
+    mutation ToggleCheckShoppingListFood($toggleCheckShoppingListFoodId: ID) {
+  toggleCheckShoppingListFood(id: $toggleCheckShoppingListFoodId) {
+    shoppingListFood {
+      id
+      shoppingListId
+      isChecked
+    }
+  }
+}
+    `;
+export type IToggleCheckShoppingListFoodMutationFn = Apollo.MutationFunction<IToggleCheckShoppingListFoodMutationData, IToggleCheckShoppingListFoodMutationVariables>;
+
+/**
+ * __useToggleCheckShoppingListFoodMutation__
+ *
+ * To run a mutation, you first call `useToggleCheckShoppingListFoodMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useToggleCheckShoppingListFoodMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [toggleCheckShoppingListFoodMutation, { data, loading, error }] = useToggleCheckShoppingListFoodMutation({
+ *   variables: {
+ *      toggleCheckShoppingListFoodId: // value for 'toggleCheckShoppingListFoodId'
+ *   },
+ * });
+ */
+export function useToggleCheckShoppingListFoodMutation(baseOptions?: Apollo.MutationHookOptions<IToggleCheckShoppingListFoodMutationData, IToggleCheckShoppingListFoodMutationVariables>) {
+        return Apollo.useMutation<IToggleCheckShoppingListFoodMutationData, IToggleCheckShoppingListFoodMutationVariables>(ToggleCheckShoppingListFoodDocument, baseOptions);
+      }
+export type ToggleCheckShoppingListFoodMutationHookResult = ReturnType<typeof useToggleCheckShoppingListFoodMutation>;
+export type ToggleCheckShoppingListFoodMutationResult = Apollo.MutationResult<IToggleCheckShoppingListFoodMutationData>;
+export type ToggleCheckShoppingListFoodMutationOptions = Apollo.BaseMutationOptions<IToggleCheckShoppingListFoodMutationData, IToggleCheckShoppingListFoodMutationVariables>;

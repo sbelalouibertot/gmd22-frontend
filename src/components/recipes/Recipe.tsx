@@ -1,15 +1,13 @@
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { FC } from 'react'
 
-import EditIcon from '@src/../public/img/icons/edit.svg'
-import PreviousIcon from '@src/../public/img/icons/previous.svg'
 import { useRecipeQuery } from '@src/generated/gmd22-api'
 
 import { Div } from '../common/div/Div.styled'
 import List from '../common/list/List'
 import Tag from '../common/tag/Tag'
 import Text from '../common/text/Text'
+import { Header } from '../header/Header'
 
 const FoodItem: FC = () => {
   const router = useRouter()
@@ -20,11 +18,7 @@ const FoodItem: FC = () => {
 
   return (
     <>
-      <Div row spaceBetween fullWidth>
-        <Image src={PreviousIcon} height={20} width={20} />
-        <Text weight="bold">Recette</Text>
-        <Image src={EditIcon} height={25} width={25} />
-      </Div>
+      <Header title="Recette" />
       Recette : {recipe?.name}
       <List gap="large">
         {recipe?.recipeInstructions?.map(instruction => (

@@ -15,13 +15,18 @@ import {
   useNextRecipeEventQuery,
   useUserPreferencesQuery,
 } from '@src/generated/gmd22-api'
+import { initSkeletons } from '@src/utils/skeletons'
 
 import { Div } from '../common/div/Div.styled'
-import EventCard from '../common/event-card/EventCard'
+import EventCard, { EventCardLoading } from '../common/event-card/EventCard'
 import List from '../common/list/List'
 import MainRecipeCard from '../common/main-recipe-card/MainRecipeCard'
 import Section from '../common/section/Section'
+import { Skeleton } from '../common/skeleton/Skeleton.styled'
 import Text from '../common/text/Text'
+
+const eventsCardsSkeletons = initSkeletons(3)
+const preferencesSkeletons = initSkeletons(2)
 
 const formatNextRecipe = (
   nextRecipeEventData?: INextRecipeEventQueryData,
@@ -51,13 +56,12 @@ const Home: FC = () => {
   const nextRecipe = formatNextRecipe(nextRecipeEventData)
 
   const {
-    /*loading: currentPeriodEventsLoading, */ data: currentPeriodEventsData,
+    loading: currentPeriodEventsLoading,
+    data: currentPeriodEventsData,
   } = useCurrentPeriodEventsQuery()
   const currentPeriodEvents = formatCurrentPeriodEvents(currentPeriodEventsData)
 
-  const {
-    /*loading: userPreferencesLoading, */ data: userPreferencesData,
-  } = useUserPreferencesQuery()
+  const { loading: userPreferencesLoading, data: userPreferencesData } = useUserPreferencesQuery()
   const userPreferences = userPreferencesData?.userPreferences?.userPreferences
 
   const dayName = useMemo(() => dayjs.utc().format('dddd'), [])
@@ -83,20 +87,34 @@ const Home: FC = () => {
       />
       <Section title="Avancement" action="Voir plus">
         <List horizontal forceScrollVisibility verticalPadding>
-          {currentPeriodEvents?.map(event => !!event && <EventCard key={event.id} event={event} />)}
+          {currentPeriodEventsLoading
+            ? eventsCardsSkeletons.map(id => <EventCardLoading key={id} />)
+            : currentPeriodEvents?.map(
+                event => !!event && <EventCard key={event.id} event={event} />,
+              )}
         </List>
       </Section>
       <Section title="Préférences">
-        <List verticalPadding gap="xsmall">
-          {userPreferences?.map(
-            preference =>
-              !!preference?.type && (
-                <Div key={preference.id} row spaceBetween>
-                  <Text>{USER_PREFERENCES_LABELS[preference.type]}</Text>
-                  <Text weight="bold">{preference.value}</Text>
+        <List verticalPadding gap="small">
+          {userPreferencesLoading
+            ? preferencesSkeletons.map(id => (
+                <Div key={id} row spaceBetween>
+                  <Div row gap="small">
+                    <Skeleton width={20} />
+                    <Skeleton width={150} />
+                  </Div>
+                  <Skeleton width={35} />
                 </Div>
-              ),
-          )}
+              ))
+            : userPreferences?.map(
+                preference =>
+                  !!preference?.type && (
+                    <Div key={preference.id} row spaceBetween>
+                      <Text>{USER_PREFERENCES_LABELS[preference.type]}</Text>
+                      <Text weight="bold">{preference.value}</Text>
+                    </Div>
+                  ),
+              )}
         </List>
       </Section>
     </>

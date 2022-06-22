@@ -7,15 +7,33 @@ export type TDivProps = {
   spaceBetween?: boolean
   fullWidth?: boolean
   center?: boolean
+  start?: boolean
   gap?: keyof TTheme['spacing']['gap']
   percentWidth?: number
+}
+
+const getFlexDirection = ({
+  center,
+  start,
+  spaceBetween,
+}: Pick<TDivProps, 'center' | 'start' | 'spaceBetween'>) => {
+  if (center) {
+    return 'center'
+  }
+  if (spaceBetween) {
+    return 'space-between'
+  }
+  if (start) {
+    return 'flex-start'
+  }
+  return 'center'
 }
 
 export const Div = styled.div<TDivProps>`
   display: flex;
   flex-direction: ${p => (p.row ? 'row' : 'column')};
-  justify-content: ${p => (p.spaceBetween ? 'space-between' : 'center')};
-  align-content: ${p => (p.spaceBetween ? 'space-between' : 'center')};
+  justify-content: ${p => getFlexDirection(p)};
+  align-content: ${p => getFlexDirection(p)};
 
   ${p => p.center && `justify-items: center; align-items: center;`}
   ${p => p.percentWidth && `width: ${p.percentWidth}%;`}

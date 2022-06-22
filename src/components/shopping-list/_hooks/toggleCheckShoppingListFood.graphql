@@ -1,0 +1,9 @@
+mutation ToggleCheckShoppingListFood($toggleCheckShoppingListFoodId: ID) {
+  toggleCheckShoppingListFood(id: $toggleCheckShoppingListFoodId) {
+    shoppingListFood {
+      id
+      shoppingListId
+      isChecked
+    }
+  }
+}

@@ -1,18 +1,15 @@
 import { useFoodItemsQuery } from 'generated/gmd22-api'
-import Image from 'next/image'
 import router from 'next/router'
 import { FC } from 'react'
 
-import EditIcon from '@src/../public/img/icons/edit.svg'
 import NextIcon from '@src/../public/img/icons/next.svg'
-import PreviousIcon from '@src/../public/img/icons/previous.svg'
 import PancakeImg from '@src/../public/img/pancake.jpeg'
 import { FOOD_TYPE_TO_STR } from '@src/constants/food'
 
-import { Div } from '../common/div/Div.styled'
 import ListItem from '../common/list/ListItem'
-import Text from '../common/text/Text'
+import { Header } from '../header/Header'
 import { StyledList } from './Food.styled'
+
 const Food: FC = () => {
   const { /*loading,*/ data: foodItemsData } = useFoodItemsQuery()
   // const [mutate, { loading: deleteLoading }] = useDeleteFoodItemMutation({
@@ -22,11 +19,7 @@ const Food: FC = () => {
 
   return (
     <>
-      <Div row spaceBetween fullWidth>
-        <Image src={PreviousIcon} height={20} width={20} />
-        <Text weight="bold">Ingrédients</Text>
-        <Image src={EditIcon} height={25} width={25} />
-      </Div>
+      <Header title="Ingrédients" />
       <StyledList>
         {foodItems?.map(
           item =>

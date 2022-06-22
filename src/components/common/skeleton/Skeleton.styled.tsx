@@ -9,7 +9,7 @@ export const Skeleton = styled.div<{
 }>`
   display: inline-flex;
   position: relative;
-  height: ${p => `${p.height ?? 20}px`};
+  height: ${p => `${p.height ?? 15}px`};
   width: ${p => `${p.width ?? 50}px`};
   ${p => p.flex && `width: 100%`};
   background: ${p => p.theme.color['background']};

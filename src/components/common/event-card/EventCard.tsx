@@ -11,11 +11,10 @@ import { Skeleton } from '../skeleton/Skeleton.styled'
 import Text from '../text/Text'
 import { StyledCardSection, StyledEventCard, StyledHeader } from './EventCard.styled'
 
-type TEventCardProps = {
+interface TEventCardProps {
   event: Pick<IEvent, 'id' | 'type' | 'date'>
   onClick?: VoidFunction
 }
-
 const EventCard: FC<TEventCardProps> = ({ event, onClick }) => {
   const isCompleted = useMemo(() => isPastEvent(event.date), [event.date])
   const eventDateDetails = useMemo(() => {
@@ -40,7 +39,7 @@ const EventCard: FC<TEventCardProps> = ({ event, onClick }) => {
     <StyledEventCard onClick={onClick} backgroundImage={eventImage}>
       <StyledCardSection isCompleted={isCompleted}>
         <StyledHeader>
-          {!!event?.type ? <h4>{EVENT_TYPE_LABELS[event.type]}</h4> : <Skeleton />}
+          <h4>{!!event.type && EVENT_TYPE_LABELS[event.type]}</h4>
           <Image src={CheckboxIcon} width={20} height={20} />
         </StyledHeader>
         <Text size="very-small" color={isCompleted ? 'text-dark' : 'text-lighter'}>
@@ -50,5 +49,17 @@ const EventCard: FC<TEventCardProps> = ({ event, onClick }) => {
     </StyledEventCard>
   )
 }
+
+export const EventCardLoading: FC = () => (
+  <StyledEventCard>
+    <StyledCardSection>
+      <StyledHeader>
+        <Skeleton width={80} />
+        <Skeleton width={20} height={20} />
+      </StyledHeader>
+      <Skeleton />
+    </StyledCardSection>
+  </StyledEventCard>
+)
 
 export default EventCard

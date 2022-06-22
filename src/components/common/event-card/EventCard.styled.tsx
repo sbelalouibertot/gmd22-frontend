@@ -3,18 +3,20 @@ import { StaticImageData } from 'next/image'
 import styled from '@emotion/styled'
 
 export type TStyledEventCardProps = {
-  backgroundImage: StaticImageData
+  backgroundImage?: StaticImageData
 }
 export const StyledEventCard = styled.div<TStyledEventCardProps>`
   width: 153px;
   height: 175px;
   filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.08));
   border-radius: ${p => p.theme.border.radius.large}px;
-  background: url(${p => p.backgroundImage.src}) ${p => p.theme.color['background-dark']};
+  background-image: ${p => !!p.backgroundImage && `url(${p.backgroundImage.src})`};
+  background-color: ${p => p.theme.color['background-dark']};
   background-size: cover;
   background-repeat: no-repeat;
   -webkit-background-position: 0px 100%;
   background-position: bottom;
+  position: relative;
 `
 
 export type TStyledCardSectionProps = {
@@ -26,6 +28,7 @@ export const StyledCardSection = styled.section<TStyledCardSectionProps>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
   bottom: 0;
   height: 64px;
   width: 100%;
