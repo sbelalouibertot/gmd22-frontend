@@ -11,6 +11,7 @@ export const StyledMainContainer = styled.main`
   position: absolute;
   overflow-y: scroll;
   width: 100%;
+  max-width: 100%;
   top: 0;
   padding: ${p => p.theme.spacing.padding.large}px;
   gap: ${p => p.theme.spacing.gap.medium}px;
