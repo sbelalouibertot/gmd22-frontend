@@ -20,3 +20,5 @@ export const FOOD_TYPE_TO_STR: Record<IFoodType, string> = {
   SODAS: 'Sodas',
   VEGETABLE: 'Légumes',
 }
+
+export const COOK_EMOJIS = ['👨‍🍳', '🤌', '👩‍🍳']

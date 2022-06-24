@@ -6,7 +6,7 @@ export const StyledNavbarContainer = styled.nav`
   background-color: ${p => p.theme.color['background-light']};
   height: 65px;
   position: absolute;
-  filter: drop-shadow(0px 4px 20px rgba(0, 0, 0, 0.1));
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   bottom: 0;
   width: 100%;
   display: flex;

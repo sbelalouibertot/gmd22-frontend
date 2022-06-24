@@ -7,12 +7,12 @@ export type TStyledListProps = {
   forceScrollVisibility?: boolean
   verticalPadding?: boolean
   horizontalPadding?: boolean
-  gap?: keyof TTheme['spacing']['gap']
+  gap?: keyof TTheme['spacing']['gap'] | number
 }
 export const StyledList = styled.ul<TStyledListProps>`
   display: flex;
   flex-direction: ${p => (p.horizontal ? 'row' : 'column')};
-  gap: ${p => p.theme.spacing.gap[p.gap ?? 'medium']}px;
+  gap: ${p => (typeof p.gap === 'number' ? p.gap : p.theme.spacing.gap[p.gap ?? 'medium'])}px;
 
   ${p =>
     p.verticalPadding &&

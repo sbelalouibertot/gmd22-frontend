@@ -4,6 +4,7 @@ import { TTheme } from '@src/styles/design-system/theme'
 
 export type TDivProps = {
   row?: boolean
+  flex?: boolean
   spaceBetween?: boolean
   fullWidth?: boolean
   center?: boolean
@@ -35,6 +36,7 @@ export const Div = styled.div<TDivProps>`
   justify-content: ${p => getFlexDirection(p)};
   align-content: ${p => getFlexDirection(p)};
 
+  ${p => p.flex && `flex:1;`}
   ${p => p.center && `justify-items: center; align-items: center;`}
   ${p => p.percentWidth && `width: ${p.percentWidth}%;`}
   ${p => p.fullWidth && `width: 100%;`}

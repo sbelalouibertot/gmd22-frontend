@@ -16,6 +16,7 @@ export const spacing = {
     small: 8,
     medium: 16,
     large: 24,
+    'very-large': 40,
   },
 }
 
