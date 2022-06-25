@@ -9,10 +9,11 @@ import { Div } from '../common/div/Div.styled'
 import Text from '../common/text/Text'
 
 type THeader = {
-  title: string
+  title?: string
+  edit?: boolean
 }
 
-export const Header: FC<THeader> = ({ title }) => {
+export const Header: FC<THeader> = ({ title, edit }) => {
   const router = useRouter()
 
   const onPreviousIconClicked = useCallback(() => {
@@ -21,9 +22,11 @@ export const Header: FC<THeader> = ({ title }) => {
 
   return (
     <Div row spaceBetween fullWidth>
-      <Image src={PreviousIcon} height={20} width={20} onClick={onPreviousIconClicked} />
-      <Text weight="bold">{title}</Text>
-      <Image src={EditIcon} height={25} width={25} />
+      <Div percentWidth={10}>
+        <Image src={PreviousIcon} height={20} width={20} onClick={onPreviousIconClicked} />
+      </Div>
+      {!!title && <Text weight="bold">{title}</Text>}
+      <Div percentWidth={10}>{edit && <Image src={EditIcon} height={25} width={25} />}</Div>
     </Div>
   )
 }

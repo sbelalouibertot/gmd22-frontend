@@ -11,6 +11,7 @@ export type TDivProps = {
   start?: boolean
   gap?: keyof TTheme['spacing']['gap']
   percentWidth?: number
+  percentHeight?: number
 }
 
 const getFlexDirection = ({
@@ -39,6 +40,7 @@ export const Div = styled.div<TDivProps>`
   ${p => p.flex && `flex:1;`}
   ${p => p.center && `justify-items: center; align-items: center;`}
   ${p => p.percentWidth && `width: ${p.percentWidth}%;`}
+  ${p => p.percentWidth && `height: ${p.percentHeight}%;`}
   ${p => p.fullWidth && `width: 100%;`}
   ${p => p.gap && `gap: ${p.theme.spacing.gap[p.gap]}px;`}
 `

@@ -2,6 +2,8 @@ import Image from 'next/image'
 
 import styled from '@emotion/styled'
 
+import { Div } from '../common/div/Div.styled'
+
 export const StyledNavbarContainer = styled.nav`
   background-color: ${p => p.theme.color['background-light']};
   height: 65px;
@@ -12,21 +14,26 @@ export const StyledNavbarContainer = styled.nav`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  z-index: 100;
 `
 
-export const StyledTabsContainer = styled.div`
+export const StyledTabsContainer = styled(Div)`
   display: flex;
 `
 
-export const StyledTab = styled.div`
-  display: flex;
-  width: 70px;
+export const StyledTab = styled(Div)`
   height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `
 
 export const StyledTabIcon = styled(Image)<{ selected: boolean }>`
   ${p => p.selected && `filter: invert(1);`}
+`
+
+export const StyledMainTabIconContainer = styled(Div)`
+  height: 72px;
+  width: 72px;
+  bottom: 15px;
+  background-color: white;
+  position: absolute;
+  border-radius: 50%;
 `

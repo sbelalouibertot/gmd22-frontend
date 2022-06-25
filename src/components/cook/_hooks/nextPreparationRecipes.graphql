@@ -1,0 +1,25 @@
+query NextPreparationRecipes() {
+  nextEvent(type: PREPARATION) {
+    event {
+      id
+      date
+      recipes {
+        id
+        name
+        preparationDuration
+        cookingDuration
+        recipeInstructions {
+          id
+          description
+          recipeId
+          duration
+          foodItems {
+            id
+            name
+            type
+          }
+        }
+      }
+    }
+  }
+}

@@ -12,14 +12,6 @@ const nextConfig = {
     PRODUCTION_HOST_IP: process.env.PRODUCTION_HOST_IP,
     PRODUCTION_API_PORT: process.env.PRODUCTION_API_PORT,
    },
-  webpack: config => {
-    config.module.rules.push({
-      test: /\.(graphql|gql)$/,
-      exclude: /node_modules/,
-      loader: 'graphql-tag/loader',
-    })
-    return config
-  },
   webpackDevMiddleware: config => {
     return config
   },

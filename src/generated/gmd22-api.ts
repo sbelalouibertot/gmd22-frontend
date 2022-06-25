@@ -117,7 +117,8 @@ export type IMutationNewRecipeArgs = {
 
 
 export type IMutationReplaceRecipeArgs = {
-  recipeEventId: Scalars['ID']
+  recipeId: Scalars['ID'],
+  eventId: Scalars['ID']
 };
 
 
@@ -340,6 +341,34 @@ export type IUserPreferenceType =
   'MAX_RECIPES_PER_WEEK' |
   'SHOPPING_WEEKS_INTERVAL';
 
+export type INextPreparationRecipesQueryVariables = {
+  type?: Maybe<IEventType>
+};
+
+
+export type INextPreparationRecipesQueryData = (
+  { __typename?: 'Query' }
+  & { nextEvent: Maybe<(
+    { __typename?: 'EventOutput' }
+    & { event: Maybe<(
+      { __typename?: 'Event' }
+      & Pick<IEvent, 'id' | 'date'>
+      & { recipes: Maybe<Array<Maybe<(
+        { __typename?: 'Recipe' }
+        & Pick<IRecipe, 'id' | 'name' | 'preparationDuration' | 'cookingDuration'>
+        & { recipeInstructions: Maybe<Array<Maybe<(
+          { __typename?: 'RecipeInstruction' }
+          & Pick<IRecipeInstruction, 'id' | 'description' | 'recipeId' | 'duration'>
+          & { foodItems: Maybe<Array<Maybe<(
+            { __typename?: 'Food' }
+            & Pick<IFood, 'id' | 'name' | 'type'>
+          )>>> }
+        )>>> }
+      )>>> }
+    )> }
+  )> }
+);
+
 export type IDeleteFoodItemMutationVariables = {
   id: Scalars['String']
 };
@@ -498,12 +527,13 @@ export type IRecipeQueryData = (
   )> }
 );
 
-export type IMutationMutationVariables = {
-  recipeEventId: Scalars['ID']
+export type IReplaceRecipeMutationVariables = {
+  recipeId: Scalars['ID'],
+  eventId: Scalars['ID']
 };
 
 
-export type IMutationMutationData = (
+export type IReplaceRecipeMutationData = (
   { __typename?: 'Mutation' }
   & { replaceRecipe: Maybe<(
     { __typename?: 'RecipeEventOutput' }
@@ -581,6 +611,59 @@ export type IToggleCheckShoppingListFoodMutationData = (
 );
 
 
+export const NextPreparationRecipesDocument = gql`
+    query NextPreparationRecipes($type: EventType) {
+  nextEvent(type: $type) {
+    event {
+      id
+      date
+      recipes {
+        id
+        name
+        preparationDuration
+        cookingDuration
+        recipeInstructions {
+          id
+          description
+          recipeId
+          duration
+          foodItems {
+            id
+            name
+            type
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useNextPreparationRecipesQuery__
+ *
+ * To run a query within a React component, call `useNextPreparationRecipesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNextPreparationRecipesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNextPreparationRecipesQuery({
+ *   variables: {
+ *      type: // value for 'type'
+ *   },
+ * });
+ */
+export function useNextPreparationRecipesQuery(baseOptions?: Apollo.QueryHookOptions<INextPreparationRecipesQueryData, INextPreparationRecipesQueryVariables>) {
+        return Apollo.useQuery<INextPreparationRecipesQueryData, INextPreparationRecipesQueryVariables>(NextPreparationRecipesDocument, baseOptions);
+      }
+export function useNextPreparationRecipesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<INextPreparationRecipesQueryData, INextPreparationRecipesQueryVariables>) {
+          return Apollo.useLazyQuery<INextPreparationRecipesQueryData, INextPreparationRecipesQueryVariables>(NextPreparationRecipesDocument, baseOptions);
+        }
+export type NextPreparationRecipesQueryHookResult = ReturnType<typeof useNextPreparationRecipesQuery>;
+export type NextPreparationRecipesLazyQueryHookResult = ReturnType<typeof useNextPreparationRecipesLazyQuery>;
+export type NextPreparationRecipesQueryResult = Apollo.QueryResult<INextPreparationRecipesQueryData, INextPreparationRecipesQueryVariables>;
 export const DeleteFoodItemDocument = gql`
     mutation deleteFoodItem($id: String!) {
   deleteFoodItem(id: $id) {
@@ -936,9 +1019,9 @@ export function useRecipeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IRe
 export type RecipeQueryHookResult = ReturnType<typeof useRecipeQuery>;
 export type RecipeLazyQueryHookResult = ReturnType<typeof useRecipeLazyQuery>;
 export type RecipeQueryResult = Apollo.QueryResult<IRecipeQueryData, IRecipeQueryVariables>;
-export const MutationDocument = gql`
-    mutation Mutation($recipeEventId: ID!) {
-  replaceRecipe(recipeEventId: $recipeEventId) {
+export const ReplaceRecipeDocument = gql`
+    mutation ReplaceRecipe($recipeId: ID!, $eventId: ID!) {
+  replaceRecipe(recipeId: $recipeId, eventId: $eventId) {
     recipeEvent {
       id
       recipeId
@@ -947,31 +1030,32 @@ export const MutationDocument = gql`
   }
 }
     `;
-export type IMutationMutationFn = Apollo.MutationFunction<IMutationMutationData, IMutationMutationVariables>;
+export type IReplaceRecipeMutationFn = Apollo.MutationFunction<IReplaceRecipeMutationData, IReplaceRecipeMutationVariables>;
 
 /**
- * __useMutationMutation__
+ * __useReplaceRecipeMutation__
  *
- * To run a mutation, you first call `useMutationMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useMutationMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useReplaceRecipeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReplaceRecipeMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [mutationMutation, { data, loading, error }] = useMutationMutation({
+ * const [replaceRecipeMutation, { data, loading, error }] = useReplaceRecipeMutation({
  *   variables: {
- *      recipeEventId: // value for 'recipeEventId'
+ *      recipeId: // value for 'recipeId'
+ *      eventId: // value for 'eventId'
  *   },
  * });
  */
-export function useMutationMutation(baseOptions?: Apollo.MutationHookOptions<IMutationMutationData, IMutationMutationVariables>) {
-        return Apollo.useMutation<IMutationMutationData, IMutationMutationVariables>(MutationDocument, baseOptions);
+export function useReplaceRecipeMutation(baseOptions?: Apollo.MutationHookOptions<IReplaceRecipeMutationData, IReplaceRecipeMutationVariables>) {
+        return Apollo.useMutation<IReplaceRecipeMutationData, IReplaceRecipeMutationVariables>(ReplaceRecipeDocument, baseOptions);
       }
-export type MutationMutationHookResult = ReturnType<typeof useMutationMutation>;
-export type MutationMutationResult = Apollo.MutationResult<IMutationMutationData>;
-export type MutationMutationOptions = Apollo.BaseMutationOptions<IMutationMutationData, IMutationMutationVariables>;
+export type ReplaceRecipeMutationHookResult = ReturnType<typeof useReplaceRecipeMutation>;
+export type ReplaceRecipeMutationResult = Apollo.MutationResult<IReplaceRecipeMutationData>;
+export type ReplaceRecipeMutationOptions = Apollo.BaseMutationOptions<IReplaceRecipeMutationData, IReplaceRecipeMutationVariables>;
 export const CurrentShoppingListEventDocument = gql`
     query CurrentShoppingListEvent {
   events(onlyCurrentPeriod: true, type: SHOPPING) {
