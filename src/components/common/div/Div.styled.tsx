@@ -8,7 +8,7 @@ export type TDivProps = {
   spaceBetween?: boolean
   fullWidth?: boolean
   center?: boolean
-  start?: boolean
+  flexStart?: boolean
   gap?: keyof TTheme['spacing']['gap']
   percentWidth?: number
   percentHeight?: number
@@ -16,16 +16,16 @@ export type TDivProps = {
 
 const getFlexDirection = ({
   center,
-  start,
+  flexStart,
   spaceBetween,
-}: Pick<TDivProps, 'center' | 'start' | 'spaceBetween'>) => {
+}: Pick<TDivProps, 'center' | 'flexStart' | 'spaceBetween'>) => {
   if (center) {
     return 'center'
   }
   if (spaceBetween) {
     return 'space-between'
   }
-  if (start) {
+  if (flexStart) {
     return 'flex-start'
   }
   return 'center'

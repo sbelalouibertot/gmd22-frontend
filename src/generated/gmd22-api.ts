@@ -19,12 +19,12 @@ export type Scalars = {
 
 export type IEvent = {
    __typename?: 'Event',
-  id?: Maybe<Scalars['String']>,
-  type?: Maybe<IEventType>,
+  id: Scalars['String'],
+  type: IEventType,
   userId?: Maybe<Scalars['String']>,
-  date?: Maybe<Scalars['DateTime']>,
+  date: Scalars['DateTime'],
   nextRecipe?: Maybe<IRecipe>,
-  recipes?: Maybe<Array<Maybe<IRecipe>>>,
+  recipes?: Maybe<Array<IRecipe>>,
   shoppingList?: Maybe<IShoppingList>,
 };
 
@@ -35,7 +35,7 @@ export type IEventOutput = {
 
 export type IEventsOutput = {
    __typename?: 'EventsOutput',
-  events?: Maybe<Array<Maybe<IEvent>>>,
+  events: Array<IEvent>,
 };
 
 export type IEventType = 
@@ -152,7 +152,7 @@ export type IPaginationOutput = {
 export type IQuery = {
    __typename?: 'Query',
   event?: Maybe<IEventOutput>,
-  events?: Maybe<IEventsOutput>,
+  events: IEventsOutput,
   nextEvent?: Maybe<IEventOutput>,
   foodItem?: Maybe<IFoodItemOutput>,
   foodItems?: Maybe<IFoodItemsOutput>,
@@ -221,10 +221,10 @@ export type IQueryUserPreferencesArgs = {
 
 export type IRecipe = {
    __typename?: 'Recipe',
-  id?: Maybe<Scalars['String']>,
-  name?: Maybe<Scalars['String']>,
-  preparationDuration?: Maybe<Scalars['Int']>,
-  cookingDuration?: Maybe<Scalars['Int']>,
+  id: Scalars['String'],
+  name: Scalars['String'],
+  preparationDuration: Scalars['Int'],
+  cookingDuration: Scalars['Int'],
   recipeInstructions?: Maybe<Array<Maybe<IRecipeInstruction>>>,
 };
 
@@ -268,9 +268,9 @@ export type IRecipesOutput = {
 
 export type IShoppingList = {
    __typename?: 'ShoppingList',
-  id?: Maybe<Scalars['String']>,
-  name?: Maybe<Scalars['String']>,
-  shoppingListItems?: Maybe<Array<Maybe<IShoppingListFood>>>,
+  id: Scalars['String'],
+  name: Scalars['String'],
+  shoppingListItems: Array<Maybe<IShoppingListFood>>,
 };
 
 export type IShoppingListEvent = {
@@ -341,9 +341,7 @@ export type IUserPreferenceType =
   'MAX_RECIPES_PER_WEEK' |
   'SHOPPING_WEEKS_INTERVAL';
 
-export type INextPreparationRecipesQueryVariables = {
-  type?: Maybe<IEventType>
-};
+export type INextPreparationRecipesQueryVariables = {};
 
 
 export type INextPreparationRecipesQueryData = (
@@ -353,7 +351,7 @@ export type INextPreparationRecipesQueryData = (
     & { event: Maybe<(
       { __typename?: 'Event' }
       & Pick<IEvent, 'id' | 'date'>
-      & { recipes: Maybe<Array<Maybe<(
+      & { recipes: Maybe<Array<(
         { __typename?: 'Recipe' }
         & Pick<IRecipe, 'id' | 'name' | 'preparationDuration' | 'cookingDuration'>
         & { recipeInstructions: Maybe<Array<Maybe<(
@@ -364,7 +362,7 @@ export type INextPreparationRecipesQueryData = (
             & Pick<IFood, 'id' | 'name' | 'type'>
           )>>> }
         )>>> }
-      )>>> }
+      )>> }
     )> }
   )> }
 );
@@ -424,17 +422,17 @@ export type ICurrentPeriodEventsQueryVariables = {};
 
 export type ICurrentPeriodEventsQueryData = (
   { __typename?: 'Query' }
-  & { events: Maybe<(
+  & { events: (
     { __typename?: 'EventsOutput' }
-    & { events: Maybe<Array<Maybe<(
+    & { events: Array<(
       { __typename?: 'Event' }
       & Pick<IEvent, 'id' | 'type' | 'date'>
-      & { recipes: Maybe<Array<Maybe<(
+      & { recipes: Maybe<Array<(
         { __typename?: 'Recipe' }
         & Pick<IRecipe, 'id' | 'name'>
-      )>>> }
-    )>>> }
-  )> }
+      )>> }
+    )> }
+  ) }
 );
 
 export type INextRecipeEventQueryVariables = {};
@@ -447,10 +445,10 @@ export type INextRecipeEventQueryData = (
     & { event: Maybe<(
       { __typename?: 'Event' }
       & Pick<IEvent, 'id' | 'type' | 'date'>
-      & { recipes: Maybe<Array<Maybe<(
+      & { recipes: Maybe<Array<(
         { __typename?: 'Recipe' }
         & Pick<IRecipe, 'id' | 'name' | 'preparationDuration' | 'cookingDuration'>
-      )>>> }
+      )>> }
     )> }
   )> }
 );
@@ -469,20 +467,25 @@ export type IUserPreferencesQueryData = (
   )> }
 );
 
-export type IDateEventsQueryVariables = {
-  date?: Maybe<Scalars['DateTime']>
-};
+export type IDateEventsQueryVariables = {};
 
 
 export type IDateEventsQueryData = (
   { __typename?: 'Query' }
-  & { events: Maybe<(
+  & { events: (
     { __typename?: 'EventsOutput' }
-    & { events: Maybe<Array<Maybe<(
+    & { events: Array<(
       { __typename?: 'Event' }
       & Pick<IEvent, 'id' | 'type' | 'date'>
-    )>>> }
-  )> }
+      & { recipes: Maybe<Array<(
+        { __typename?: 'Recipe' }
+        & Pick<IRecipe, 'id' | 'name' | 'preparationDuration' | 'cookingDuration'>
+      )>>, shoppingList: Maybe<(
+        { __typename?: 'ShoppingList' }
+        & Pick<IShoppingList, 'id' | 'name'>
+      )> }
+    )> }
+  ) }
 );
 
 export type ICurrentPeriodRecipeEventsQueryVariables = {};
@@ -490,17 +493,17 @@ export type ICurrentPeriodRecipeEventsQueryVariables = {};
 
 export type ICurrentPeriodRecipeEventsQueryData = (
   { __typename?: 'Query' }
-  & { events: Maybe<(
+  & { events: (
     { __typename?: 'EventsOutput' }
-    & { events: Maybe<Array<Maybe<(
+    & { events: Array<(
       { __typename?: 'Event' }
       & Pick<IEvent, 'id'>
-      & { recipes: Maybe<Array<Maybe<(
+      & { recipes: Maybe<Array<(
         { __typename?: 'Recipe' }
         & Pick<IRecipe, 'id' | 'name' | 'preparationDuration' | 'cookingDuration'>
-      )>>> }
-    )>>> }
-  )> }
+      )>> }
+    )> }
+  ) }
 );
 
 export type IRecipeQueryVariables = {
@@ -549,25 +552,25 @@ export type ICurrentShoppingListEventQueryVariables = {};
 
 export type ICurrentShoppingListEventQueryData = (
   { __typename?: 'Query' }
-  & { events: Maybe<(
+  & { events: (
     { __typename?: 'EventsOutput' }
-    & { events: Maybe<Array<Maybe<(
+    & { events: Array<(
       { __typename?: 'Event' }
       & Pick<IEvent, 'id'>
       & { shoppingList: Maybe<(
         { __typename?: 'ShoppingList' }
         & Pick<IShoppingList, 'id' | 'name'>
-        & { shoppingListItems: Maybe<Array<Maybe<(
+        & { shoppingListItems: Array<Maybe<(
           { __typename?: 'ShoppingListFood' }
           & Pick<IShoppingListFood, 'id' | 'shoppingListId' | 'foodId' | 'isChecked'>
           & { food: Maybe<(
             { __typename?: 'Food' }
             & Pick<IFood, 'id' | 'name' | 'type'>
           )> }
-        )>>> }
+        )>> }
       )> }
-    )>>> }
-  )> }
+    )> }
+  ) }
 );
 
 export type IShoppingListQueryVariables = {
@@ -582,14 +585,14 @@ export type IShoppingListQueryData = (
     & { shoppingList: Maybe<(
       { __typename?: 'ShoppingList' }
       & Pick<IShoppingList, 'id' | 'name'>
-      & { shoppingListItems: Maybe<Array<Maybe<(
+      & { shoppingListItems: Array<Maybe<(
         { __typename?: 'ShoppingListFood' }
         & Pick<IShoppingListFood, 'id' | 'shoppingListId' | 'foodId' | 'isChecked'>
         & { food: Maybe<(
           { __typename?: 'Food' }
           & Pick<IFood, 'id' | 'name' | 'type'>
         )> }
-      )>>> }
+      )>> }
     )> }
   )> }
 );
@@ -612,8 +615,8 @@ export type IToggleCheckShoppingListFoodMutationData = (
 
 
 export const NextPreparationRecipesDocument = gql`
-    query NextPreparationRecipes($type: EventType) {
-  nextEvent(type: $type) {
+    query NextPreparationRecipes {
+  nextEvent(type: PREPARATION) {
     event {
       id
       date
@@ -651,7 +654,6 @@ export const NextPreparationRecipesDocument = gql`
  * @example
  * const { data, loading, error } = useNextPreparationRecipesQuery({
  *   variables: {
- *      type: // value for 'type'
  *   },
  * });
  */
@@ -894,12 +896,22 @@ export type UserPreferencesQueryHookResult = ReturnType<typeof useUserPreference
 export type UserPreferencesLazyQueryHookResult = ReturnType<typeof useUserPreferencesLazyQuery>;
 export type UserPreferencesQueryResult = Apollo.QueryResult<IUserPreferencesQueryData, IUserPreferencesQueryVariables>;
 export const DateEventsDocument = gql`
-    query DateEvents($date: DateTime) {
-  events(date: $date) {
+    query DateEvents {
+  events(onlyCurrentPeriod: true) {
     events {
       id
       type
       date
+      recipes {
+        id
+        name
+        preparationDuration
+        cookingDuration
+      }
+      shoppingList {
+        id
+        name
+      }
     }
   }
 }
@@ -917,7 +929,6 @@ export const DateEventsDocument = gql`
  * @example
  * const { data, loading, error } = useDateEventsQuery({
  *   variables: {
- *      date: // value for 'date'
  *   },
  * });
  */

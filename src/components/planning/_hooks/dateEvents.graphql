@@ -1,9 +1,19 @@
-query DateEvents($date: DateTime) {
-  events(date: $date) {
+query DateEvents {
+  events(onlyCurrentPeriod: true) {
     events {
       id
       type
       date
+      recipes {
+        id
+        name
+        preparationDuration
+        cookingDuration
+      }
+      shoppingList {
+        id
+        name
+      }
     }
   }
 }

@@ -2,7 +2,9 @@ import Image from 'next/image'
 
 import styled from '@emotion/styled'
 
-export const StyledListItem = styled.div`
+import { Div } from '../div/Div.styled'
+
+export const StyledListItem = styled(Div)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;

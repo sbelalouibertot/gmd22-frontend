@@ -43,7 +43,7 @@ const FoodItem: FC = () => {
         <StyledTimelineList gap={120}>
           {instructionsSkeletons.map(index => (
             <Div key={index} gap="large" row fullWidth center>
-              <StyledRecipeItemContainer start>
+              <StyledRecipeItemContainer flexStart>
                 <StyledRecipeItem>{index + 1}</StyledRecipeItem>
               </StyledRecipeItemContainer>
               <Div flex>
@@ -68,7 +68,7 @@ const FoodItem: FC = () => {
       <StyledTimelineList gap={120}>
         {recipeInstructions?.map((instruction, index) => (
           <Div key={instruction?.id} gap="large" row fullWidth center>
-            <StyledRecipeItemContainer start>
+            <StyledRecipeItemContainer flexStart>
               <StyledRecipeItem>{index + 1}</StyledRecipeItem>
             </StyledRecipeItemContainer>
             <Div flex>

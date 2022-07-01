@@ -1,4 +1,4 @@
-query NextPreparationRecipes() {
+query NextPreparationRecipes {
   nextEvent(type: PREPARATION) {
     event {
       id

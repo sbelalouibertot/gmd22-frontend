@@ -31,3 +31,28 @@ export const getDiffDateDetails = (date: Date | string): string => {
     return 'Date inconnue'
   }
 }
+
+export const getStartOfDay = (date: Date | string = new Date()): Date =>
+  dayjs
+    .utc(date)
+    .startOf('day')
+    .toDate()
+
+export const generateDays = (
+  startDate: Date | string,
+  endDate: Date | string,
+  maxDaysNb = 60,
+): { date: Date }[] => {
+  const _startDate = dayjs.utc(startDate)
+  const daysNb = Math.abs(_startDate.diff(endDate, 'days'))
+
+  if (!daysNb || daysNb > maxDaysNb) {
+    return []
+  }
+  const days = [...Array(daysNb).keys()].map(dayIndex => {
+    return {
+      date: _startDate.add(dayIndex, 'days').toDate(),
+    }
+  })
+  return days
+}

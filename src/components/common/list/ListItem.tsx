@@ -9,10 +9,12 @@ import { StyledItemAvatar, StyledListItem } from './ListItem.styled'
 type TListItemProps = {
   title: string
   avatar: StaticImageData
-  details: string
-  actionIcon: StaticImageData
+  details?: string
+  actionIcon?: StaticImageData
   onClick: VoidFunction
-  onActionClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  onActionClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  percentWidth?: number
+  small?: boolean
 }
 
 const ListItem: FC<TListItemProps> = ({
@@ -22,22 +24,26 @@ const ListItem: FC<TListItemProps> = ({
   actionIcon,
   onClick,
   onActionClick,
+  percentWidth,
+  small,
 }) => {
   return (
-    <StyledListItem onClick={onClick}>
+    <StyledListItem onClick={onClick} percentWidth={percentWidth}>
       <Div percentWidth={16}>
         {!!avatar && (
           <StyledItemAvatar src={avatar} width={45} height={45} objectFit="cover" layout="fixed" />
         )}
       </Div>
       <Div spaceBetween percentWidth={60} gap="small">
-        <Text size="small">{title}</Text>
+        <Text size={small ? 'very-small' : 'small'}>{title}</Text>
         <Text size="very-small" color="text-lighter">
           {details}
         </Text>
       </Div>
       <Div percentWidth={8}>
-        {!!actionIcon && <Image src={actionIcon} onClick={onActionClick} width={18} height={18} />}
+        {!!onActionClick && !!actionIcon && (
+          <Image src={actionIcon} onClick={onActionClick} width={18} height={18} />
+        )}
       </Div>
     </StyledListItem>
   )
@@ -49,11 +55,11 @@ export const ListItemLoading = () => (
       <Skeleton width={45} height={45} />
     </Div>
     <Div spaceBetween percentWidth={60} gap="medium">
-      <Div start gap="small">
+      <Div flexStart gap="small">
         <Skeleton width={130} />
         <Skeleton width={50} />
       </Div>
-      <Div row start gap="small">
+      <Div row flexStart gap="small">
         <Skeleton height={15} width={40} />
         <Skeleton height={15} width={40} />
       </Div>
