@@ -21,9 +21,9 @@ export const getEventsMainEmoji = (eventTypes: IEventType[]): string | undefined
 export const getEventTitle = (eventType: IEventType): string | undefined => {
   switch (eventType) {
     case 'PERIOD_START':
-      return 'Ça commence'
+      return 'Ça commence 🤫'
     case 'PERIOD_END':
-      return "C'est terminé"
+      return "C'est terminé 🏆"
   }
   return
 }

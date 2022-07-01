@@ -249,8 +249,8 @@ export type IRecipeInput = {
 
 export type IRecipeInstruction = {
    __typename?: 'RecipeInstruction',
-  id?: Maybe<Scalars['ID']>,
-  description?: Maybe<Scalars['String']>,
+  id: Scalars['ID'],
+  description: Scalars['String'],
   recipeId?: Maybe<Scalars['ID']>,
   duration?: Maybe<Scalars['Int']>,
   foodItems?: Maybe<Array<Maybe<IFood>>>,

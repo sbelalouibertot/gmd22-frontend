@@ -1,7 +1,7 @@
 import { Page } from 'utils/libs/nextjs/types'
 
 import CookContainer from '@src/components/cook/CookContainer'
-import CookHome from '@src/components/cook/CookHome'
+import CookInstruction from '@src/components/cook/CookInstruction'
 import { FullScreenLayout } from '@src/layouts/FullScreenLayout'
 import { MainLayout } from '@src/layouts/MainLayout'
 
@@ -10,7 +10,7 @@ type Props = {}
 const CookContainerPage: Page<Props> = () => (
   <FullScreenLayout>
     <CookContainer>
-      <CookHome />
+      <CookInstruction />
     </CookContainer>
   </FullScreenLayout>
 )

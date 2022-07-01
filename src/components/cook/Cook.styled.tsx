@@ -30,10 +30,27 @@ export const StyledButton = styled.button`
   width: 220px;
   height: 52px;
 
-  bottom: 70px;
+  bottom: 40px;
   background: #cf3a47;
   border-radius: 12px;
   border: none;
   color: white;
   font-size: ${p => p.theme.text.size.regular}px;
+`
+
+export const StyledTimer = styled(Div)`
+  background-color: ${p => p.theme.color['border-dark']};
+  color: ${p => p.theme.color['text-light']};
+  padding: ${p => p.theme.spacing.padding.xsmall}px;
+  border-radius: 10px;
+  width: 85px;
+  text-align: center;
+`
+
+export const StyledProgressionGauge = styled(Div)`
+  background-color: ${p => p.theme.color['border-dark']};
+  color: ${p => p.theme.color['text-light']};
+  padding: ${p => p.theme.spacing.padding.xsmall}px;
+  border-radius: 10px;
+  text-align: center;
 `

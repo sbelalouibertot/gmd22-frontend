@@ -204,6 +204,14 @@ const Planning: FC = () => {
           </Div>
         ))}
       </List>
+      {!loading && (!selectedDayEvents || selectedDayEvents.length === 0) && (
+        <Div center>
+          <Text size="very-big">😎</Text>
+          <Text weight="light" color="text-lighter">
+            Rien de prévu ce jour-là.
+          </Text>
+        </Div>
+      )}
     </>
   )
 }
