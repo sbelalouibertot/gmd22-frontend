@@ -32,15 +32,15 @@ export const StyledDayCardContainer = styled(Div)`
 `
 
 export const StyledEventsIndicator = styled.div`
-  background-color: ${p => p.theme.color.primary};
-  border: 1px solid ${p => p.theme.color['background-light']};
-  height: 13px;
-  width: 13px;
+  text-shadow: 0 0 5px #cccccc;
+  height: 20px;
+  width: 20px;
   z-index: 99999909999;
   border-radius: 50%;
   position: absolute;
   top: -5px;
   right: -5px;
+  text-align: center;
 `
 
 export const StyledTimelineList = styled(List)`

@@ -11,7 +11,7 @@ type TListItemProps = {
   avatar: StaticImageData
   details?: string
   actionIcon?: StaticImageData
-  onClick: VoidFunction
+  onClick?: VoidFunction
   onActionClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
   percentWidth?: number
   small?: boolean

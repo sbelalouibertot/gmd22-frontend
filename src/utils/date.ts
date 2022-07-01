@@ -44,7 +44,7 @@ export const generateDays = (
   maxDaysNb = 60,
 ): { date: Date }[] => {
   const _startDate = dayjs.utc(startDate)
-  const daysNb = Math.abs(_startDate.diff(endDate, 'days'))
+  const daysNb = Math.abs(_startDate.diff(endDate, 'days')) + 1
 
   if (!daysNb || daysNb > maxDaysNb) {
     return []
@@ -56,3 +56,5 @@ export const generateDays = (
   })
   return days
 }
+
+export const isToday = (date: Date | string) => dayjs.utc(date).isSame(new Date(), 'day')
