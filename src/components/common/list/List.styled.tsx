@@ -7,6 +7,7 @@ export type TStyledListProps = {
   forceScrollVisibility?: boolean
   verticalPadding?: boolean
   horizontalPadding?: boolean
+  fullHeight?: boolean
   gap?: keyof TTheme['spacing']['gap'] | number
 }
 export const StyledList = styled.ul<TStyledListProps>`
@@ -28,4 +29,5 @@ export const StyledList = styled.ul<TStyledListProps>`
     `overflow-y: auto; 
     margin-right: -${p.theme.spacing.margin.large}px;
     padding-right: ${p.theme.spacing.padding.medium}px;`}
+  ${p => p.fullHeight && `height: 100%;`}
 `

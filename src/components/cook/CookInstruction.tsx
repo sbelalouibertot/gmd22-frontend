@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import CookBackground from '@src/../public/img/background/cook.svg'
 
 import { Div } from '../common/div/Div.styled'
+import List from '../common/list/List'
+import Section from '../common/section/Section'
 import Text from '../common/text/Text'
 import { useCookContext } from './_hooks/useCookContext'
 import {
@@ -12,19 +14,26 @@ import {
   StyledProgressionGauge,
   StyledTimer,
 } from './Cook.styled'
+import CookInstructionCard from './CookInstructionCard'
 
-const Cook = () => {
+const CookInstruction = () => {
   const { cookPreparationState /*, cookPreparationDispatch*/ } = useCookContext()
-  //TODO: Debug why startedDate is null in cookPreparationState
-  //const { recipes } = cookPreparationState
+  const { recipes } = cookPreparationState
 
-  console.log('(instruction) cookPreparationState = ', cookPreparationState)
+  const [duration, setDuration] = useState<null | number>(null)
 
-  const [duration, setDuration] = useState(cookPreparationState.startedAt?.getDate() ?? 0)
+  useEffect(() => {
+    setDuration(dayjs(new Date()).diff(cookPreparationState.startedAt, 'seconds') * 10)
+  }, [cookPreparationState.startedAt])
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setDuration(time => time + 10)
+      setDuration(time => {
+        if (time !== null) {
+          return time + 10
+        }
+        return null
+      })
     }, 1000)
 
     return () => {
@@ -36,18 +45,35 @@ const Cook = () => {
     <StyledCookContainer backgroundImage={CookBackground} gap="large">
       <Div row spaceBetween fullWidth gap="medium">
         <StyledTimer>
-          <Text>
-            {dayjs(100 * duration)
-              .format('mm:ss')
-              .toString()}
-          </Text>
+          {duration !== null && !isNaN(duration) && (
+            <Text>
+              {dayjs(100 * duration)
+                .format('mm:ss')
+                .toString()}
+            </Text>
+          )}
         </StyledTimer>
         <StyledProgressionGauge flex>0 % complétés</StyledProgressionGauge>
       </Div>
-      <Text>{}</Text>
+      <Div fullWidth percentHeight={75} gap="medium">
+        {recipes.map(recipe => (
+          <Section key={recipe.id} title={recipe.name} flex>
+            <List horizontal forceScrollVisibility verticalPadding fullHeight>
+              {recipe.instructions.map(instruction => (
+                <CookInstructionCard
+                  key={instruction.id}
+                  description={instruction.description}
+                  isCompleted={false}
+                  onCompleted={() => console.log('on completed', instruction.id)}
+                />
+              ))}
+            </List>
+          </Section>
+        ))}
+      </Div>
       <StyledButton>Suivant</StyledButton>
     </StyledCookContainer>
   )
 }
 
-export default Cook
+export default CookInstruction

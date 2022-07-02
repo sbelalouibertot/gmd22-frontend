@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { useCallback, useMemo } from 'react'
 
 import CookBackground from '@src/../public/img/background/cook.svg'
@@ -15,7 +15,6 @@ import { StyledButton, StyledCookContainer } from './Cook.styled'
 const CookHome = () => {
   const { cookPreparationState, cookPreparationDispatch } = useCookContext()
   const { isLoaded, recipes } = cookPreparationState
-  const router = useRouter()
 
   const totalSequentialDurations: {
     preparation?: number
@@ -31,8 +30,7 @@ const CookHome = () => {
 
   const startCookPreparation = useCallback(() => {
     cookPreparationDispatch({ type: 'COOK_PREPARATION_START' })
-    router.push('/cook/instructions')
-  }, [cookPreparationDispatch, router])
+  }, [cookPreparationDispatch])
 
   return (
     <StyledCookContainer backgroundImage={CookBackground} gap="large">
@@ -68,7 +66,9 @@ const CookHome = () => {
           )}
         </Div>
       </Div>
-      <StyledButton onClick={startCookPreparation}>En cuisine 🥘</StyledButton>
+      <Link href="/cook/instructions">
+        <StyledButton onClick={startCookPreparation}>En cuisine 🥘</StyledButton>
+      </Link>
     </StyledCookContainer>
   )
 }

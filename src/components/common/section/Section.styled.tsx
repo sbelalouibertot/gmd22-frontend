@@ -1,9 +1,14 @@
 import styled from '@emotion/styled'
 
-export const StyledSection = styled.section`
+export type TStyledSectionProps = {
+  flex?: boolean
+}
+
+export const StyledSection = styled.section<TStyledSectionProps>`
   display: flex;
   flex-direction: column;
   width: 100%;
+  ${p => p.flex && `flex:1;`}
 `
 export const StyledHeader = styled.header`
   display: flex;

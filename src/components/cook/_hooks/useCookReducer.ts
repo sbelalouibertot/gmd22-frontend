@@ -12,10 +12,14 @@ export type TCookAction =
       payload: { recipes: TCookState['recipes'] }
     }
   | {
+      type: 'COOK_UPDATE_STATE_FROM_LOCAL_STORAGE'
+      payload: TCookState
+    }
+  | {
       type: 'COOK_PREPARATION_START' | 'COOK_PREPARATION_FINISH'
     }
 
-const defaultState: TCookState = {
+export const defaultState: TCookState = {
   startedAt: null,
   finishedAt: null,
   lastUpdate: null,
@@ -24,7 +28,7 @@ const defaultState: TCookState = {
 }
 
 const cookReducer = (state: TCookState, action: TCookAction): TCookState => {
-  console.log('cookReducer', action.type)
+  console.log('cookReducer', action.type, new Date(), new Date().getMilliseconds())
   switch (action.type) {
     case 'COOK_PREPARATION_COMPLETE_STEP':
       const newState = { ...state }
@@ -50,6 +54,9 @@ const cookReducer = (state: TCookState, action: TCookAction): TCookState => {
 
     case 'COOK_PREPARATION_FINISH':
       return { ...state, finishedAt: new Date(), lastUpdate: new Date() }
+
+    case 'COOK_UPDATE_STATE_FROM_LOCAL_STORAGE':
+      return action.payload
 
     default:
       return state
