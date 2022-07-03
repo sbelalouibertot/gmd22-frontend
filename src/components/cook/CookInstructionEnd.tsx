@@ -25,19 +25,6 @@ const CookHome = () => {
       ),
     [cookPreparationState.finishedAt, cookPreparationState.pauses, cookPreparationState.startedAt],
   )
-  console.log(
-    'diff = ',
-    dayjs(cookPreparationState.finishedAt).diff(cookPreparationState.startedAt, 'seconds'),
-  )
-
-  console.log(
-    'pause duration = ',
-    cookPreparationState.pauses.reduce(
-      (acc, pause) =>
-        acc + (pause.endTime !== null ? dayjs(pause.endTime).diff(pause.startTime, 'seconds') : 0),
-      0,
-    ),
-  )
 
   const efficiencyRatio: number | null = useMemo(() => {
     if (!recipes) {

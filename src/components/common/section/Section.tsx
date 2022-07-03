@@ -5,7 +5,7 @@ import { StyledAction, StyledHeader, StyledSection, TStyledSectionProps } from '
 
 type TSectionProps = {
   title: string
-  action?: string
+  action?: ReactNode
   children?: ReactNode
 } & TStyledSectionProps
 

@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { FC } from 'react'
+import { FC, memo } from 'react'
 
 import CheckboxIcon from '@src/../public/img/icons/checkbox.svg'
 import { COMPLETION_STATUS_TO_STR } from '@src/constants/cook'
@@ -22,20 +22,22 @@ const CookInstructionCard: FC<TCookInstructionCard> = ({
   completionStatus,
   onCompleted,
   description,
-}) => (
-  <StyledInstructionCard onClick={onCompleted}>
-    <StyledCardHeader>
-      <Text>{description}</Text>
-    </StyledCardHeader>
-    <StyledCardFooter completionStatus={completionStatus}>
-      <Text
-        size="very-small"
-        color={completionStatus === 'NOT_STARTED' ? 'text-lighter' : 'text-dark'}
-      >
-        {COMPLETION_STATUS_TO_STR[completionStatus]}
-      </Text>
-      <Image src={CheckboxIcon} width={20} height={20} />
-    </StyledCardFooter>
-  </StyledInstructionCard>
-)
-export default CookInstructionCard
+}) => {
+  return (
+    <StyledInstructionCard onClick={onCompleted}>
+      <StyledCardHeader>
+        <Text>{description}</Text>
+      </StyledCardHeader>
+      <StyledCardFooter completionStatus={completionStatus}>
+        <Text
+          size="very-small"
+          color={completionStatus === 'NOT_STARTED' ? 'text-lighter' : 'text-dark'}
+        >
+          {COMPLETION_STATUS_TO_STR[completionStatus]}
+        </Text>
+        <Image src={CheckboxIcon} width={20} height={20} />
+      </StyledCardFooter>
+    </StyledInstructionCard>
+  )
+}
+export default memo(CookInstructionCard)

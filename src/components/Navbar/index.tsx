@@ -8,6 +8,7 @@ import HomeIcon from '@src/../public/img/icons/home.svg'
 import PlayIcon from '@src/../public/img/icons/play.svg'
 import ShoppingCartIcon from '@src/../public/img/icons/shopping-cart.svg'
 
+import AnimatedButtonWrapper from '../common/animations/AnimatedButtonWrapper'
 import {
   StyledMainTabIconContainer,
   StyledNavbarContainer,
@@ -63,15 +64,17 @@ const Navbar: FC = () => {
     <StyledNavbarContainer>
       {tabsData.map(({ id, icon, route, selected, main }) => (
         <StyledTab key={id} center {...(main ? { percentWidth: 32 } : { flex: true })}>
-          <Link href={route}>
-            {main ? (
-              <StyledMainTabIconContainer center>
-                <StyledTabIcon src={icon} selected={selected} layout="fixed" />
-              </StyledMainTabIconContainer>
-            ) : (
-              <StyledTabIcon src={icon} selected={selected} height={30} layout="fixed" />
-            )}
-          </Link>
+          <AnimatedButtonWrapper absolute={main}>
+            <Link href={route}>
+              {main ? (
+                <StyledMainTabIconContainer center>
+                  <StyledTabIcon src={icon} selected={selected} layout="fixed" />
+                </StyledMainTabIconContainer>
+              ) : (
+                <StyledTabIcon src={icon} selected={selected} height={30} layout="fixed" />
+              )}
+            </Link>
+          </AnimatedButtonWrapper>
         </StyledTab>
       ))}
     </StyledNavbarContainer>

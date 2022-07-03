@@ -9,6 +9,7 @@ import { generateDays, isToday } from '@src/utils/date'
 import { getEventDescription, getEventsMainEmoji, getEventTitle } from '@src/utils/events'
 import { initSkeletons } from '@src/utils/skeletons'
 
+import AnimatedButtonWrapper from '../common/animations/AnimatedButtonWrapper'
 import { Div } from '../common/div/Div.styled'
 import List from '../common/list/List'
 import ListItem from '../common/list/ListItem'
@@ -116,6 +117,18 @@ const Planning: FC = () => {
       inline: 'center',
     })
 
+    /*const newspaperSpinning = [
+      { transform: 'rotate(0) scale(1)' },
+      { transform: 'rotate(360deg) scale(0)' },
+    ]
+
+    const newspaperTiming = {
+      duration: 500,
+      iterations: 1,
+    }
+
+    selectedDayRef?.current?.animate(newspaperSpinning, newspaperTiming)*/
+
     if (!!days && selectedDayIndex !== null && days.length > selectedDayIndex) {
       setSelectedDayEvents(
         days[selectedDayIndex].events.map(event => ({
@@ -147,20 +160,21 @@ const Planning: FC = () => {
       <Header title="Planning" />
       <StyledDayCardContainer row gap="medium" flexStart>
         {days?.map((day, dayIndex) => (
-          <StyledDayCard
-            key={`day-${dayIndex}`}
-            center
-            isToday={day.isToday}
-            isSelected={selectedDayIndex === dayIndex}
-            {...(selectedDayIndex === dayIndex && { ref: selectedDayRef })}
-            onClick={() => updateSelectedDay(dayIndex)}
-          >
-            {day.events.length > 0 && <StyledEventsIndicator>{day.emoji}</StyledEventsIndicator>}
-            <Text size="small" weight={day.isToday ? 'bold' : 'light'} firstLetterUppercase>
-              {day.dayName}
-            </Text>
-            <Text weight="medium">{day.dayNumber}</Text>
-          </StyledDayCard>
+          <AnimatedButtonWrapper key={dayIndex}>
+            <StyledDayCard
+              center
+              isToday={day.isToday}
+              isSelected={selectedDayIndex === dayIndex}
+              {...(selectedDayIndex === dayIndex && { ref: selectedDayRef })}
+              onClick={() => updateSelectedDay(dayIndex)}
+            >
+              {day.events.length > 0 && <StyledEventsIndicator>{day.emoji}</StyledEventsIndicator>}
+              <Text size="small" weight={day.isToday ? 'bold' : 'light'} firstLetterUppercase>
+                {day.dayName}
+              </Text>
+              <Text weight="medium">{day.dayNumber}</Text>
+            </StyledDayCard>
+          </AnimatedButtonWrapper>
         ))}
       </StyledDayCardContainer>
       <List>

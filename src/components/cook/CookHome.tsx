@@ -5,6 +5,7 @@ import { useCallback, useMemo } from 'react'
 import CookBackground from '@src/../public/img/background/cook.svg'
 import WizardPreparationIllustration from '@src/../public/img/illustrations/wizard-preparation.svg'
 
+import AnimatedButtonWrapper from '../common/animations/AnimatedButtonWrapper'
 import { Div } from '../common/div/Div.styled'
 import { Skeleton } from '../common/skeleton/Skeleton.styled'
 import Text from '../common/text/Text'
@@ -66,9 +67,11 @@ const CookHome = () => {
           )}
         </Div>
       </Div>
-      <Link href="/cook/instructions">
-        <StyledButton onClick={startCookPreparation}>En cuisine 🥘</StyledButton>
-      </Link>
+      <AnimatedButtonWrapper>
+        <Link href="/cook/instructions">
+          <StyledButton onClick={startCookPreparation}>En cuisine 🥘</StyledButton>
+        </Link>
+      </AnimatedButtonWrapper>
     </StyledCookContainer>
   )
 }

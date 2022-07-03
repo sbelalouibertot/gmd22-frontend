@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import pick from 'lodash/pick'
 import Image from 'next/image'
+import Link from 'next/link'
 import router from 'next/router'
 import { FC, useMemo } from 'react'
 
@@ -17,6 +18,7 @@ import {
 } from '@src/generated/gmd22-api'
 import { initSkeletons } from '@src/utils/skeletons'
 
+import AnimatedButtonWrapper from '../common/animations/AnimatedButtonWrapper'
 import { Div } from '../common/div/Div.styled'
 import EventCard, { EventCardLoading } from '../common/event-card/EventCard'
 import List from '../common/list/List'
@@ -65,6 +67,7 @@ const Home: FC = () => {
   const userPreferences = userPreferencesData?.userPreferences?.userPreferences
 
   const dayName = useMemo(() => dayjs.utc().format('dddd'), [])
+  console.log({ currentPeriodEvents })
 
   return (
     <>
@@ -75,17 +78,19 @@ const Home: FC = () => {
         </Div>
         <Image src={AlertIcon} height={25} width={25} />
       </Div>
-      <MainRecipeCard
-        title="Prochaine recette"
-        recipe={nextRecipe}
-        loading={nextRecipeEventLoading}
-        onClick={() => {
-          if (!!nextRecipe?.id) {
-            router.push(`/recipes/${nextRecipe.id}`)
-          }
-        }}
-      />
-      <Section title="Avancement" action="Voir plus">
+      <AnimatedButtonWrapper>
+        <MainRecipeCard
+          title="Prochaine recette"
+          recipe={nextRecipe}
+          loading={nextRecipeEventLoading}
+          onClick={() => {
+            if (!!nextRecipe?.id) {
+              router.push(`/recipes/${nextRecipe.id}`)
+            }
+          }}
+        />
+      </AnimatedButtonWrapper>
+      <Section title="Avancement" action={<Link href="/planning">Voir plus</Link>}>
         <List horizontal forceScrollVisibility verticalPadding>
           {currentPeriodEventsLoading
             ? eventsCardsSkeletons.map(id => <EventCardLoading key={id} />)

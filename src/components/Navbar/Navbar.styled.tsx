@@ -36,4 +36,5 @@ export const StyledMainTabIconContainer = styled(Div)`
   background-color: white;
   position: absolute;
   border-radius: 50%;
+  left: calc(50% - 36px);
 `

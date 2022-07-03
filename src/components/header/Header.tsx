@@ -17,7 +17,7 @@ export const Header: FC<THeader> = ({ title, edit }) => {
   const router = useRouter()
 
   const onPreviousIconClicked = useCallback(() => {
-    router.back()
+    router.push('/home')
   }, [router])
 
   return (

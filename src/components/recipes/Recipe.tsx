@@ -7,6 +7,7 @@ import { IRecipeInstruction, useRecipeQuery } from '@src/generated/gmd22-api'
 import { truthy } from '@src/utils/other'
 import { initSkeletons } from '@src/utils/skeletons'
 
+import AnimatedListItemWrapper from '../common/animations/AnimatedListItemWrapper'
 import { Div } from '../common/div/Div.styled'
 import { Skeleton } from '../common/skeleton/Skeleton.styled'
 import Text from '../common/text/Text'
@@ -68,16 +69,18 @@ const FoodItem: FC = () => {
       </Text>
       <StyledTimelineList gap={120}>
         {recipeInstructions?.map((instruction, index) => (
-          <Div key={instruction?.id} gap="large" row fullWidth center>
-            <StyledRecipeItemContainer flexStart>
-              <StyledRecipeItem>{index + 1}</StyledRecipeItem>
-            </StyledRecipeItemContainer>
-            <Div flex>
-              <Text color="text-dark">
-                {instruction?.description} {instruction.emoji}
-              </Text>
+          <AnimatedListItemWrapper key={instruction?.id}>
+            <Div gap="large" row fullWidth center>
+              <StyledRecipeItemContainer flexStart>
+                <StyledRecipeItem>{index + 1}</StyledRecipeItem>
+              </StyledRecipeItemContainer>
+              <Div flex>
+                <Text color="text-dark">
+                  {instruction?.description} {instruction.emoji}
+                </Text>
+              </Div>
             </Div>
-          </Div>
+          </AnimatedListItemWrapper>
         ))}
       </StyledTimelineList>
     </Div>

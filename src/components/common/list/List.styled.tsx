@@ -30,4 +30,5 @@ export const StyledList = styled.ul<TStyledListProps>`
     margin-right: -${p.theme.spacing.margin.large}px;
     padding-right: ${p.theme.spacing.padding.medium}px;`}
   ${p => p.fullHeight && `height: 100%;`}
+  scroll-behavior: smooth;
 `

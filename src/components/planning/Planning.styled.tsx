@@ -18,17 +18,19 @@ export const StyledDayCard = styled(Div)<TDivProps & TDayCardProps>`
   height: 60px;
   padding: 8px 10px;
   position: relative;
+  scroll-behavior: smooth;
 `
 
 export const StyledDayCardContainer = styled(Div)`
   max-width: calc(100% + 24px + 24px);
-  overflow-y: auto;
+  overflow: auto;
   margin-right: -24px;
   margin-left: -24px;
   padding-right: 24px;
   padding-left: 24px;
   height: 85px;
   align-items: center;
+  scroll-behavior: smooth;
 `
 
 export const StyledEventsIndicator = styled.div`

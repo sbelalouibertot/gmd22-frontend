@@ -54,11 +54,8 @@ export const StyledButton = styled.button`
   padding: 12px 0px;
   gap: 10px;
 
-  position: absolute;
   width: 220px;
   height: 52px;
-
-  bottom: 40px;
   background: #cf3a47;
   border-radius: 12px;
   border: none;

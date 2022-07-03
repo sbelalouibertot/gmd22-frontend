@@ -7,14 +7,14 @@ import { TInstructionCompletionStatus } from './_hooks/useCookContext'
 export const StyledInstructionCard = styled.div`
   width: 276px;
   height: 100%;
-  filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.08));
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
   border-radius: ${p => p.theme.border.radius.large}px;
   position: relative;
   > * {
     padding: ${p => p.theme.spacing.padding.small}px;
   }
 
-  background: linear-gradient(357deg, #e4c6bd, #ffffff, #db95c0, #cab599);
+  background: linear-gradient(357deg, #e4c6bd, #ffffff, #dddeea, #cab599);
   background-size: 400% 400%;
   animation: gradient 5s ease infinite;
 

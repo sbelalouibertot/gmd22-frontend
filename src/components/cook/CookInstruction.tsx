@@ -1,9 +1,10 @@
 import dayjs from 'dayjs'
 import Link from 'next/link'
-import { useEffect, useMemo, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 
 import CookBackground from '@src/../public/img/background/cook.svg'
 
+import AnimatedButtonWrapper from '../common/animations/AnimatedButtonWrapper'
 import { Div } from '../common/div/Div.styled'
 import List from '../common/list/List'
 import Section from '../common/section/Section'
@@ -32,8 +33,6 @@ const CookInstruction = () => {
     () => recipes.reduce((acc, recipe) => acc + recipe.instructions.length, 0),
     [recipes],
   )
-
-  console.log('cookPreparationState.pauses = ', cookPreparationState.pauses)
 
   useEffect(() => {
     setDuration(
@@ -92,30 +91,33 @@ const CookInstruction = () => {
     setPreparationCompletionPercentage(newCalculatedPercentage)
   }, [cookPreparationState.lastUpdate, recipes, totalInstructionsNb])
 
-  const onUpdateInstructionCompletionStatus = (
-    recipeId: string,
-    instructionId: string,
-    previousCompletionStatus: TInstructionCompletionStatus,
-  ) => {
-    const newCompletionStatus = ((): TInstructionCompletionStatus => {
-      switch (previousCompletionStatus) {
-        case 'NOT_STARTED':
-          return 'IN_PROGRESS'
-        case 'IN_PROGRESS':
-          return 'DONE'
-        default:
-          return 'NOT_STARTED'
-      }
-    })()
-    cookPreparationDispatch({
-      type: 'COOK_PREPARATION_UPDATE_INSTRUCTION_COMPLETION_STATUS',
-      payload: {
-        recipeId,
-        instructionId,
-        completionStatus: newCompletionStatus,
-      },
-    })
-  }
+  const onUpdateInstructionCompletionStatus = useCallback(
+    (
+      recipeId: string,
+      instructionId: string,
+      previousCompletionStatus: TInstructionCompletionStatus,
+    ) => {
+      const newCompletionStatus = ((): TInstructionCompletionStatus => {
+        switch (previousCompletionStatus) {
+          case 'NOT_STARTED':
+            return 'IN_PROGRESS'
+          case 'IN_PROGRESS':
+            return 'DONE'
+          default:
+            return 'NOT_STARTED'
+        }
+      })()
+      cookPreparationDispatch({
+        type: 'COOK_PREPARATION_UPDATE_INSTRUCTION_COMPLETION_STATUS',
+        payload: {
+          recipeId,
+          instructionId,
+          completionStatus: newCompletionStatus,
+        },
+      })
+    },
+    [cookPreparationDispatch],
+  )
 
   const onPauseClick = () => {
     cookPreparationDispatch({
@@ -156,18 +158,19 @@ const CookInstruction = () => {
           <Section key={recipe.id} title={recipe.name} flex>
             <List horizontal forceScrollVisibility verticalPadding fullHeight>
               {recipe.instructions.map(instruction => (
-                <CookInstructionCard
-                  key={instruction.id}
-                  description={instruction.description}
-                  completionStatus={instruction.completionStatus}
-                  onCompleted={() =>
-                    onUpdateInstructionCompletionStatus(
-                      recipe.id,
-                      instruction.id,
-                      instruction.completionStatus,
-                    )
-                  }
-                />
+                <AnimatedButtonWrapper absolute key={instruction.id}>
+                  <CookInstructionCard
+                    description={instruction.description}
+                    completionStatus={instruction.completionStatus}
+                    onCompleted={() =>
+                      onUpdateInstructionCompletionStatus(
+                        recipe.id,
+                        instruction.id,
+                        instruction.completionStatus,
+                      )
+                    }
+                  />
+                </AnimatedButtonWrapper>
               ))}
             </List>
           </Section>
@@ -175,9 +178,11 @@ const CookInstruction = () => {
       </Div>
       <StyledInstructionFooter>
         <StyledInstructionButton onClick={onPauseClick}>Pause</StyledInstructionButton>
+
         <Link href={'/cook'}>
           <StyledInstructionButton onClick={onRestartClick}>Recommencer</StyledInstructionButton>
         </Link>
+
         {preparationCompletionPercentage === 100 && (
           <Link href={'/cook/instructions/end'}>
             <StyledInstructionButton onClick={onEndClick}>Fin</StyledInstructionButton>
@@ -188,4 +193,4 @@ const CookInstruction = () => {
   )
 }
 
-export default CookInstruction
+export default memo(CookInstruction)

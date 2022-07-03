@@ -1,6 +1,7 @@
 import Image, { StaticImageData } from 'next/image'
 import { FC } from 'react'
 
+import AnimatedButtonWrapper from '../animations/AnimatedButtonWrapper'
 import { Div } from '../div/Div.styled'
 import { Skeleton } from '../skeleton/Skeleton.styled'
 import Text from '../text/Text'
@@ -41,9 +42,11 @@ const ListItem: FC<TListItemProps> = ({
         </Text>
       </Div>
       <Div percentWidth={8}>
-        {!!onActionClick && !!actionIcon && (
-          <Image src={actionIcon} onClick={onActionClick} width={18} height={18} />
-        )}
+        <AnimatedButtonWrapper>
+          {!!onActionClick && !!actionIcon && (
+            <Image src={actionIcon} onClick={onActionClick} width={18} height={18} />
+          )}
+        </AnimatedButtonWrapper>
       </Div>
     </StyledListItem>
   )

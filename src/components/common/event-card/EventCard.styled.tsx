@@ -8,7 +8,7 @@ export type TStyledEventCardProps = {
 export const StyledEventCard = styled.div<TStyledEventCardProps>`
   width: 153px;
   height: 175px;
-  filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.08));
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
   border-radius: ${p => p.theme.border.radius.large}px;
   background-image: ${p => !!p.backgroundImage && `url(${p.backgroundImage.src})`};
   background-color: ${p => p.theme.color['background-dark']};
