@@ -2,6 +2,8 @@ import { createContext, Dispatch, useContext } from 'react'
 
 import { TCookAction } from './useCookReducer'
 
+export type TInstructionCompletionStatus = 'NOT_STARTED' | 'IN_PROGRESS' | 'DONE'
+
 export type TCookState = {
   startedAt: Date | null
   finishedAt: Date | null
@@ -10,10 +12,17 @@ export type TCookState = {
   recipes: {
     id: string
     name: string
-    instructions: { id: string; description: string }[]
+    instructions: {
+      id: string
+      description: string
+      completionStatus: TInstructionCompletionStatus
+    }[]
     preparationDuration: number
     cookingDuration: number
-    currentInstructionIndex: number
+  }[]
+  pauses: {
+    startTime: Date | null
+    endTime: Date | null
   }[]
 }
 

@@ -37,19 +37,14 @@ const CookContainer = ({ children }: { children?: ReactNode }) => {
           recipes: recipes.map(recipe => ({
             id: recipe.id,
             name: recipe.name,
-            currentInstructionIndex: 0,
             preparationDuration: recipe.preparationDuration,
             cookingDuration: recipe.cookingDuration,
             instructions:
-              recipe.recipeInstructions
-                ?.map(
-                  instruction =>
-                    !!instruction && {
-                      id: instruction.id,
-                      description: instruction?.description,
-                    },
-                )
-                .filter(truthy) ?? [],
+              recipe.recipeInstructions?.filter(truthy).map(instruction => ({
+                id: instruction.id,
+                description: instruction?.description,
+                completionStatus: 'NOT_STARTED',
+              })) ?? [],
           })),
         },
       })

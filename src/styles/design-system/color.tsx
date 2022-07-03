@@ -10,6 +10,7 @@ export const color = {
   'text-dark': '#282122',
   'border-dark': '#6c6262',
   success: '#73AE6E',
+  progress: '#ff9953e3',
 }
 
 export type TColor = typeof color

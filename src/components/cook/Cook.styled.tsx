@@ -18,6 +18,34 @@ export const StyledCookContainer = styled(Div)<TCookContainerProps>`
   align-items: center;
 `
 
+export const StyledInstructionFooter = styled.footer`
+  bottom: 0;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: ${p => p.theme.spacing.gap.small}px;
+`
+
+export const StyledInstructionButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0px;
+  gap: 10px;
+
+  font-size: ${p => p.theme.text.size['very-small']}px;
+  max-width: 220px;
+  flex: 1;
+  height: 32px;
+
+  background: ${p => p.theme.color['primary']};
+  border-radius: 12px;
+  border: none;
+  color: ${p => p.theme.color['text-light']};
+`
 export const StyledButton = styled.button`
   display: flex;
   flex-direction: row;
@@ -47,9 +75,18 @@ export const StyledTimer = styled(Div)`
   text-align: center;
 `
 
-export const StyledProgressionGauge = styled(Div)`
+type TStyledProgressionGaugeProps = {
+  preparationCompletionPercentage: number
+}
+
+export const StyledProgressionGauge = styled(Div)<TStyledProgressionGaugeProps>`
   background-color: ${p => p.theme.color['border-dark']};
-  color: ${p => p.theme.color['text-light']};
+  background: linear-gradient(
+    90deg,
+    ${p => p.theme.color['success']} ${p => p.preparationCompletionPercentage}%,
+    ${p => p.theme.color['background-dark']} ${p => p.preparationCompletionPercentage}%
+  );
+  color: ${p => p.theme.color['text-dark']};
   padding: ${p => p.theme.spacing.padding.xsmall}px;
   border-radius: 10px;
   text-align: center;
