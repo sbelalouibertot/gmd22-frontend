@@ -4,6 +4,7 @@ import { FC, useMemo } from 'react'
 
 import { COOK_EMOJIS } from '@src/constants/food'
 import { IRecipeInstruction, useRecipeQuery } from '@src/generated/gmd22-api'
+import { truthy } from '@src/utils/other'
 import { initSkeletons } from '@src/utils/skeletons'
 
 import { Div } from '../common/div/Div.styled'
@@ -28,7 +29,7 @@ const FoodItem: FC = () => {
     | null
     | undefined = useMemo(
     () =>
-      recipe?.recipeInstructions?.map(instruction => ({
+      recipe?.recipeInstructions?.filter(truthy).map(instruction => ({
         ...instruction,
         emoji: sample(COOK_EMOJIS),
       })),
