@@ -24,8 +24,8 @@ export const StyledInstructionFooter = styled.footer`
   height: 70px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: ${p => p.theme.spacing.gap.small}px;
+  justify-content: center;
+  gap: ${p => p.theme.spacing.gap.large}px;
 `
 
 export const StyledInstructionButton = styled.button`
@@ -87,4 +87,38 @@ export const StyledProgressionGauge = styled(Div)<TStyledProgressionGaugeProps>`
   padding: ${p => p.theme.spacing.padding.xsmall}px;
   border-radius: 10px;
   text-align: center;
+`
+
+type TStyledActionButton = {
+  icon: StaticImageData
+}
+
+export const StyledActionButton = styled.button<TStyledActionButton>`
+  background-color: ${p => p.theme.color['background-light']};
+  ${p => !!p.icon && `background-image: url(${p.icon.src})`};
+  border: none;
+  background-size: 24px 24px;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 16px;
+  height: 35px;
+  width: 35px;
+  border-radius: ${p => p.theme.border.radius['very-large']}px;
+`
+
+type TStyledTimerContainer = {
+  isTimerValidated: boolean
+}
+
+export const StyledTimerContainer = styled(Div)<TStyledTimerContainer>`
+  height: 100%;
+  width: 100%;
+  position: absolute;
+
+  background-color: ${p =>
+    p.isTimerValidated ? p.theme.color.progress : p.theme.color['background-dark']};
+  opacity: ${p => (p.isTimerValidated ? 0.3 : 0.6)};
+
+  color: ${p => p.theme.color['text-light']};
+  border-radius: ${p => p.theme.border.radius.large}px;
 `

@@ -4,13 +4,19 @@ import { TTheme } from '@src/styles/design-system/theme'
 
 import { TInstructionCompletionStatus } from './_hooks/useCookContext'
 
-export const StyledInstructionCard = styled.div`
+type TInstructionCardProps = {
+  isDropTargetDisplayed?: boolean
+  isOver?: boolean
+}
+export const StyledInstructionCard = styled.div<TInstructionCardProps>`
   width: 276px;
   height: 100%;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
   border-radius: ${p => p.theme.border.radius.large}px;
   position: relative;
-  > * {
+
+  header,
+  footer {
     padding: ${p => p.theme.spacing.padding.small}px;
   }
 
@@ -29,6 +35,15 @@ export const StyledInstructionCard = styled.div`
       background-position: 0% 50%;
     }
   }
+
+  ${p =>
+    p.isDropTargetDisplayed &&
+    !p.isOver &&
+    `
+    opacity: 0.7;
+    border: ${p.theme.border.size.medium}px solid ${p.theme.color.progress};
+  `}
+  ${p => p.isOver && `border: 6px solid ${p.theme.color.success};`}
 `
 
 export type TStyledCardSectionProps = {

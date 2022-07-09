@@ -1,6 +1,8 @@
 import '../styles/globals.css'
 
 import { AppProps } from 'next/app'
+import { DndProvider } from 'react-dnd'
+import { TouchBackend } from 'react-dnd-touch-backend'
 
 import { ApolloProvider } from '@apollo/client'
 import { ThemeProvider } from '@emotion/react'
@@ -14,7 +16,9 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <ThemeProvider theme={theme}>
       <ApolloProvider client={apolloClient}>
-        <Component {...pageProps} />
+        <DndProvider backend={TouchBackend}>
+          <Component {...pageProps} />
+        </DndProvider>
       </ApolloProvider>
     </ThemeProvider>
   )

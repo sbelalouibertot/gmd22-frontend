@@ -1,8 +1,12 @@
 import dayjs from 'dayjs'
 import Link from 'next/link'
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import { useDrag } from 'react-dnd'
 
 import CookBackground from '@src/../public/img/background/cook.svg'
+import ChronometerIcon from '@src/../public/img/icons/chronometer.svg'
+import PauseIcon from '@src/../public/img/icons/pause.svg'
+import RestartIcon from '@src/../public/img/icons/restart.svg'
 
 import AnimatedButtonWrapper from '../common/animations/AnimatedButtonWrapper'
 import { Div } from '../common/div/Div.styled'
@@ -11,13 +15,14 @@ import Section from '../common/section/Section'
 import Text from '../common/text/Text'
 import { TInstructionCompletionStatus, useCookContext } from './_hooks/useCookContext'
 import {
+  StyledActionButton,
   StyledCookContainer,
   StyledInstructionButton,
   StyledInstructionFooter,
   StyledProgressionGauge,
   StyledTimer,
 } from './Cook.styled'
-import CookInstructionCard from './CookInstructionCard'
+import CookInstructionCard, { DropResult } from './CookInstructionCard'
 
 const CookInstruction = () => {
   const { cookPreparationState, cookPreparationDispatch } = useCookContext()
@@ -33,6 +38,27 @@ const CookInstruction = () => {
     () => recipes.reduce((acc, recipe) => acc + recipe.instructions.length, 0),
     [recipes],
   )
+
+  const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
+    type: 'CHRONOMETER',
+    item: { name: 'Chronometer' },
+    end: (_, monitor) => {
+      const { id, timer } = monitor.getDropResult<DropResult>() ?? {}
+      if (!id || !timer) {
+        return
+      }
+      cookPreparationDispatch({
+        type: 'COOK_ADD_TIMER_TO_INSTRUCTION',
+        payload: {
+          instructionId: id,
+          timer,
+        },
+      })
+    },
+    collect: monitor => ({
+      isDragging: monitor.isDragging(),
+    }),
+  }))
 
   useEffect(() => {
     setDuration(
@@ -160,6 +186,7 @@ const CookInstruction = () => {
               {recipe.instructions.map(instruction => (
                 <AnimatedButtonWrapper absolute key={instruction.id}>
                   <CookInstructionCard
+                    id={instruction.id}
                     description={instruction.description}
                     completionStatus={instruction.completionStatus}
                     onCompleted={() =>
@@ -169,6 +196,9 @@ const CookInstruction = () => {
                         instruction.completionStatus,
                       )
                     }
+                    isDropTargetDisplayed={isDragging}
+                    timerInitValue={instruction.timer}
+                    timerInitDate={instruction.timerInitDate}
                   />
                 </AnimatedButtonWrapper>
               ))}
@@ -177,12 +207,13 @@ const CookInstruction = () => {
         ))}
       </Div>
       <StyledInstructionFooter>
-        <StyledInstructionButton onClick={onPauseClick}>Pause</StyledInstructionButton>
-
+        <StyledActionButton icon={PauseIcon} onClick={onPauseClick} />
         <Link href={'/cook'}>
-          <StyledInstructionButton onClick={onRestartClick}>Recommencer</StyledInstructionButton>
+          <StyledActionButton icon={RestartIcon} onClick={onRestartClick} />
         </Link>
-
+        <Div ref={dragPreview} style={{ opacity: isDragging ? 0.5 : 1 }}>
+          <StyledActionButton icon={ChronometerIcon} role="Handle" ref={drag} />
+        </Div>
         {preparationCompletionPercentage === 100 && (
           <Link href={'/cook/instructions/end'}>
             <StyledInstructionButton onClick={onEndClick}>Fin</StyledInstructionButton>

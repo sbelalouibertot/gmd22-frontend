@@ -16,6 +16,8 @@ export type TCookState = {
       id: string
       description: string
       completionStatus: TInstructionCompletionStatus
+      timer?: number
+      timerInitDate?: Date
     }[]
     preparationDuration: number
     cookingDuration: number
