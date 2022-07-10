@@ -488,6 +488,23 @@ export type IDateEventsQueryData = (
   ) }
 );
 
+export type IUpdateEventDateMutationVariables = {
+  updateEventDateId?: Maybe<Scalars['ID']>,
+  date?: Maybe<Scalars['DateTime']>
+};
+
+
+export type IUpdateEventDateMutationData = (
+  { __typename?: 'Mutation' }
+  & { updateEventDate: Maybe<(
+    { __typename?: 'EventOutput' }
+    & { event: Maybe<(
+      { __typename?: 'Event' }
+      & Pick<IEvent, 'id' | 'date'>
+    )> }
+  )> }
+);
+
 export type ICurrentPeriodRecipeEventsQueryVariables = {};
 
 
@@ -941,6 +958,42 @@ export function useDateEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type DateEventsQueryHookResult = ReturnType<typeof useDateEventsQuery>;
 export type DateEventsLazyQueryHookResult = ReturnType<typeof useDateEventsLazyQuery>;
 export type DateEventsQueryResult = Apollo.QueryResult<IDateEventsQueryData, IDateEventsQueryVariables>;
+export const UpdateEventDateDocument = gql`
+    mutation UpdateEventDate($updateEventDateId: ID, $date: DateTime) {
+  updateEventDate(id: $updateEventDateId, date: $date) {
+    event {
+      id
+      date
+    }
+  }
+}
+    `;
+export type IUpdateEventDateMutationFn = Apollo.MutationFunction<IUpdateEventDateMutationData, IUpdateEventDateMutationVariables>;
+
+/**
+ * __useUpdateEventDateMutation__
+ *
+ * To run a mutation, you first call `useUpdateEventDateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateEventDateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateEventDateMutation, { data, loading, error }] = useUpdateEventDateMutation({
+ *   variables: {
+ *      updateEventDateId: // value for 'updateEventDateId'
+ *      date: // value for 'date'
+ *   },
+ * });
+ */
+export function useUpdateEventDateMutation(baseOptions?: Apollo.MutationHookOptions<IUpdateEventDateMutationData, IUpdateEventDateMutationVariables>) {
+        return Apollo.useMutation<IUpdateEventDateMutationData, IUpdateEventDateMutationVariables>(UpdateEventDateDocument, baseOptions);
+      }
+export type UpdateEventDateMutationHookResult = ReturnType<typeof useUpdateEventDateMutation>;
+export type UpdateEventDateMutationResult = Apollo.MutationResult<IUpdateEventDateMutationData>;
+export type UpdateEventDateMutationOptions = Apollo.BaseMutationOptions<IUpdateEventDateMutationData, IUpdateEventDateMutationVariables>;
 export const CurrentPeriodRecipeEventsDocument = gql`
     query CurrentPeriodRecipeEvents {
   events(onlyCurrentPeriod: true, type: PREPARATION) {

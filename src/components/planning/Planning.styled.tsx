@@ -6,7 +6,11 @@ import List from '../common/list/List'
 type TDayCardProps = {
   isSelected?: boolean
   isToday?: boolean
+  isDropTargetDisplayed?: boolean
+  isOver?: boolean
 }
+
+export type TStyledDayCard = TDivProps & TDayCardProps
 
 export const StyledDayCard = styled(Div)<TDivProps & TDayCardProps>`
   background-color: ${p =>
@@ -19,6 +23,15 @@ export const StyledDayCard = styled(Div)<TDivProps & TDayCardProps>`
   padding: 8px 10px;
   position: relative;
   scroll-behavior: smooth;
+
+  ${p =>
+    p.isDropTargetDisplayed &&
+    !p.isOver &&
+    `
+    opacity: 0.7;
+    border: ${p.theme.border.size.medium}px solid ${p.theme.color.progress};
+  `}
+  ${p => p.isOver && `border: 6px solid ${p.theme.color.success};`}
 `
 
 export const StyledDayCardContainer = styled(Div)`
@@ -33,18 +46,12 @@ export const StyledDayCardContainer = styled(Div)`
   scroll-behavior: smooth;
 `
 
-export const StyledEventsIndicator = styled.div`
-  text-shadow: 0 0 5px #cccccc;
-  height: 20px;
-  width: 20px;
-  z-index: 99999909999;
-  border-radius: 50%;
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  text-align: center;
-`
-
 export const StyledTimelineList = styled(List)`
   position: relative;
+`
+
+export const StyledActionButtonsContainer = styled(Div)`
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
 `

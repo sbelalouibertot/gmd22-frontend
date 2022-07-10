@@ -1,0 +1,8 @@
+mutation UpdateEventDate($updateEventDateId: ID, $date: DateTime) {
+  updateEventDate(id: $updateEventDateId, date: $date) {
+    event {
+      id
+      date
+    }
+  }
+}

@@ -89,23 +89,6 @@ export const StyledProgressionGauge = styled(Div)<TStyledProgressionGaugeProps>`
   text-align: center;
 `
 
-type TStyledActionButton = {
-  icon: StaticImageData
-}
-
-export const StyledActionButton = styled.button<TStyledActionButton>`
-  background-color: ${p => p.theme.color['background-light']};
-  ${p => !!p.icon && `background-image: url(${p.icon.src})`};
-  border: none;
-  background-size: 24px 24px;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 16px;
-  height: 35px;
-  width: 35px;
-  border-radius: ${p => p.theme.border.radius['very-large']}px;
-`
-
 type TStyledTimerContainer = {
   isTimerValidated: boolean
 }
@@ -113,7 +96,6 @@ type TStyledTimerContainer = {
 export const StyledTimerContainer = styled(Div)<TStyledTimerContainer>`
   height: 100%;
   width: 100%;
-  position: absolute;
 
   background-color: ${p =>
     p.isTimerValidated ? p.theme.color.progress : p.theme.color['background-dark']};

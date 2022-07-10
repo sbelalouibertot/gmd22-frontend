@@ -51,6 +51,7 @@ export type TStyledCardSectionProps = {
 }
 
 export const StyledCardHeader = styled.header`
+  position: absolute;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

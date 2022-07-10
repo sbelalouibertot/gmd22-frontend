@@ -2,27 +2,31 @@ import dayjs from 'dayjs'
 import pick from 'lodash/pick'
 import { useRouter } from 'next/router'
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useDragLayer } from 'react-dnd'
 
 import PancakeImg from '@src/../public/img/pancake.jpeg'
-import { IDateEventsQueryData, useDateEventsQuery } from '@src/generated/gmd22-api'
+import {
+  IDateEventsQueryData,
+  useDateEventsQuery,
+  useUpdateEventDateMutation,
+} from '@src/generated/gmd22-api'
 import { generateDays, isToday } from '@src/utils/date'
 import { getEventDescription, getEventsMainEmoji, getEventTitle } from '@src/utils/events'
 import { initSkeletons } from '@src/utils/skeletons'
 
 import AnimatedButtonWrapper from '../common/animations/AnimatedButtonWrapper'
 import { Div } from '../common/div/Div.styled'
+import { StyledIndicator } from '../common/div/Indicator.styled'
 import List from '../common/list/List'
 import ListItem from '../common/list/ListItem'
 import { Skeleton } from '../common/skeleton/Skeleton.styled'
 import Text from '../common/text/Text'
 import { Header } from '../header/Header'
 import { StyledRecipeItem, StyledRecipeItemContainer } from '../recipes/Recipes.styled'
-import {
-  StyledDayCard,
-  StyledDayCardContainer,
-  StyledEventsIndicator,
-  StyledTimelineList,
-} from './Planning.styled'
+import * as dateEventsQuery from './_hooks/dateEvents.graphql'
+import DraggableDayEvent from './DraggableDayEvent'
+import DroppableDayCard from './DroppableDayCard'
+import { StyledDayCard, StyledDayCardContainer, StyledTimelineList } from './Planning.styled'
 
 const daysSkeletons = initSkeletons(7)
 
@@ -116,19 +120,6 @@ const Planning: FC = () => {
       block: 'center',
       inline: 'center',
     })
-
-    /*const newspaperSpinning = [
-      { transform: 'rotate(0) scale(1)' },
-      { transform: 'rotate(360deg) scale(0)' },
-    ]
-
-    const newspaperTiming = {
-      duration: 500,
-      iterations: 1,
-    }
-
-    selectedDayRef?.current?.animate(newspaperSpinning, newspaperTiming)*/
-
     if (!!days && selectedDayIndex !== null && days.length > selectedDayIndex) {
       setSelectedDayEvents(
         days[selectedDayIndex].events.map(event => ({
@@ -138,6 +129,21 @@ const Planning: FC = () => {
       )
     }
   }, [days, router, selectedDayIndex])
+
+  const isDragging = useDragLayer(monitor => monitor.isDragging())
+
+  const [updateEventDate] = useUpdateEventDateMutation({
+    refetchQueries: [{ query: dateEventsQuery }],
+  })
+
+  const onUpdateEventDate = ({ date, id }: { date: Date; id: string }) => {
+    updateEventDate({ variables: { updateEventDateId: id, date } })
+    const dayIndex = days.findIndex(day => dayjs.utc(day.date).isSame(date, 'day'))
+    if (dayIndex < 0) {
+      return
+    }
+    updateSelectedDay(dayIndex)
+  }
 
   if (loading) {
     return (
@@ -161,26 +167,36 @@ const Planning: FC = () => {
       <StyledDayCardContainer row gap="medium" flexStart>
         {days?.map((day, dayIndex) => (
           <AnimatedButtonWrapper key={dayIndex}>
-            <StyledDayCard
+            <DroppableDayCard
               center
               isToday={day.isToday}
               isSelected={selectedDayIndex === dayIndex}
               {...(selectedDayIndex === dayIndex && { ref: selectedDayRef })}
-              onClick={() => updateSelectedDay(dayIndex)}
+              onClick={() => {
+                updateSelectedDay(dayIndex)
+              }}
+              isDropTargetDisplayed={isDragging}
+              date={day.date}
             >
-              {day.events.length > 0 && <StyledEventsIndicator>{day.emoji}</StyledEventsIndicator>}
+              {day.events.length > 0 && <StyledIndicator>{day.emoji}</StyledIndicator>}
               <Text size="small" weight={day.isToday ? 'bold' : 'light'} firstLetterUppercase>
                 {day.dayName}
               </Text>
               <Text weight="medium">{day.dayNumber}</Text>
-            </StyledDayCard>
+            </DroppableDayCard>
           </AnimatedButtonWrapper>
         ))}
       </StyledDayCardContainer>
       <List>
         {selectedDayEvents?.map(event => (
           <Div key={event.id} gap="medium">
-            {!event.description && <Text>{event.formattedTime}</Text>}
+            {!event.description && (
+              <DraggableDayEvent
+                formattedTime={event.formattedTime}
+                id={event.id}
+                onUpdateEventDate={onUpdateEventDate}
+              />
+            )}
             {!!event.recipes && event.recipes.length > 0 && (
               <StyledTimelineList>
                 {event.recipes.map((recipe, recipeIndex) => (

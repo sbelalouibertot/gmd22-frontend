@@ -1,21 +1,24 @@
 import dayjs from 'dayjs'
+import Image from 'next/image'
 import Link from 'next/link'
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { useDrag } from 'react-dnd'
 
 import CookBackground from '@src/../public/img/background/cook.svg'
 import ChronometerIcon from '@src/../public/img/icons/chronometer.svg'
+import DragdAndDropIcon from '@src/../public/img/icons/drag-and-drop.svg'
 import PauseIcon from '@src/../public/img/icons/pause.svg'
 import RestartIcon from '@src/../public/img/icons/restart.svg'
 
 import AnimatedButtonWrapper from '../common/animations/AnimatedButtonWrapper'
+import { StyledActionButton } from '../common/button/Button.styled'
 import { Div } from '../common/div/Div.styled'
+import { StyledIndicator } from '../common/div/Indicator.styled'
 import List from '../common/list/List'
 import Section from '../common/section/Section'
 import Text from '../common/text/Text'
 import { TInstructionCompletionStatus, useCookContext } from './_hooks/useCookContext'
 import {
-  StyledActionButton,
   StyledCookContainer,
   StyledInstructionButton,
   StyledInstructionFooter,
@@ -211,8 +214,11 @@ const CookInstruction = () => {
         <Link href={'/cook'}>
           <StyledActionButton icon={RestartIcon} onClick={onRestartClick} />
         </Link>
-        <Div ref={dragPreview} style={{ opacity: isDragging ? 0.5 : 1 }}>
+        <Div ref={dragPreview} style={{ opacity: isDragging ? 0.5 : 1 }} relative>
           <StyledActionButton icon={ChronometerIcon} role="Handle" ref={drag} />
+          <StyledIndicator>
+            <Image src={DragdAndDropIcon} />
+          </StyledIndicator>
         </Div>
         {preparationCompletionPercentage === 100 && (
           <Link href={'/cook/instructions/end'}>
