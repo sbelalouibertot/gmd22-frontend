@@ -43,9 +43,7 @@ const calculateTimer = ({
   }
   const ratio =
     (monitorOffset - cardRef.current.getBoundingClientRect().x) / cardRef.current.clientWidth
-  const realRatio = 0.5 + ratio
-  const seconds = Math.floor(60 * 8 * realRatio)
-
+  const seconds = Math.floor(60 * 30 * ratio)
   return 1000 * seconds
 }
 
@@ -89,7 +87,7 @@ const CookInstructionCard: FC<TCookInstructionCard> = ({
     return {
       accept: 'CHRONOMETER',
       drop: (_, monitor) => {
-        const monitorOffset = monitor?.getSourceClientOffset()?.x
+        const monitorOffset = monitor?.getClientOffset()?.x
         if (!monitorOffset) {
           return
         }
@@ -123,7 +121,6 @@ const CookInstructionCard: FC<TCookInstructionCard> = ({
     <StyledInstructionCard
       ref={cardRef}
       onClick={onCompleted}
-      role={'Dustbin'}
       isDropTargetDisplayed={isDropTargetDisplayed}
       isOver={isOver}
     >
