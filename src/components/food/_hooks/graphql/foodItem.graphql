@@ -4,6 +4,10 @@ query FoodItem($foodItemId: ID!) {
       id
       name
       type
+      currentRecipes {
+        id
+        name
+      }
       recipes {
         id
         name

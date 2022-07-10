@@ -8,6 +8,7 @@ import {
   useCurrentShoppingListEventQuery,
   useToggleCheckShoppingListFoodMutation,
 } from '@src/generated/gmd22-api'
+import { truthy } from '@src/utils/other'
 import { initSkeletons } from '@src/utils/skeletons'
 
 import ListItem, { ListItemLoading } from '../common/list/ListItem'
@@ -20,17 +21,13 @@ const ShoppingList: FC = () => {
   const { loading, data } = useCurrentShoppingListEventQuery()
   const currentShoppingList = data?.events?.events?.[0]?.shoppingList
 
-  const [toggleCheckShoppingListFood] = useToggleCheckShoppingListFoodMutation({
-    // refetchQueries: [
-    //   {
-    //     query: currentShoppingListEventQuery,
-    //   },
-    // ],
-  })
+  const [toggleCheckShoppingListFood] = useToggleCheckShoppingListFoodMutation()
 
   const onListItemCheckboxClicked = (itemId: string) => {
     toggleCheckShoppingListFood({ variables: { toggleCheckShoppingListFoodId: itemId } })
   }
+
+  console.log({ currentShoppingList })
 
   return (
     <>
@@ -45,7 +42,11 @@ const ShoppingList: FC = () => {
                     key={item.food.id}
                     title={item.food.name ?? ''}
                     avatar={PancakeImg}
-                    details={`-`}
+                    details={`${item.food.currentRecipeFoodItems
+                      ?.map(foodItem =>
+                        [foodItem?.quantity, foodItem?.quantityUnit].filter(truthy).join(' '),
+                      )
+                      .join(' et ')}`}
                     actionIcon={item.isChecked ? CheckboxCompletedIcon : CheckboxIcon}
                     onClick={() => {
                       if (!!item?.food?.id) {

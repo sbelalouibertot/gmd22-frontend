@@ -1,0 +1,10 @@
+query Recipes($filters: RecipeFiltersInput) {
+  recipes(filters: $filters) {
+    recipes {
+      id
+      name
+      preparationDuration
+      cookingDuration
+    }
+  }
+}

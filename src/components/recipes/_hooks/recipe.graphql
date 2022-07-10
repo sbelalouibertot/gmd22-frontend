@@ -10,10 +10,16 @@ query Recipe($recipeId: ID!) {
         description
         recipeId
         duration
-        foodItems {
+      }
+      recipeFoodItems {
+        id
+        recipeId
+        foodId
+        quantity
+        quantityUnit
+        food {
           id
           name
-          type
         }
       }
     }

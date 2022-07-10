@@ -9,6 +9,7 @@ export type TStyledListProps = {
   horizontalPadding?: boolean
   fullHeight?: boolean
   gap?: keyof TTheme['spacing']['gap'] | number
+  wrap?: boolean
 }
 export const StyledList = styled.ul<TStyledListProps>`
   display: flex;
@@ -31,4 +32,5 @@ export const StyledList = styled.ul<TStyledListProps>`
     padding-right: ${p.theme.spacing.padding.medium}px;`}
   ${p => p.fullHeight && `height: 100%;`}
   scroll-behavior: smooth;
+  ${p => p.wrap && `flex-wrap: wrap;`}
 `

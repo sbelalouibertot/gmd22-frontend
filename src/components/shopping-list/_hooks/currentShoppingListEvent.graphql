@@ -14,7 +14,12 @@ query CurrentShoppingListEvent {
             id
             name
             type
-        }
+            currentRecipeFoodItems {
+              quantity
+              quantityUnit
+              id
+            }
+          }
         }
       }
     }

@@ -50,6 +50,8 @@ export type IFood = {
   name?: Maybe<Scalars['String']>,
   type?: Maybe<IFoodType>,
   recipes?: Maybe<Array<Maybe<IRecipe>>>,
+  currentRecipes?: Maybe<Array<Maybe<IRecipe>>>,
+  currentRecipeFoodItems?: Maybe<Array<Maybe<IRecipeFood>>>,
 };
 
 export type IFoodItemOutput = {
@@ -200,6 +202,11 @@ export type IQueryRecipeArgs = {
 };
 
 
+export type IQueryRecipesArgs = {
+  filters?: Maybe<IRecipeFiltersInput>
+};
+
+
 export type IQueryFoodRecipesArgs = {
   foodId: Scalars['ID']
 };
@@ -226,6 +233,7 @@ export type IRecipe = {
   preparationDuration: Scalars['Int'],
   cookingDuration: Scalars['Int'],
   recipeInstructions?: Maybe<Array<Maybe<IRecipeInstruction>>>,
+  recipeFoodItems?: Maybe<Array<Maybe<IRecipeFood>>>,
 };
 
 export type IRecipeEvent = {
@@ -239,6 +247,21 @@ export type IRecipeEvent = {
 export type IRecipeEventOutput = {
    __typename?: 'RecipeEventOutput',
   recipeEvent?: Maybe<IRecipeEvent>,
+};
+
+export type IRecipeFiltersInput = {
+  searchQuery?: Maybe<Scalars['String']>,
+};
+
+export type IRecipeFood = {
+   __typename?: 'RecipeFood',
+  id?: Maybe<Scalars['ID']>,
+  recipeId?: Maybe<Scalars['ID']>,
+  foodId?: Maybe<Scalars['ID']>,
+  quantity?: Maybe<Scalars['Int']>,
+  quantityUnit?: Maybe<Scalars['String']>,
+  food?: Maybe<IFood>,
+  recipe?: Maybe<IRecipe>,
 };
 
 export type IRecipeInput = {
@@ -395,7 +418,10 @@ export type IFoodItemQueryData = (
     & { foodItem: Maybe<(
       { __typename?: 'Food' }
       & Pick<IFood, 'id' | 'name' | 'type'>
-      & { recipes: Maybe<Array<Maybe<(
+      & { currentRecipes: Maybe<Array<Maybe<(
+        { __typename?: 'Recipe' }
+        & Pick<IRecipe, 'id' | 'name'>
+      )>>>, recipes: Maybe<Array<Maybe<(
         { __typename?: 'Recipe' }
         & Pick<IRecipe, 'id' | 'name'>
       )>>> }
@@ -538,12 +564,31 @@ export type IRecipeQueryData = (
       & { recipeInstructions: Maybe<Array<Maybe<(
         { __typename?: 'RecipeInstruction' }
         & Pick<IRecipeInstruction, 'id' | 'description' | 'recipeId' | 'duration'>
-        & { foodItems: Maybe<Array<Maybe<(
+      )>>>, recipeFoodItems: Maybe<Array<Maybe<(
+        { __typename?: 'RecipeFood' }
+        & Pick<IRecipeFood, 'id' | 'recipeId' | 'foodId' | 'quantity' | 'quantityUnit'>
+        & { food: Maybe<(
           { __typename?: 'Food' }
-          & Pick<IFood, 'id' | 'name' | 'type'>
-        )>>> }
+          & Pick<IFood, 'id' | 'name'>
+        )> }
       )>>> }
     )> }
+  )> }
+);
+
+export type IRecipesQueryVariables = {
+  filters?: Maybe<IRecipeFiltersInput>
+};
+
+
+export type IRecipesQueryData = (
+  { __typename?: 'Query' }
+  & { recipes: Maybe<(
+    { __typename?: 'RecipesOutput' }
+    & { recipes: Maybe<Array<Maybe<(
+      { __typename?: 'Recipe' }
+      & Pick<IRecipe, 'id' | 'name' | 'preparationDuration' | 'cookingDuration'>
+    )>>> }
   )> }
 );
 
@@ -583,6 +628,10 @@ export type ICurrentShoppingListEventQueryData = (
           & { food: Maybe<(
             { __typename?: 'Food' }
             & Pick<IFood, 'id' | 'name' | 'type'>
+            & { currentRecipeFoodItems: Maybe<Array<Maybe<(
+              { __typename?: 'RecipeFood' }
+              & Pick<IRecipeFood, 'quantity' | 'quantityUnit' | 'id'>
+            )>>> }
           )> }
         )>> }
       )> }
@@ -724,6 +773,10 @@ export const FoodItemDocument = gql`
       id
       name
       type
+      currentRecipes {
+        id
+        name
+      }
       recipes {
         id
         name
@@ -1047,10 +1100,16 @@ export const RecipeDocument = gql`
         description
         recipeId
         duration
-        foodItems {
+      }
+      recipeFoodItems {
+        id
+        recipeId
+        foodId
+        quantity
+        quantityUnit
+        food {
           id
           name
-          type
         }
       }
     }
@@ -1083,6 +1142,44 @@ export function useRecipeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IRe
 export type RecipeQueryHookResult = ReturnType<typeof useRecipeQuery>;
 export type RecipeLazyQueryHookResult = ReturnType<typeof useRecipeLazyQuery>;
 export type RecipeQueryResult = Apollo.QueryResult<IRecipeQueryData, IRecipeQueryVariables>;
+export const RecipesDocument = gql`
+    query Recipes($filters: RecipeFiltersInput) {
+  recipes(filters: $filters) {
+    recipes {
+      id
+      name
+      preparationDuration
+      cookingDuration
+    }
+  }
+}
+    `;
+
+/**
+ * __useRecipesQuery__
+ *
+ * To run a query within a React component, call `useRecipesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRecipesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRecipesQuery({
+ *   variables: {
+ *      filters: // value for 'filters'
+ *   },
+ * });
+ */
+export function useRecipesQuery(baseOptions?: Apollo.QueryHookOptions<IRecipesQueryData, IRecipesQueryVariables>) {
+        return Apollo.useQuery<IRecipesQueryData, IRecipesQueryVariables>(RecipesDocument, baseOptions);
+      }
+export function useRecipesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IRecipesQueryData, IRecipesQueryVariables>) {
+          return Apollo.useLazyQuery<IRecipesQueryData, IRecipesQueryVariables>(RecipesDocument, baseOptions);
+        }
+export type RecipesQueryHookResult = ReturnType<typeof useRecipesQuery>;
+export type RecipesLazyQueryHookResult = ReturnType<typeof useRecipesLazyQuery>;
+export type RecipesQueryResult = Apollo.QueryResult<IRecipesQueryData, IRecipesQueryVariables>;
 export const ReplaceRecipeDocument = gql`
     mutation ReplaceRecipe($recipeId: ID!, $eventId: ID!) {
   replaceRecipe(recipeId: $recipeId, eventId: $eventId) {
@@ -1137,6 +1234,11 @@ export const CurrentShoppingListEventDocument = gql`
             id
             name
             type
+            currentRecipeFoodItems {
+              quantity
+              quantityUnit
+              id
+            }
           }
         }
       }

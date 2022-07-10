@@ -1,4 +1,5 @@
 import { sample } from 'lodash'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FC, useMemo } from 'react'
 
@@ -9,7 +10,9 @@ import { initSkeletons } from '@src/utils/skeletons'
 
 import AnimatedListItemWrapper from '../common/animations/AnimatedListItemWrapper'
 import { Div } from '../common/div/Div.styled'
+import List from '../common/list/List'
 import { Skeleton } from '../common/skeleton/Skeleton.styled'
+import Tag from '../common/tag/Tag'
 import Text from '../common/text/Text'
 import { Header } from '../header/Header'
 import { StyledRecipeItem, StyledRecipeItemContainer, StyledTimelineList } from './Recipes.styled'
@@ -22,6 +25,7 @@ const FoodItem: FC = () => {
 
   const { loading, data } = useRecipeQuery({ variables: { recipeId } })
   const recipe = data?.recipe?.recipe
+  console.log({ recipe })
 
   const recipeInstructions:
     | (Pick<IRecipeInstruction, 'id' | 'description'> & {
@@ -36,6 +40,32 @@ const FoodItem: FC = () => {
       })),
     [recipe],
   )
+
+  const recipeFoodItems: {
+    id: string
+    name: string
+    quantity: number
+    unit?: string
+  }[] = useMemo(() => {
+    if (!recipe?.recipeFoodItems) {
+      return []
+    }
+    return recipe.recipeFoodItems
+      .map(
+        foodItem =>
+          !!foodItem?.foodId &&
+          !!foodItem.food?.name &&
+          !!foodItem.quantity && {
+            id: foodItem.foodId,
+            name: foodItem.food.name,
+            quantity: foodItem.quantity,
+            unit: foodItem.quantityUnit ?? undefined,
+          },
+      )
+      .filter(truthy)
+  }, [recipe?.recipeFoodItems])
+
+  console.log({ recipeFoodItems })
 
   if (loading) {
     return (
@@ -67,6 +97,18 @@ const FoodItem: FC = () => {
       <Text weight="bold" color="primary">
         {recipe?.name}
       </Text>
+      <List horizontal wrap gap="small">
+        {recipeFoodItems.map(foodItem => (
+          <Link key={foodItem.id} href={`/food/${foodItem.id}`}>
+            <Tag>
+              <Text>{foodItem.name}</Text>
+              <Text color="text-light" weight="light" size="very-small">
+                {foodItem.quantity} {foodItem.unit}
+              </Text>
+            </Tag>
+          </Link>
+        ))}
+      </List>
       <StyledTimelineList gap={120}>
         {recipeInstructions?.map((instruction, index) => (
           <AnimatedListItemWrapper key={instruction?.id}>

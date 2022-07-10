@@ -1,10 +1,11 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 
 import PancakeImg from '@src/../public/img/pancake.jpeg'
 import { FOOD_TYPE_TO_STR } from '@src/constants/food'
-import { useFoodItemQuery } from '@src/generated/gmd22-api'
+import { IRecipe, useFoodItemQuery } from '@src/generated/gmd22-api'
+import { truthy } from '@src/utils/other'
 import { initSkeletons } from '@src/utils/skeletons'
 
 import { Div } from '../common/div/Div.styled'
@@ -23,6 +24,25 @@ const FoodItem: FC = () => {
 
   const { loading, data } = useFoodItemQuery({ variables: { foodItemId } })
   const foodItem = data?.foodItem?.foodItem
+
+  const recipes: (Pick<IRecipe, 'id' | 'name'> & { isCurrent?: boolean })[] = useMemo(() => {
+    if (!foodItem) {
+      return []
+    }
+    const currentRecipes = foodItem?.currentRecipes
+      ?.filter(truthy)
+      .map(recipe => ({ ...recipe, isCurrent: true }))
+
+    const currentRecipesIds = foodItem?.currentRecipes?.filter(truthy).map(recipe => recipe.id)
+
+    const otherRecipes = foodItem?.recipes
+      ?.filter(truthy)
+      .filter(recipe => !currentRecipesIds?.includes(recipe.id))
+
+    return [currentRecipes, otherRecipes].filter(truthy).flat()
+  }, [foodItem])
+
+  console.log({ data })
 
   return (
     <>
@@ -65,21 +85,19 @@ const FoodItem: FC = () => {
         <List horizontal>
           {loading
             ? tagSkeletons.map(id => <Skeleton key={id} width={130} />)
-            : foodItem?.recipes?.map(
-                recipe =>
-                  !!recipe && (
-                    <Tag
-                      key={recipe?.id}
-                      onClick={() => {
-                        if (!!recipe.id) {
-                          router.push(`/recipes/${recipe.id}`)
-                        }
-                      }}
-                    >
-                      {recipe?.name}
-                    </Tag>
-                  ),
-              )}
+            : recipes.map(recipe => (
+                <Tag
+                  key={recipe?.id}
+                  onClick={() => {
+                    if (!!recipe.id) {
+                      router.push(`/recipes/${recipe.id}`)
+                    }
+                  }}
+                  {...(recipe.isCurrent && { color: 'success' })}
+                >
+                  {recipe?.name}
+                </Tag>
+              ))}
         </List>
       </StyledFoodCard>
     </>

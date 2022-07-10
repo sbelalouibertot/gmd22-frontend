@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import router from 'next/router'
 import { FC } from 'react'
 
@@ -9,7 +10,9 @@ import {
 } from '@src/generated/gmd22-api'
 import { initSkeletons } from '@src/utils/skeletons'
 
+import { Div } from '../common/div/Div.styled'
 import ListItem, { ListItemLoading } from '../common/list/ListItem'
+import Text from '../common/text/Text'
 import { Header } from '../header/Header'
 import * as currentPeriodRecipeEventsQuery from './_hooks/currentPeriodRecipeEvents.graphql'
 import { StyledList } from './Recipes.styled'
@@ -32,6 +35,13 @@ const Recipes: FC = () => {
   return (
     <>
       <Header title="Recettes" />
+      <Div fullWidth>
+        <Link href={'/recipes/all'}>
+          <Text color="primary" align="right" size="small">
+            Voir toutes les recettes
+          </Text>
+        </Link>
+      </Div>
       <StyledList>
         {loading
           ? recipesSkeletons.map(id => <ListItemLoading key={id} />)
