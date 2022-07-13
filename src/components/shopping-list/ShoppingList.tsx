@@ -1,5 +1,6 @@
+import { groupBy, mapValues } from 'lodash'
 import router from 'next/router'
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 
 import CheckboxIcon from '@src/../public/img/icons/checkbox.svg'
 import CheckboxCompletedIcon from '@src/../public/img/icons/checkbox-completed.svg'
@@ -18,7 +19,7 @@ import { StyledList } from './ShoppingList.styled'
 const shoppingListItemSkeletons = initSkeletons(6)
 
 const ShoppingList: FC = () => {
-  const { loading, data } = useCurrentShoppingListEventQuery()
+  const { loading, data } = useCurrentShoppingListEventQuery({ fetchPolicy: 'cache-and-network' })
   const currentShoppingList = data?.events?.events?.[0]?.shoppingList
 
   const [toggleCheckShoppingListFood] = useToggleCheckShoppingListFoodMutation()
@@ -27,7 +28,33 @@ const ShoppingList: FC = () => {
     toggleCheckShoppingListFood({ variables: { toggleCheckShoppingListFoodId: itemId } })
   }
 
-  console.log({ currentShoppingList })
+  const formattedShoppingListItems = useMemo(
+    () =>
+      currentShoppingList?.shoppingListItems
+        .map(shoppingListItem => {
+          if (!shoppingListItem?.food) {
+            return
+          }
+          const groupedItem = groupBy(shoppingListItem.food.currentRecipeFoodItems, 'quantityUnit')
+          const quantitiesObject = mapValues(groupedItem, (v, quantityUnit) => {
+            const quantity = v.reduce((acc, recipeFood) => acc + (recipeFood?.quantity ?? 0), 0)
+            return quantityUnit === 'null'
+              ? `${[
+                  quantity,
+                  Object.keys(groupedItem).length > 1 && `unité${quantity > 1 ? 's' : ''}`,
+                ]
+                  .filter(truthy)
+                  .join(' ')}`
+              : `${quantity} ${quantityUnit}`
+          })
+          const quantities = Object.values(quantitiesObject)
+            .sort(x => (x.includes('unité') ? -1 : 1))
+            .join(' et ')
+          return { ...shoppingListItem, quantities }
+        })
+        .filter(truthy),
+    [currentShoppingList?.shoppingListItems],
+  )
 
   return (
     <>
@@ -35,18 +62,14 @@ const ShoppingList: FC = () => {
       <StyledList>
         {loading
           ? shoppingListItemSkeletons.map(id => <ListItemLoading key={id} />)
-          : currentShoppingList?.shoppingListItems?.map(
+          : formattedShoppingListItems?.map(
               item =>
                 !!item?.food && (
                   <ListItem
                     key={item.food.id}
                     title={item.food.name ?? ''}
                     avatar={PancakeImg}
-                    details={`${item.food.currentRecipeFoodItems
-                      ?.map(foodItem =>
-                        [foodItem?.quantity, foodItem?.quantityUnit].filter(truthy).join(' '),
-                      )
-                      .join(' et ')}`}
+                    details={item.quantities}
                     actionIcon={item.isChecked ? CheckboxCompletedIcon : CheckboxIcon}
                     onClick={() => {
                       if (!!item?.food?.id) {

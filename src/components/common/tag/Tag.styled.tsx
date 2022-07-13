@@ -9,7 +9,7 @@ export const StyledTag = styled.span<TStyledTagProps>`
   border-radius: ${p => p.theme.border.radius.large}px;
   background-color: ${p => p.theme.color[p.color ?? 'primary']};
   font-size: ${p => p.theme.text.size['very-small']}px;
-  width: fit-content;
+  max-width: 130px;
   color: ${p => p.theme.color['text-light']};
   padding: ${p => p.theme.spacing.padding.xsmall}px ${p => p.theme.spacing.padding.small}px;
 `

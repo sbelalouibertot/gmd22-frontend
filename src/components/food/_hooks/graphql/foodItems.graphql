@@ -4,6 +4,7 @@ query foodItems {
       id
       name
       type
+      image
     }
   }
 }

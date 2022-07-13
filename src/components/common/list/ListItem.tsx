@@ -5,11 +5,11 @@ import AnimatedButtonWrapper from '../animations/AnimatedButtonWrapper'
 import { Div } from '../div/Div.styled'
 import { Skeleton } from '../skeleton/Skeleton.styled'
 import Text from '../text/Text'
-import { StyledItemAvatar, StyledListItem } from './ListItem.styled'
+import { StyledItemAvatar, StyledListItem, StyledMainText } from './ListItem.styled'
 
 type TListItemProps = {
   title: string
-  avatar: StaticImageData
+  avatar?: StaticImageData | string
   details?: string
   actionIcon?: StaticImageData
   onClick?: VoidFunction
@@ -36,7 +36,7 @@ const ListItem: FC<TListItemProps> = ({
         )}
       </Div>
       <Div spaceBetween percentWidth={60} gap="small">
-        <Text size={small ? 'very-small' : 'small'}>{title}</Text>
+        <StyledMainText size={small ? 'very-small' : 'small'}>{title}</StyledMainText>
         <Text size="very-small" color="text-lighter">
           {details}
         </Text>

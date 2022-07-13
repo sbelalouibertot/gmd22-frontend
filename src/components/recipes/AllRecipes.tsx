@@ -1,7 +1,7 @@
 import router from 'next/router'
 import { FC, useEffect, useState } from 'react'
 
-import PancakeImg from '@src/../public/img/pancake.jpeg'
+import UnknownImg from '@src/../public/img/unknown.jpeg'
 import { QUERY_DEBOUNCE_DURATION } from '@src/constants/common'
 import { useRecipesQuery } from '@src/generated/gmd22-api'
 import { useDebounce } from '@src/utils/hooks/useDebounce'
@@ -48,8 +48,8 @@ const AllRecipes: FC = () => {
                 !!recipe && (
                   <ListItem
                     key={recipe.id}
-                    title={recipe.name ?? ''}
-                    avatar={PancakeImg}
+                    title={recipe.name.length > 42 ? `${recipe.name.slice(0, 42)}...` : recipe.name}
+                    avatar={recipe.image ?? UnknownImg}
                     details={`👨‍🍳 ${recipe.preparationDuration} min • 🔥 ${recipe.cookingDuration} min`}
                     onClick={() => {
                       if (!!recipe.id) {

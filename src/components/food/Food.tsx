@@ -3,7 +3,7 @@ import router from 'next/router'
 import { FC } from 'react'
 
 import NextIcon from '@src/../public/img/icons/next.svg'
-import PancakeImg from '@src/../public/img/pancake.jpeg'
+import UnknownImg from '@src/../public/img/unknown.jpeg'
 import { FOOD_TYPE_TO_STR } from '@src/constants/food'
 
 import AnimatedListItemWrapper from '../common/animations/AnimatedListItemWrapper'
@@ -31,7 +31,7 @@ const Food: FC = () => {
                 <ListItem
                   key={item.id}
                   title={item.name}
-                  avatar={PancakeImg}
+                  avatar={item.image ?? UnknownImg}
                   details={FOOD_TYPE_TO_STR[item.type]}
                   actionIcon={NextIcon}
                   onClick={() => router.push(`/food/${item.id}`)}

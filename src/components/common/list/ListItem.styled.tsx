@@ -3,6 +3,7 @@ import Image from 'next/image'
 import styled from '@emotion/styled'
 
 import { Div } from '../div/Div.styled'
+import Text from '../text/Text'
 
 export const StyledListItem = styled(Div)`
   display: flex;
@@ -19,4 +20,8 @@ export const StyledListItem = styled(Div)`
 
 export const StyledItemAvatar = styled(Image)`
   border-radius: ${p => p.theme.border.radius['very-large']}px;
+`
+
+export const StyledMainText = styled(Text)`
+  overflow: hidden;
 `

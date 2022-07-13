@@ -5,6 +5,7 @@ query Recipes($filters: RecipeFiltersInput) {
       name
       preparationDuration
       cookingDuration
+      image
     }
   }
 }

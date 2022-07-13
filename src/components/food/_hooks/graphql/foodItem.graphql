@@ -4,6 +4,7 @@ query FoodItem($foodItemId: ID!) {
       id
       name
       type
+      image
       currentRecipes {
         id
         name

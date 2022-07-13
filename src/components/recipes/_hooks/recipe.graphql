@@ -5,6 +5,7 @@ query Recipe($recipeId: ID!) {
       name
       preparationDuration
       cookingDuration
+      image
       recipeInstructions {
         id
         description

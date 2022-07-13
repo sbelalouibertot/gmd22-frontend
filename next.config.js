@@ -15,7 +15,9 @@ const nextConfig = {
   webpackDevMiddleware: config => {
     return config
   },
-  
+  images: {
+    domains: ['assets.afcdn.com'],
+  },
 }
 
 module.exports = (phase, { defaultConfig }) => {

@@ -49,6 +49,7 @@ export type IFood = {
   id?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
   type?: Maybe<IFoodType>,
+  image?: Maybe<Scalars['String']>,
   recipes?: Maybe<Array<Maybe<IRecipe>>>,
   currentRecipes?: Maybe<Array<Maybe<IRecipe>>>,
   currentRecipeFoodItems?: Maybe<Array<Maybe<IRecipeFood>>>,
@@ -232,6 +233,8 @@ export type IRecipe = {
   name: Scalars['String'],
   preparationDuration: Scalars['Int'],
   cookingDuration: Scalars['Int'],
+  image?: Maybe<Scalars['String']>,
+  numberOfPeople?: Maybe<Scalars['Int']>,
   recipeInstructions?: Maybe<Array<Maybe<IRecipeInstruction>>>,
   recipeFoodItems?: Maybe<Array<Maybe<IRecipeFood>>>,
 };
@@ -258,7 +261,7 @@ export type IRecipeFood = {
   id?: Maybe<Scalars['ID']>,
   recipeId?: Maybe<Scalars['ID']>,
   foodId?: Maybe<Scalars['ID']>,
-  quantity?: Maybe<Scalars['Int']>,
+  quantity?: Maybe<Scalars['Float']>,
   quantityUnit?: Maybe<Scalars['String']>,
   food?: Maybe<IFood>,
   recipe?: Maybe<IRecipe>,
@@ -417,7 +420,7 @@ export type IFoodItemQueryData = (
     { __typename?: 'FoodItemOutput' }
     & { foodItem: Maybe<(
       { __typename?: 'Food' }
-      & Pick<IFood, 'id' | 'name' | 'type'>
+      & Pick<IFood, 'id' | 'name' | 'type' | 'image'>
       & { currentRecipes: Maybe<Array<Maybe<(
         { __typename?: 'Recipe' }
         & Pick<IRecipe, 'id' | 'name'>
@@ -438,7 +441,7 @@ export type IFoodItemsQueryData = (
     { __typename?: 'FoodItemsOutput' }
     & { foodItems: Array<(
       { __typename?: 'Food' }
-      & Pick<IFood, 'id' | 'name' | 'type'>
+      & Pick<IFood, 'id' | 'name' | 'type' | 'image'>
     )> }
   )> }
 );
@@ -543,7 +546,7 @@ export type ICurrentPeriodRecipeEventsQueryData = (
       & Pick<IEvent, 'id'>
       & { recipes: Maybe<Array<(
         { __typename?: 'Recipe' }
-        & Pick<IRecipe, 'id' | 'name' | 'preparationDuration' | 'cookingDuration'>
+        & Pick<IRecipe, 'id' | 'name' | 'preparationDuration' | 'cookingDuration' | 'image'>
       )>> }
     )> }
   ) }
@@ -560,7 +563,7 @@ export type IRecipeQueryData = (
     { __typename?: 'RecipeOutput' }
     & { recipe: Maybe<(
       { __typename?: 'Recipe' }
-      & Pick<IRecipe, 'id' | 'name' | 'preparationDuration' | 'cookingDuration'>
+      & Pick<IRecipe, 'id' | 'name' | 'preparationDuration' | 'cookingDuration' | 'image'>
       & { recipeInstructions: Maybe<Array<Maybe<(
         { __typename?: 'RecipeInstruction' }
         & Pick<IRecipeInstruction, 'id' | 'description' | 'recipeId' | 'duration'>
@@ -587,7 +590,7 @@ export type IRecipesQueryData = (
     { __typename?: 'RecipesOutput' }
     & { recipes: Maybe<Array<Maybe<(
       { __typename?: 'Recipe' }
-      & Pick<IRecipe, 'id' | 'name' | 'preparationDuration' | 'cookingDuration'>
+      & Pick<IRecipe, 'id' | 'name' | 'preparationDuration' | 'cookingDuration' | 'image'>
     )>>> }
   )> }
 );
@@ -773,6 +776,7 @@ export const FoodItemDocument = gql`
       id
       name
       type
+      image
       currentRecipes {
         id
         name
@@ -818,6 +822,7 @@ export const FoodItemsDocument = gql`
       id
       name
       type
+      image
     }
   }
 }
@@ -1057,6 +1062,7 @@ export const CurrentPeriodRecipeEventsDocument = gql`
         name
         preparationDuration
         cookingDuration
+        image
       }
     }
   }
@@ -1095,6 +1101,7 @@ export const RecipeDocument = gql`
       name
       preparationDuration
       cookingDuration
+      image
       recipeInstructions {
         id
         description
@@ -1150,6 +1157,7 @@ export const RecipesDocument = gql`
       name
       preparationDuration
       cookingDuration
+      image
     }
   }
 }

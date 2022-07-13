@@ -54,7 +54,7 @@ const FoodItem: FC = () => {
           </Text>
         </Link>
       </Div>
-      <StyledFoodCard spaceBetween>
+      <StyledFoodCard spaceBetween gap="large">
         {loading ? (
           <Div gap="large">
             <Div gap="small">
@@ -82,7 +82,7 @@ const FoodItem: FC = () => {
             />
           </Div>
         )}
-        <List horizontal>
+        <List horizontal wrap>
           {loading
             ? tagSkeletons.map(id => <Skeleton key={id} width={130} />)
             : recipes.map(recipe => (

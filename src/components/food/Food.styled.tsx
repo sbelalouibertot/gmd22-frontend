@@ -13,7 +13,6 @@ export const StyledList = styled(List)`
 
 export const StyledFoodCard = styled(Div)`
   width: 327px;
-  height: 284px;
   border-radius: ${p => p.theme.border.radius.large}px;
   background-color: ${p => p.theme.color['background-light']};
   border: 1px solid ${p => p.theme.color['background-dark']};

@@ -3,7 +3,7 @@ import router from 'next/router'
 import { FC } from 'react'
 
 import ChangeIcon from '@src/../public/img/icons/change.svg'
-import PancakeImg from '@src/../public/img/pancake.jpeg'
+import UnknownImg from '@src/../public/img/unknown.jpeg'
 import {
   useCurrentPeriodRecipeEventsQuery,
   useReplaceRecipeMutation,
@@ -50,8 +50,8 @@ const Recipes: FC = () => {
                 !!recipe && (
                   <ListItem
                     key={recipe.id}
-                    title={recipe.name ?? ''}
-                    avatar={PancakeImg}
+                    title={recipe.name.length > 42 ? `${recipe.name.slice(0, 41)}...` : recipe.name}
+                    avatar={recipe.image ?? UnknownImg}
                     details={`👨‍🍳 ${recipe.preparationDuration} min • 🔥 ${recipe.cookingDuration} min`}
                     actionIcon={ChangeIcon}
                     onClick={() => {
