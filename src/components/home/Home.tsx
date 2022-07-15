@@ -91,7 +91,12 @@ const Home: FC = () => {
           {currentPeriodEventsLoading
             ? eventsCardsSkeletons.map(id => <EventCardLoading key={id} />)
             : currentPeriodEvents?.map(
-                event => !!event && <EventCard key={event.id} event={event} />,
+                event =>
+                  !!event && (
+                    <Link key={event.id} href={`/planning/event/${event.id}`}>
+                      <EventCard event={event} />
+                    </Link>
+                  ),
               )}
         </List>
       </Section>

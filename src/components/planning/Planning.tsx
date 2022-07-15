@@ -50,6 +50,7 @@ type TFormattedEvent = TDay['events'][number] & {
 const Planning: FC = () => {
   const router = useRouter()
   const routerDayIndex = router.query.dayIndex as string
+  const routerEventId = router.query.eventId as string
 
   const [selectedDayIndex, setSelectedDayIndex] = useState<number | null>(null)
   const [selectedDayEvents, setSelectedDayEvents] = useState<TFormattedEvent[] | null>(null)
@@ -108,12 +109,14 @@ const Planning: FC = () => {
 
   useEffect(() => {
     if (!loading && !!data?.events?.events && !!days) {
-      const dayIndex = days.findIndex(day => isToday(day.date))
+      const dayIndex = days.findIndex(day =>
+        !!routerEventId ? day.events.find(event => event.id === routerEventId) : isToday(day.date),
+      )
       if (dayIndex !== -1) {
         updateSelectedDay(dayIndex, { force: false })
       }
     }
-  }, [data?.events?.events, days, loading, updateSelectedDay])
+  }, [data?.events?.events, days, loading, routerEventId, updateSelectedDay])
 
   useEffect(() => {
     selectedDayRef?.current?.scrollIntoView({
