@@ -25,7 +25,6 @@ const FoodItem: FC = () => {
 
   const { loading, data } = useRecipeQuery({ variables: { recipeId } })
   const recipe = data?.recipe?.recipe
-  console.log({ recipe })
 
   const recipeInstructions:
     | (Pick<IRecipeInstruction, 'id' | 'description'> & {
@@ -64,8 +63,6 @@ const FoodItem: FC = () => {
       )
       .filter(truthy)
   }, [recipe?.recipeFoodItems])
-
-  console.log({ recipeFoodItems })
 
   if (loading) {
     return (

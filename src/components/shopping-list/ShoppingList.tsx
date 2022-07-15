@@ -12,6 +12,7 @@ import { truthy } from '@src/utils/other'
 import { initSkeletons } from '@src/utils/skeletons'
 
 import ListItem, { ListItemLoading } from '../common/list/ListItem'
+import Text from '../common/text/Text'
 import { Header } from '../header/Header'
 import { StyledList } from './ShoppingList.styled'
 
@@ -54,10 +55,16 @@ const ShoppingList: FC = () => {
         .filter(truthy),
     [currentShoppingList?.shoppingListItems],
   )
+  const total = formattedShoppingListItems?.length ?? 0
 
   return (
     <>
       <Header title={currentShoppingList?.name || 'Liste de courses'} />
+      {!loading && (
+        <Text color="text-lighter" size="very-small">
+          {total} résultat{total > 1 && 's'}
+        </Text>
+      )}
       <StyledList>
         {loading
           ? shoppingListItemSkeletons.map(id => <ListItemLoading key={id} />)

@@ -1,5 +1,6 @@
-query foodItems {
-  foodItems {
+query foodItems($pagination: Pagination) {
+  foodItems(pagination: $pagination) {
+    total
     foodItems {
       id
       name

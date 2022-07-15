@@ -62,6 +62,7 @@ export type IFoodItemOutput = {
 
 export type IFoodItemsOutput = {
    __typename?: 'FoodItemsOutput',
+  total?: Maybe<Scalars['Int']>,
   foodItems: Array<IFood>,
 };
 
@@ -135,20 +136,13 @@ export type IMutationUpdateUserPreferencesArgs = {
 };
 
 export type IPagination = {
-  first?: Maybe<Scalars['Int']>,
-  skip?: Maybe<Scalars['Int']>,
-};
-
-export type IPaginationInfos = {
-   __typename?: 'PaginationInfos',
-  total?: Maybe<Scalars['Int']>,
-  first?: Maybe<Scalars['Int']>,
+  take?: Maybe<Scalars['Int']>,
   skip?: Maybe<Scalars['Int']>,
 };
 
 export type IPaginationOutput = {
    __typename?: 'PaginationOutput',
-  first?: Maybe<Scalars['Int']>,
+  take?: Maybe<Scalars['Int']>,
   skip?: Maybe<Scalars['Int']>,
 };
 
@@ -193,6 +187,11 @@ export type IQueryFoodItemArgs = {
 };
 
 
+export type IQueryFoodItemsArgs = {
+  pagination?: Maybe<IPagination>
+};
+
+
 export type IQueryNextRecipeArgs = {
   userId: Scalars['ID']
 };
@@ -204,7 +203,8 @@ export type IQueryRecipeArgs = {
 
 
 export type IQueryRecipesArgs = {
-  filters?: Maybe<IRecipeFiltersInput>
+  filters?: Maybe<IRecipeFiltersInput>,
+  pagination?: Maybe<IPagination>
 };
 
 
@@ -290,6 +290,7 @@ export type IRecipeOutput = {
 export type IRecipesOutput = {
    __typename?: 'RecipesOutput',
   recipes?: Maybe<Array<Maybe<IRecipe>>>,
+  total?: Maybe<Scalars['Int']>,
 };
 
 export type IShoppingList = {
@@ -432,13 +433,16 @@ export type IFoodItemQueryData = (
   )> }
 );
 
-export type IFoodItemsQueryVariables = {};
+export type IFoodItemsQueryVariables = {
+  pagination?: Maybe<IPagination>
+};
 
 
 export type IFoodItemsQueryData = (
   { __typename?: 'Query' }
   & { foodItems: Maybe<(
     { __typename?: 'FoodItemsOutput' }
+    & Pick<IFoodItemsOutput, 'total'>
     & { foodItems: Array<(
       { __typename?: 'Food' }
       & Pick<IFood, 'id' | 'name' | 'type' | 'image'>
@@ -580,7 +584,8 @@ export type IRecipeQueryData = (
 );
 
 export type IRecipesQueryVariables = {
-  filters?: Maybe<IRecipeFiltersInput>
+  filters?: Maybe<IRecipeFiltersInput>,
+  pagination?: Maybe<IPagination>
 };
 
 
@@ -588,6 +593,7 @@ export type IRecipesQueryData = (
   { __typename?: 'Query' }
   & { recipes: Maybe<(
     { __typename?: 'RecipesOutput' }
+    & Pick<IRecipesOutput, 'total'>
     & { recipes: Maybe<Array<Maybe<(
       { __typename?: 'Recipe' }
       & Pick<IRecipe, 'id' | 'name' | 'preparationDuration' | 'cookingDuration' | 'image'>
@@ -816,8 +822,9 @@ export type FoodItemQueryHookResult = ReturnType<typeof useFoodItemQuery>;
 export type FoodItemLazyQueryHookResult = ReturnType<typeof useFoodItemLazyQuery>;
 export type FoodItemQueryResult = Apollo.QueryResult<IFoodItemQueryData, IFoodItemQueryVariables>;
 export const FoodItemsDocument = gql`
-    query foodItems {
-  foodItems {
+    query foodItems($pagination: Pagination) {
+  foodItems(pagination: $pagination) {
+    total
     foodItems {
       id
       name
@@ -840,6 +847,7 @@ export const FoodItemsDocument = gql`
  * @example
  * const { data, loading, error } = useFoodItemsQuery({
  *   variables: {
+ *      pagination: // value for 'pagination'
  *   },
  * });
  */
@@ -1150,8 +1158,9 @@ export type RecipeQueryHookResult = ReturnType<typeof useRecipeQuery>;
 export type RecipeLazyQueryHookResult = ReturnType<typeof useRecipeLazyQuery>;
 export type RecipeQueryResult = Apollo.QueryResult<IRecipeQueryData, IRecipeQueryVariables>;
 export const RecipesDocument = gql`
-    query Recipes($filters: RecipeFiltersInput) {
-  recipes(filters: $filters) {
+    query Recipes($filters: RecipeFiltersInput, $pagination: Pagination) {
+  recipes(filters: $filters, pagination: $pagination) {
+    total
     recipes {
       id
       name
@@ -1176,6 +1185,7 @@ export const RecipesDocument = gql`
  * const { data, loading, error } = useRecipesQuery({
  *   variables: {
  *      filters: // value for 'filters'
+ *      pagination: // value for 'pagination'
  *   },
  * });
  */

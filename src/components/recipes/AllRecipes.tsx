@@ -9,14 +9,18 @@ import { initSkeletons } from '@src/utils/skeletons'
 import { Div } from '../common/div/Div.styled'
 import { Input } from '../common/input/Input.styled'
 import ListItem, { ListItemLoading } from '../common/list/ListItem'
+import Text from '../common/text/Text'
 import { Header } from '../header/Header'
 import { StyledList } from './Recipes.styled'
 
 const recipesSkeletons = initSkeletons(5)
 
 const AllRecipes: FC = () => {
-  const { loading, data, refetch } = useRecipesQuery()
+  const { loading, data, refetch, fetchMore } = useRecipesQuery({
+    notifyOnNetworkStatusChange: true,
+  })
   const recipes = data?.recipes?.recipes
+  const total = data?.recipes?.total ?? 0
 
   const [searchQuery, setSearchQuery] = useState<string | undefined>(undefined)
   const debouncedQuery = useDebounce(searchQuery, QUERY_DEBOUNCE_DURATION)
@@ -29,6 +33,27 @@ const AllRecipes: FC = () => {
     refetch({ filters: {} })
   }, [debouncedQuery, refetch])
 
+  const onBottomReached = () => {
+    if (recipes && recipes.length < total && !loading) {
+      fetchMore({
+        variables: { pagination: { skip: recipes.length } },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          if (!fetchMoreResult?.recipes || !previousResult?.recipes?.recipes) {
+            return previousResult
+          }
+          const previousRecipes = previousResult.recipes.recipes
+          const nextRecipes = fetchMoreResult.recipes?.recipes
+          return {
+            recipes: {
+              total: fetchMoreResult.recipes.total,
+              recipes: previousRecipes.concat(nextRecipes),
+            },
+          }
+        },
+      })
+    }
+  }
+
   return (
     <>
       <Header title="Recettes" />
@@ -39,7 +64,10 @@ const AllRecipes: FC = () => {
           onChange={e => setSearchQuery(e.currentTarget.value || undefined)}
         />
       </Div>
-      <StyledList>
+      <Text color="text-lighter" size="very-small">
+        {total} résultat{total > 1 && 's'}
+      </Text>
+      <StyledList onBottomReached={onBottomReached}>
         {loading
           ? recipesSkeletons.map(id => <ListItemLoading key={id} />)
           : recipes?.map(

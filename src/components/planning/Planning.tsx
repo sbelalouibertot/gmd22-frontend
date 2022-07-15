@@ -68,10 +68,12 @@ const Planning: FC = () => {
     (dayIndex: number, options: { force: boolean } = { force: true }) => {
       if (options.force || (selectedDayIndex === null && routerDayIndex === undefined)) {
         setSelectedDayIndex(dayIndex)
-        router.push(`/planning/${dayIndex}`)
+        if (!routerEventId) {
+          router.push(`/planning/${dayIndex}`)
+        }
       }
     },
-    [router, routerDayIndex, selectedDayIndex],
+    [router, routerDayIndex, routerEventId, selectedDayIndex],
   )
 
   const days: TDay[] = useMemo(() => {
@@ -171,12 +173,14 @@ const Planning: FC = () => {
       <StyledDayCardContainer row gap="medium" flexStart>
         {days?.map((day, dayIndex) => (
           <AnimatedButtonWrapper key={dayIndex}>
-            <Link href={`/planning/${dayIndex}`}>
+            <Link
+              href={`/planning/${dayIndex}`}
+              {...(selectedDayIndex === dayIndex && { ref: selectedDayRef })}
+            >
               <DroppableDayCard
                 center
                 isToday={day.isToday}
                 isSelected={selectedDayIndex === dayIndex}
-                {...(selectedDayIndex === dayIndex && { ref: selectedDayRef })}
                 onClick={() => {
                   updateSelectedDay(dayIndex)
                 }}

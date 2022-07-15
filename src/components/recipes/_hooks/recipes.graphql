@@ -1,5 +1,6 @@
-query Recipes($filters: RecipeFiltersInput) {
-  recipes(filters: $filters) {
+query Recipes($filters: RecipeFiltersInput, $pagination: Pagination) {
+  recipes(filters: $filters, pagination: $pagination) {
+    total
     recipes {
       id
       name
