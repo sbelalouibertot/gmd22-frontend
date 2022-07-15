@@ -18,7 +18,7 @@ type TMainRecipeCardProps = {
   title: string
   recipe: Pick<IRecipe, 'name' | 'preparationDuration' | 'cookingDuration'> | null
   loading: boolean
-  onClick: VoidFunction
+  onClick?: VoidFunction
 }
 
 const MainRecipeCard: FC<TMainRecipeCardProps> = ({ title, recipe, loading, onClick }) => {

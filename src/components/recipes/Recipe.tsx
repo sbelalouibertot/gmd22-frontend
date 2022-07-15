@@ -1,8 +1,8 @@
 import { sample } from 'lodash'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FC, useMemo } from 'react'
 
+import Link from '@src/components/common/link/Link'
 import { COOK_EMOJIS } from '@src/constants/food'
 import { IRecipeInstruction, useRecipeQuery } from '@src/generated/gmd22-api'
 import { truthy } from '@src/utils/other'

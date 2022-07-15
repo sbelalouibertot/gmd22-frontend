@@ -1,8 +1,8 @@
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FC, useMemo } from 'react'
 
-import PancakeImg from '@src/../public/img/pancake.jpeg'
+import UnknownImg from '@src/../public/img/unknown.jpeg'
+import Link from '@src/components/common/link/Link'
 import { FOOD_TYPE_TO_STR } from '@src/constants/food'
 import { IRecipe, useFoodItemQuery } from '@src/generated/gmd22-api'
 import { truthy } from '@src/utils/other'
@@ -74,7 +74,7 @@ const FoodItem: FC = () => {
               )}
             </Div>
             <StyledFoodImage
-              src={PancakeImg}
+              src={foodItem?.image ?? UnknownImg}
               width={140}
               height={140}
               objectFit="cover"

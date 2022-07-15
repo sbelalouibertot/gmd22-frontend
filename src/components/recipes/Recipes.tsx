@@ -1,9 +1,8 @@
-import Link from 'next/link'
-import router from 'next/router'
 import { FC } from 'react'
 
 import ChangeIcon from '@src/../public/img/icons/change.svg'
 import UnknownImg from '@src/../public/img/unknown.jpeg'
+import Link from '@src/components/common/link/Link'
 import {
   useCurrentPeriodRecipeEventsQuery,
   useReplaceRecipeMutation,
@@ -36,11 +35,9 @@ const Recipes: FC = () => {
     <>
       <Header title="Recettes" />
       <Div fullWidth>
-        <Link href={'/recipes/all'}>
-          <Text color="primary" align="right" size="small">
-            Voir toutes les recettes
-          </Text>
-        </Link>
+        <Text color="primary" align="right" size="small">
+          <Link href={'/recipes/all'}>Voir toutes les recettes </Link>
+        </Text>
       </Div>
       <StyledList>
         {loading
@@ -54,16 +51,11 @@ const Recipes: FC = () => {
                     avatar={recipe.image ?? UnknownImg}
                     details={`👨‍🍳 ${recipe.preparationDuration} min • 🔥 ${recipe.cookingDuration} min`}
                     actionIcon={ChangeIcon}
-                    onClick={() => {
-                      if (!!recipe.id) {
-                        router.push(`/recipes/${recipe.id}`)
-                      }
-                    }}
-                    onActionClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+                    {...(!!recipe.id && { linkTo: `/recipes/${recipe.id}` })}
+                    onActionClick={() => {
                       if (!!recipe.id && !!recipe.eventId) {
                         onListItemClicked({ recipeId: recipe.id, eventId: recipe.eventId })
                       }
-                      e.stopPropagation()
                     }}
                   />
                 ),

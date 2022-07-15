@@ -1,6 +1,5 @@
 import dayjs from 'dayjs'
 import Image from 'next/image'
-import Link from 'next/link'
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { useDrag } from 'react-dnd'
 
@@ -9,6 +8,7 @@ import ChronometerIcon from '@src/../public/img/icons/chronometer.svg'
 import DragdAndDropIcon from '@src/../public/img/icons/drag-and-drop.svg'
 import PauseIcon from '@src/../public/img/icons/pause.svg'
 import RestartIcon from '@src/../public/img/icons/restart.svg'
+import Link from '@src/components/common/link/Link'
 
 import AnimatedButtonWrapper from '../common/animations/AnimatedButtonWrapper'
 import { StyledActionButton } from '../common/button/Button.styled'

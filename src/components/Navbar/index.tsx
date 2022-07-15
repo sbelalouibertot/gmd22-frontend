@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FC, useMemo } from 'react'
 
@@ -9,6 +8,7 @@ import PlayIcon from '@src/../public/img/icons/play.svg'
 import ShoppingCartIcon from '@src/../public/img/icons/shopping-cart.svg'
 
 import AnimatedButtonWrapper from '../common/animations/AnimatedButtonWrapper'
+import Link from '../common/link/Link'
 import {
   StyledMainTabIconContainer,
   StyledNavbarContainer,

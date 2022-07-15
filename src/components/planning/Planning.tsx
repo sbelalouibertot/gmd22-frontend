@@ -17,6 +17,7 @@ import { initSkeletons } from '@src/utils/skeletons'
 import AnimatedButtonWrapper from '../common/animations/AnimatedButtonWrapper'
 import { Div } from '../common/div/Div.styled'
 import { StyledIndicator } from '../common/div/Indicator.styled'
+import Link from '../common/link/Link'
 import List from '../common/list/List'
 import ListItem from '../common/list/ListItem'
 import { Skeleton } from '../common/skeleton/Skeleton.styled'
@@ -167,23 +168,25 @@ const Planning: FC = () => {
       <StyledDayCardContainer row gap="medium" flexStart>
         {days?.map((day, dayIndex) => (
           <AnimatedButtonWrapper key={dayIndex}>
-            <DroppableDayCard
-              center
-              isToday={day.isToday}
-              isSelected={selectedDayIndex === dayIndex}
-              {...(selectedDayIndex === dayIndex && { ref: selectedDayRef })}
-              onClick={() => {
-                updateSelectedDay(dayIndex)
-              }}
-              isDropTargetDisplayed={isDragging}
-              date={day.date}
-            >
-              {day.events.length > 0 && <StyledIndicator>{day.emoji}</StyledIndicator>}
-              <Text size="small" weight={day.isToday ? 'bold' : 'light'} firstLetterUppercase>
-                {day.dayName}
-              </Text>
-              <Text weight="medium">{day.dayNumber}</Text>
-            </DroppableDayCard>
+            <Link href={`/planning/${dayIndex}`}>
+              <DroppableDayCard
+                center
+                isToday={day.isToday}
+                isSelected={selectedDayIndex === dayIndex}
+                {...(selectedDayIndex === dayIndex && { ref: selectedDayRef })}
+                onClick={() => {
+                  updateSelectedDay(dayIndex)
+                }}
+                isDropTargetDisplayed={isDragging}
+                date={day.date}
+              >
+                {day.events.length > 0 && <StyledIndicator>{day.emoji}</StyledIndicator>}
+                <Text size="small" weight={day.isToday ? 'bold' : 'light'} firstLetterUppercase>
+                  {day.dayName}
+                </Text>
+                <Text weight="medium">{day.dayNumber}</Text>
+              </DroppableDayCard>
+            </Link>
           </AnimatedButtonWrapper>
         ))}
       </StyledDayCardContainer>
@@ -210,11 +213,7 @@ const Planning: FC = () => {
                       title={recipe.name ?? ''}
                       avatar={PancakeImg}
                       details={`👨‍🍳 ${recipe.preparationDuration} min • 🔥 ${recipe.cookingDuration} min`}
-                      onClick={() => {
-                        if (!!recipe.id) {
-                          router.push(`/recipes/${recipe.id}`)
-                        }
-                      }}
+                      {...(!!recipe.id && { linkTo: `/recipes/${recipe.id}` })}
                     />
                   </Div>
                 ))}
@@ -225,7 +224,7 @@ const Planning: FC = () => {
                 title={'Courses'}
                 avatar={PancakeImg}
                 details={event.shoppingList.name}
-                onClick={() => router.push(`/shoppingList`)}
+                linkTo={`/shoppingList`}
               />
             )}
             {!!event.title && !!event.description && (

@@ -14,7 +14,7 @@ export const StyledListItem = styled(Div)`
   border-radius: ${p => p.theme.border.radius.large}px;
   width: 327px;
   min-height: 84px;
-  max-height: 95px;
+  max-height: 105px;
   padding: ${p => p.theme.spacing.padding.medium}px;
 `
 

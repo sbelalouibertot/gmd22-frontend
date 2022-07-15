@@ -1,5 +1,4 @@
 import { groupBy, mapValues } from 'lodash'
-import router from 'next/router'
 import { FC, useMemo } from 'react'
 
 import CheckboxIcon from '@src/../public/img/icons/checkbox.svg'
@@ -19,7 +18,7 @@ import { StyledList } from './ShoppingList.styled'
 const shoppingListItemSkeletons = initSkeletons(6)
 
 const ShoppingList: FC = () => {
-  const { loading, data } = useCurrentShoppingListEventQuery({ fetchPolicy: 'cache-and-network' })
+  const { loading, data } = useCurrentShoppingListEventQuery()
   const currentShoppingList = data?.events?.events?.[0]?.shoppingList
 
   const [toggleCheckShoppingListFood] = useToggleCheckShoppingListFoodMutation()
@@ -71,16 +70,11 @@ const ShoppingList: FC = () => {
                     avatar={PancakeImg}
                     details={item.quantities}
                     actionIcon={item.isChecked ? CheckboxCompletedIcon : CheckboxIcon}
-                    onClick={() => {
-                      if (!!item?.food?.id) {
-                        router.push(`/food/${item.food.id}`)
-                      }
-                    }}
-                    onActionClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+                    {...(!!item?.food?.id && { linkTo: `/food/${item.food.id}` })}
+                    onActionClick={() => {
                       if (!!item.id) {
                         onListItemCheckboxClicked(item.id)
                       }
-                      e.stopPropagation()
                     }}
                   />
                 ),

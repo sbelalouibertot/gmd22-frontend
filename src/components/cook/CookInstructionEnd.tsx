@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
-import Link from 'next/link'
 import { useMemo } from 'react'
 
 import CookBackground from '@src/../public/img/background/cook.svg'
+import Link from '@src/components/common/link/Link'
 
 import { Div } from '../common/div/Div.styled'
 import Text from '../common/text/Text'

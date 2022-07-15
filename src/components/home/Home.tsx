@@ -1,12 +1,11 @@
 import dayjs from 'dayjs'
 import pick from 'lodash/pick'
 import Image from 'next/image'
-import Link from 'next/link'
-import router from 'next/router'
 import { FC, useMemo } from 'react'
 
 import AlertIcon from '@src/../public/img/icons/alert.svg'
 import SunIcon from '@src/../public/img/icons/sun.svg'
+import Link from '@src/components/common/link/Link'
 import { USER_PREFERENCES_LABELS } from '@src/constants/userPreferences'
 import {
   ICurrentPeriodEventsQueryData,
@@ -79,16 +78,13 @@ const Home: FC = () => {
         <Image src={AlertIcon} height={25} width={25} />
       </Div>
       <AnimatedButtonWrapper>
-        <MainRecipeCard
-          title="Prochaine recette"
-          recipe={nextRecipe}
-          loading={nextRecipeEventLoading}
-          onClick={() => {
-            if (!!nextRecipe?.id) {
-              router.push(`/recipes/${nextRecipe.id}`)
-            }
-          }}
-        />
+        <Link {...(!!nextRecipe?.id && { href: `/recipes/${nextRecipe.id}` })}>
+          <MainRecipeCard
+            title="Prochaine recette"
+            recipe={nextRecipe}
+            loading={nextRecipeEventLoading}
+          />
+        </Link>
       </AnimatedButtonWrapper>
       <Section title="Avancement" action={<Link href="/planning">Voir plus</Link>}>
         <List horizontal forceScrollVisibility verticalPadding>

@@ -1,9 +1,9 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { useCallback, useMemo } from 'react'
 
 import CookBackground from '@src/../public/img/background/cook.svg'
 import WizardPreparationIllustration from '@src/../public/img/illustrations/wizard-preparation.svg'
+import Link from '@src/components/common/link/Link'
 
 import AnimatedButtonWrapper from '../common/animations/AnimatedButtonWrapper'
 import { Div } from '../common/div/Div.styled'

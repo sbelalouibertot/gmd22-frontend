@@ -1,4 +1,3 @@
-import router from 'next/router'
 import { FC, useEffect, useState } from 'react'
 
 import UnknownImg from '@src/../public/img/unknown.jpeg'
@@ -51,11 +50,7 @@ const AllRecipes: FC = () => {
                     title={recipe.name.length > 42 ? `${recipe.name.slice(0, 42)}...` : recipe.name}
                     avatar={recipe.image ?? UnknownImg}
                     details={`👨‍🍳 ${recipe.preparationDuration} min • 🔥 ${recipe.cookingDuration} min`}
-                    onClick={() => {
-                      if (!!recipe.id) {
-                        router.push(`/recipes/${recipe.id}`)
-                      }
-                    }}
+                    {...(!!recipe.id && { linkTo: `/recipes/${recipe.id}` })}
                   />
                 ),
             )}
