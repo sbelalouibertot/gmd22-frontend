@@ -17,6 +17,7 @@ const nextConfig = {
   },
   images: {
     domains: ['assets.afcdn.com'],
+    formats: ["image/webp"],
   },
 }
 
