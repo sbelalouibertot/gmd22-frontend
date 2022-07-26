@@ -34,7 +34,6 @@ const CookHome = () => {
       (acc, recipe) => acc + recipe.preparationDuration + recipe.cookingDuration,
       0,
     )
-
     return 100 * ((60 * totalSequentialDuration) / completionDuration) - 100
   }, [completionDuration, recipes])
 

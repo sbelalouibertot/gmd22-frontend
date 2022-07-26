@@ -66,7 +66,6 @@ const Home: FC = () => {
   const userPreferences = userPreferencesData?.userPreferences?.userPreferences
 
   const dayName = useMemo(() => dayjs.utc().format('dddd'), [])
-  console.log({ currentPeriodEvents })
 
   return (
     <>

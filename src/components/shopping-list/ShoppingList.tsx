@@ -55,37 +55,48 @@ const ShoppingList: FC = () => {
         .filter(truthy),
     [currentShoppingList?.shoppingListItems],
   )
+
   const total = formattedShoppingListItems?.length ?? 0
+  const title = currentShoppingList?.name || 'Liste de courses'
+
+  if (loading) {
+    return (
+      <>
+        <Header title={title} />
+        <StyledList>
+          {shoppingListItemSkeletons.map(id => (
+            <ListItemLoading key={id} />
+          ))}
+        </StyledList>
+      </>
+    )
+  }
 
   return (
     <>
-      <Header title={currentShoppingList?.name || 'Liste de courses'} />
-      {!loading && (
-        <Text color="text-lighter" size="very-small">
-          {total} résultat{total > 1 && 's'}
-        </Text>
-      )}
+      <Header title={title} />
+      <Text color="text-lighter" size="very-small">
+        {total} résultat{total > 1 && 's'}
+      </Text>
       <StyledList>
-        {loading
-          ? shoppingListItemSkeletons.map(id => <ListItemLoading key={id} />)
-          : formattedShoppingListItems?.map(
-              item =>
-                !!item?.food && (
-                  <ListItem
-                    key={item.food.id}
-                    title={item.food.name ?? ''}
-                    avatar={PancakeImg}
-                    details={item.quantities}
-                    actionIcon={item.isChecked ? CheckboxCompletedIcon : CheckboxIcon}
-                    {...(!!item?.food?.id && { linkTo: `/food/${item.food.id}` })}
-                    onActionClick={() => {
-                      if (!!item.id) {
-                        onListItemCheckboxClicked(item.id)
-                      }
-                    }}
-                  />
-                ),
-            )}
+        {formattedShoppingListItems?.map(
+          item =>
+            !!item?.food && (
+              <ListItem
+                key={item.food.id}
+                title={item.food.name ?? ''}
+                avatar={PancakeImg}
+                details={item.quantities}
+                actionIcon={item.isChecked ? CheckboxCompletedIcon : CheckboxIcon}
+                {...(!!item?.food?.id && { linkTo: `/food/${item.food.id}` })}
+                onActionClick={() => {
+                  if (!!item.id) {
+                    onListItemCheckboxClicked(item.id)
+                  }
+                }}
+              />
+            ),
+        )}
       </StyledList>
     </>
   )

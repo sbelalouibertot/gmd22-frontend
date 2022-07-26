@@ -15,7 +15,6 @@ export const StyledActionButton = styled.button<TStyledActionButton>`
   background-size: 24px 24px;
   background-position: center;
   background-repeat: no-repeat;
-  border-radius: 16px;
   height: 35px;
   min-width: 35px;
   ${p => !!p.width && `width: ${p.width}px`};

@@ -42,8 +42,6 @@ const FoodItem: FC = () => {
     return [currentRecipes, otherRecipes].filter(truthy).flat()
   }, [foodItem])
 
-  console.log({ data })
-
   return (
     <>
       <Header title="Ingrédient" />
