@@ -9,6 +9,7 @@ query DateEvents {
         name
         preparationDuration
         cookingDuration
+        image
       }
       shoppingList {
         id

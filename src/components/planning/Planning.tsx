@@ -5,6 +5,7 @@ import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useDragLayer } from 'react-dnd'
 
 import PancakeImg from '@src/../public/img/pancake.jpeg'
+import UnknownImg from '@src/../public/img/unknown.jpeg'
 import {
   IDateEventsQueryData,
   useDateEventsQuery,
@@ -218,7 +219,7 @@ const Planning: FC = () => {
                       key={recipe.id}
                       small
                       title={recipe.name ?? ''}
-                      avatar={PancakeImg}
+                      avatar={recipe.image ?? UnknownImg}
                       details={`👨‍🍳 ${recipe.preparationDuration} min • 🔥 ${recipe.cookingDuration} min`}
                       {...(!!recipe.id && { linkTo: `/recipes/${recipe.id}` })}
                     />

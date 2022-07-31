@@ -512,7 +512,7 @@ export type IDateEventsQueryData = (
       & Pick<IEvent, 'id' | 'type' | 'date'>
       & { recipes: Maybe<Array<(
         { __typename?: 'Recipe' }
-        & Pick<IRecipe, 'id' | 'name' | 'preparationDuration' | 'cookingDuration'>
+        & Pick<IRecipe, 'id' | 'name' | 'preparationDuration' | 'cookingDuration' | 'image'>
       )>>, shoppingList: Maybe<(
         { __typename?: 'ShoppingList' }
         & Pick<IShoppingList, 'id' | 'name'>
@@ -636,7 +636,7 @@ export type ICurrentShoppingListEventQueryData = (
           & Pick<IShoppingListFood, 'id' | 'shoppingListId' | 'foodId' | 'isChecked'>
           & { food: Maybe<(
             { __typename?: 'Food' }
-            & Pick<IFood, 'id' | 'name' | 'type'>
+            & Pick<IFood, 'id' | 'name' | 'type' | 'image'>
             & { currentRecipeFoodItems: Maybe<Array<Maybe<(
               { __typename?: 'RecipeFood' }
               & Pick<IRecipeFood, 'quantity' | 'quantityUnit' | 'id'>
@@ -665,7 +665,7 @@ export type IShoppingListQueryData = (
         & Pick<IShoppingListFood, 'id' | 'shoppingListId' | 'foodId' | 'isChecked'>
         & { food: Maybe<(
           { __typename?: 'Food' }
-          & Pick<IFood, 'id' | 'name' | 'type'>
+          & Pick<IFood, 'id' | 'name' | 'type' | 'image'>
         )> }
       )>> }
     )> }
@@ -990,6 +990,7 @@ export const DateEventsDocument = gql`
         name
         preparationDuration
         cookingDuration
+        image
       }
       shoppingList {
         id
@@ -1252,6 +1253,7 @@ export const CurrentShoppingListEventDocument = gql`
             id
             name
             type
+            image
             currentRecipeFoodItems {
               quantity
               quantityUnit
@@ -1304,6 +1306,7 @@ export const ShoppingListDocument = gql`
           id
           name
           type
+          image
         }
       }
     }

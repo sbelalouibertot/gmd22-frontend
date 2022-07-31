@@ -14,6 +14,7 @@ query CurrentShoppingListEvent {
             id
             name
             type
+            image
             currentRecipeFoodItems {
               quantity
               quantityUnit

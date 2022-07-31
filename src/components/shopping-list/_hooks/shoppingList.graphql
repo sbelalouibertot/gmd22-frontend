@@ -12,6 +12,7 @@ query ShoppingList($shoppingListId: ID!) {
           id
           name
           type
+          image
         }
       }
     }

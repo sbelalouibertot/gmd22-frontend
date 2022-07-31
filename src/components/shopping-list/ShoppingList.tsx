@@ -3,7 +3,7 @@ import { FC, useMemo } from 'react'
 
 import CheckboxIcon from '@src/../public/img/icons/checkbox.svg'
 import CheckboxCompletedIcon from '@src/../public/img/icons/checkbox-completed.svg'
-import PancakeImg from '@src/../public/img/pancake.jpeg'
+import UnknownImg from '@src/../public/img/unknown.jpeg'
 import {
   useCurrentShoppingListEventQuery,
   useToggleCheckShoppingListFoodMutation,
@@ -85,7 +85,7 @@ const ShoppingList: FC = () => {
               <ListItem
                 key={item.food.id}
                 title={item.food.name ?? ''}
-                avatar={PancakeImg}
+                avatar={item.food.image ?? UnknownImg}
                 details={item.quantities}
                 actionIcon={item.isChecked ? CheckboxCompletedIcon : CheckboxIcon}
                 {...(!!item?.food?.id && { linkTo: `/food/${item.food.id}` })}
