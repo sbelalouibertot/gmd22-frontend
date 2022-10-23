@@ -12,9 +12,13 @@ export const isPastEvent = (date: Date | string): boolean =>
   dayjs.utc(new Date()).diff(dayjs.utc(date), 'hours') > MAX_EVENT_HOURS_DURATION
 
 export const getDiffDateDetails = (date: Date | string): string => {
-  const daysDifference = dayjs
-    .utc(dayjs.utc(date).startOf('day'))
-    .diff(dayjs.utc(new Date()).startOf('day'), 'days')
+  const daysDifference = dayjs.utc(dayjs.utc(date).startOf('day')).diff(
+    dayjs
+      .utc(new Date())
+      .subtract(2, 'hours') // Local time
+      .startOf('day'),
+    'days',
+  )
 
   if (daysDifference < -1) {
     return `Il y a ${daysDifference} jours`

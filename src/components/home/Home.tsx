@@ -65,7 +65,14 @@ const Home: FC = () => {
   const { loading: userPreferencesLoading, data: userPreferencesData } = useUserPreferencesQuery()
   const userPreferences = userPreferencesData?.userPreferences?.userPreferences
 
-  const dayName = useMemo(() => dayjs.utc().format('dddd'), [])
+  const dayName = useMemo(
+    () =>
+      dayjs
+        .utc()
+        .add(2, 'hours') // Local time
+        .format('dddd'),
+    [],
+  )
 
   return (
     <>

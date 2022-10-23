@@ -130,7 +130,10 @@ const Planning: FC = () => {
     if (!!days && selectedDayIndex !== null && days.length > selectedDayIndex) {
       setSelectedDayEvents(
         days[selectedDayIndex].events.map(event => ({
-          formattedTime: dayjs.utc(event.date).format('hh[h]mm'),
+          formattedTime: dayjs
+            .utc(event.date)
+            .add(2, 'hours') // Local time
+            .format('hh[h]mm'),
           ...pick(event, ['id', 'recipes', 'shoppingList', 'type', 'date', 'title', 'description']),
         })),
       )
