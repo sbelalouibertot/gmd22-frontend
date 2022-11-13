@@ -1,4 +1,4 @@
-import { sample } from 'lodash'
+import sample from 'lodash/sample'
 import { useRouter } from 'next/router'
 import { FC, useMemo } from 'react'
 

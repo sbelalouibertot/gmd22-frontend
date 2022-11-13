@@ -2,11 +2,11 @@ import Image from 'next/image'
 import { FC, useMemo } from 'react'
 
 import CheckboxIcon from '@src/../public/img/icons/checkbox.svg'
-import UnknownImg from '@src/../public/img/unknown.jpeg'
 import { EVENT_TYPE_IMAGES, EVENT_TYPE_LABELS } from '@src/constants/events'
 import { IEvent } from '@src/generated/gmd22-api'
 import { getDiffDateDetails, isPastEvent } from '@src/utils/date'
 
+import UnknownImg from '../../../../public/img/unknown.jpeg'
 import { Skeleton } from '../skeleton/Skeleton.styled'
 import Text from '../text/Text'
 import { StyledCardSection, StyledEventCard, StyledHeader } from './EventCard.styled'

@@ -1,6 +1,9 @@
 const withPlugins = require('next-compose-plugins')
 const graphql = require('next-plugin-graphql')
 const withTranspileModule = require('next-transpile-modules')([])
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -21,7 +24,7 @@ const nextConfig = {
 }
 
 module.exports = (phase, { defaultConfig }) => {
-  const plugins = [graphql, withTranspileModule]
+  const plugins = [graphql, withTranspileModule, withBundleAnalyzer]
 
   return withPlugins(plugins, nextConfig)(phase, {
     defaultConfig,
