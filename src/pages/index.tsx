@@ -2,6 +2,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 
 import styles from '../styles/Home.module.css'
+import HomeContainer from './home/index'
 
 const Home: NextPage = () => {
   return (
@@ -16,11 +17,8 @@ const Home: NextPage = () => {
           rel="stylesheet"
         />
       </Head>
-
       <main className={styles.main}>
-        <h1 className={styles.title}>GMD-22</h1>
-
-        <p className={styles.description}>Work in progress 🚧</p>
+        <HomeContainer />
       </main>
     </div>
   )
