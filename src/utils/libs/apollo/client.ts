@@ -17,7 +17,7 @@ export const getApolloClient = (): ApolloClient<unknown> => {
       uri:
         process.env.NODE_ENV === 'production'
           ? `http://${env.PRODUCTION_HOST_IP}:${env.PRODUCTION_API_PORT}`
-          : 'http://192.168.0.19:4000', //'http://localhost:4000',
+          : 'http://localhost:4000', // 'http://192.168.0.19:4000'
       ssrMode: false,
       cache,
       name: packageInfo.name,
