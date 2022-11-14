@@ -77,6 +77,7 @@ const FoodItem: FC = () => {
               height={140}
               objectFit="cover"
               layout="fixed"
+              alt="Food"
             />
           </Div>
         )}

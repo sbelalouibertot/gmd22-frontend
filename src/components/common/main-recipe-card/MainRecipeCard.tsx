@@ -31,6 +31,16 @@ const MainRecipeCard: FC<TMainRecipeCardProps> = ({ title, recipe, loading, onCl
 
   return (
     <StyledMainRecipeCardContainer onClick={onClick}>
+      <Div flexStart fullWidth row absolute left={175} top={69}>
+        <StyledImageBackground
+          objectFit="none"
+          src={FoodImg}
+          alt="Food"
+          priority
+          height={214}
+          width={214}
+        />
+      </Div>
       <StyledMainRecipeCard>
         <Div>
           <StyledTitle>{title}</StyledTitle>
@@ -40,7 +50,6 @@ const MainRecipeCard: FC<TMainRecipeCardProps> = ({ title, recipe, loading, onCl
           <span>{loading ? <Skeleton height={30} width={50} /> : recipeDuration}</span> min
         </StyledDuration>
       </StyledMainRecipeCard>
-      <StyledImageBackground image={FoodImg} />
     </StyledMainRecipeCardContainer>
   )
 }

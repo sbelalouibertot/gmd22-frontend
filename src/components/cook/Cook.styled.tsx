@@ -1,18 +1,11 @@
-import { StaticImageData } from 'next/image'
-
 import styled from '@emotion/styled'
 
 import { Div } from '../common/div/Div.styled'
 
-type TCookContainerProps = {
-  backgroundImage: StaticImageData
-}
-export const StyledCookContainer = styled(Div)<TCookContainerProps>`
+export const StyledCookContainer = styled(Div)`
   height: 100%;
   width: 100%;
-  background-image: ${p => !!p.backgroundImage && `url(${p.backgroundImage.src})`};
   background-color: ${p => p.theme.color['background-dark']};
-  background-repeat: no-repeat;
   padding: ${p => p.theme.spacing.padding.large}px;
   justify-content: flex-start;
   align-items: center;

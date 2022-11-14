@@ -13,6 +13,10 @@ export type TDivProps = {
   percentWidth?: number
   percentHeight?: number
   relative?: boolean
+  zIndex?: number
+  absolute?: boolean
+  left?: number
+  top?: number
 }
 
 const getFlexDirection = ({
@@ -38,6 +42,7 @@ export const Div = styled.div<TDivProps>`
   justify-content: ${p => getFlexDirection(p)};
   align-content: ${p => getFlexDirection(p)};
 
+  ${p => p.absolute && `position: absolute;`}
   ${p => p.relative && `position: relative;`}
   ${p => p.flex && `flex:1;`}
   ${p => p.center && `justify-items: center; align-items: center;`}
@@ -45,4 +50,7 @@ export const Div = styled.div<TDivProps>`
   ${p => p.percentHeight && `height: ${p.percentHeight}%;`}
   ${p => p.fullWidth && `width: 100%;`}
   ${p => p.gap && `gap: ${p.theme.spacing.gap[p.gap]}px;`}
+  ${p => p.zIndex && `z-index: ${p.zIndex};`}
+  ${p => p.left && `left: ${p.left}px;`}
+  ${p => p.top && `top: ${p.top}px;`}
 `

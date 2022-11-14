@@ -1,5 +1,6 @@
 import Image, { StaticImageData } from 'next/image'
 import { FC, ReactNode } from 'react'
+import { MouseEvent as ReactMouseEvent } from 'react'
 
 import Link from '@src/components/common/link/Link'
 
@@ -15,7 +16,7 @@ type TListItemProps = {
   details?: string
   actionIcon?: StaticImageData
   onClick?: VoidFunction
-  onActionClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  onActionClick?: (e: ReactMouseEvent<HTMLDivElement, MouseEvent>) => void
   percentWidth?: number
   small?: boolean
   linkTo?: string
@@ -46,6 +47,7 @@ const ListItem: FC<TListItemProps> = ({
               height={45}
               objectFit="cover"
               layout="fixed"
+              alt="Item picture"
             />
           )}
         </Div>
@@ -67,6 +69,7 @@ const ListItem: FC<TListItemProps> = ({
                 }}
                 width={18}
                 height={18}
+                alt="Action"
               />
             )}
           </AnimatedButtonWrapper>

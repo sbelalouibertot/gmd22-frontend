@@ -142,7 +142,7 @@ const CookInstructionCard: FC<TCookInstructionCard> = ({
           >
             {COMPLETION_STATUS_TO_STR[completionStatus]}
           </Text>
-          <Image src={CheckboxIcon} width={20} height={20} />
+          <Image src={CheckboxIcon} width={20} height={20} alt="Checkbox" />
         </StyledCardFooter>
       </Div>
     </StyledInstructionCard>

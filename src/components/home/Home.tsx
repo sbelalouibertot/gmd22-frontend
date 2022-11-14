@@ -78,10 +78,10 @@ const Home: FC = () => {
     <>
       <Div row spaceBetween fullWidth>
         <Div row center gap="large">
-          <Image src={SunIcon} height={20} width={20} />
+          <Image src={SunIcon} height={20} width={20} alt="Sun" />
           <Text firstLetterUppercase>{dayName}</Text>
         </Div>
-        <Image src={AlertIcon} height={25} width={25} />
+        <Image src={AlertIcon} height={25} width={25} alt="Alert" />
       </Div>
       <AnimatedButtonWrapper>
         <Link {...(!!nextRecipe?.id && { href: `/recipes/${nextRecipe.id}` })}>
@@ -95,7 +95,7 @@ const Home: FC = () => {
       <Section title="Avancement" action={<Link href="/planning">Voir plus</Link>}>
         <List horizontal forceScrollVisibility verticalPadding>
           {currentPeriodEventsLoading
-            ? eventsCardsSkeletons.map(id => <EventCardLoading key={id} />)
+            ? eventsCardsSkeletons.map(id => <EventCardLoading key={id} index={id} />)
             : currentPeriodEvents?.map(
                 event =>
                   !!event && (

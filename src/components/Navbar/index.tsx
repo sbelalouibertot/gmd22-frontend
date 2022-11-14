@@ -68,10 +68,16 @@ const Navbar: FC = () => {
             <Link href={route}>
               {main ? (
                 <StyledMainTabIconContainer center>
-                  <StyledTabIcon src={icon} selected={selected} layout="fixed" />
+                  <StyledTabIcon src={icon} selected={selected} layout="fixed" alt="Tab" />
                 </StyledMainTabIconContainer>
               ) : (
-                <StyledTabIcon src={icon} selected={selected} height={30} layout="fixed" />
+                <StyledTabIcon
+                  src={icon}
+                  selected={selected}
+                  height={30}
+                  layout="fixed"
+                  alt="Tab"
+                />
               )}
             </Link>
           </AnimatedButtonWrapper>

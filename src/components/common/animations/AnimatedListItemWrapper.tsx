@@ -1,7 +1,6 @@
-import { motion, Variants } from 'framer-motion'
-import { FC, ReactNode } from 'react'
+import { ElementType, FC, ReactNode, useEffect, useState } from 'react'
 
-const variants: Variants = {
+const variants = {
   offscreen: {
     y: 90,
   },
@@ -15,15 +14,25 @@ const variants: Variants = {
   },
 }
 
-const AnimatedListItemWrapper: FC<{ children: ReactNode }> = ({ children }) => (
-  <motion.div
-    variants={variants}
-    initial="offscreen"
-    whileInView="onscreen"
-    viewport={{ once: true, amount: 0.8 }}
-  >
-    {children}
-  </motion.div>
-)
+const AnimatedListItemWrapper: FC<{ children: ReactNode }> = ({ children }) => {
+  const [MotionDiv, setMotionDiv] = useState<ElementType | null>(null)
+
+  useEffect(() => {
+    import('framer-motion').then(a => setMotionDiv(a.motion.div))
+  }, [])
+
+  return !!MotionDiv ? (
+    <MotionDiv
+      variants={variants}
+      initial="offscreen"
+      whileInView="onscreen"
+      viewport={{ once: true, amount: 0.8 }}
+    >
+      {children}
+    </MotionDiv>
+  ) : (
+    <>{children}</>
+  )
+}
 
 export default AnimatedListItemWrapper

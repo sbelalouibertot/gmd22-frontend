@@ -162,7 +162,14 @@ const CookInstruction = () => {
   }
 
   return (
-    <StyledCookContainer backgroundImage={CookBackground} gap="large">
+    <StyledCookContainer gap="large">
+      <Image
+        layout="fill"
+        objectFit="contain"
+        objectPosition="top"
+        src={CookBackground}
+        alt="Cook"
+      />
       <Div row spaceBetween fullWidth gap="medium">
         <StyledTimer>
           {duration !== null && !isNaN(duration) && (
@@ -217,7 +224,7 @@ const CookInstruction = () => {
         <Div ref={dragPreview} style={{ opacity: isDragging ? 0.5 : 1 }} relative>
           <StyledActionButton icon={ChronometerIcon} role="Handle" ref={drag} />
           <StyledIndicator>
-            <Image src={DragdAndDropIcon} />
+            <Image src={DragdAndDropIcon} alt="Drag and drop" />
           </StyledIndicator>
         </Div>
         {preparationCompletionPercentage === 100 && (

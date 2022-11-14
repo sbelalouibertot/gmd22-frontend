@@ -1,4 +1,4 @@
-import { StaticImageData } from 'next/image'
+import Image, { StaticImageData } from 'next/image'
 
 import styled from '@emotion/styled'
 
@@ -50,18 +50,6 @@ export type TStyledImageBackgroundProps = {
   image: StaticImageData
 }
 
-export const StyledImageBackground = styled.div<TStyledImageBackgroundProps>`
-  position: absolute;
-  left: 175px;
-  top: 69px;
-  height: 214px;
-  width: 214px;
+export const StyledImageBackground = styled(Image)`
   border-radius: 120px;
-
-  background: url(${p => p.image.src});
-  background-repeat: no-repeat;
-  background-size: 320px 272px;
-  background-position: center;
-
-  z-index: 0;
 `

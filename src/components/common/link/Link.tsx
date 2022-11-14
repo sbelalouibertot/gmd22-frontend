@@ -6,7 +6,7 @@ const Link: FC<Omit<LinkProps, 'href'> & {
   children: ReactNode
 }> = ({ children, href, ...rest }) =>
   !!href ? (
-    <NextLink href={href} {...rest} passHref prefetch>
+    <NextLink href={href} {...rest} passHref>
       <a>{children}</a>
     </NextLink>
   ) : (

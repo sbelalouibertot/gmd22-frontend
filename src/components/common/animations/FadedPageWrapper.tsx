@@ -1,5 +1,5 @@
-import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter } from 'next/router'
+import { ElementType, ReactElement, useEffect, useState } from 'react'
 
 const variants = {
   in: {
@@ -20,14 +20,27 @@ const variants = {
   },
 }
 
-const FadedPageWrapper = ({ children }: { children?: React.ReactChild }) => {
+const FadedPageWrapper = ({ children }: { children?: ReactElement }) => {
+  const [MotionDiv, setMotionDiv] = useState<ElementType | null>(null)
+  const [AnimatePresence, setAnimatePresence] = useState<ElementType | null>(null)
+
+  useEffect(() => {
+    import('framer-motion').then(a => {
+      setMotionDiv(a.motion.div)
+      setAnimatePresence(a.AnimatePresence)
+    })
+  }, [])
+
   const router = useRouter()
-  return (
+  return !!MotionDiv && AnimatePresence ? (
     <AnimatePresence initial exitBeforeEnter>
-      <motion.div key={router.route} variants={variants} animate="in" initial="out" exit="out">
+      <MotionDiv key={router.route} variants={variants} animate="in" initial="out" exit="out">
         {children}
-      </motion.div>
+      </MotionDiv>
     </AnimatePresence>
+  ) : (
+    <>{children}</>
   )
 }
+
 export default FadedPageWrapper

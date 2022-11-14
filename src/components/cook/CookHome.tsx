@@ -34,9 +34,16 @@ const CookHome = () => {
   }, [cookPreparationDispatch])
 
   return (
-    <StyledCookContainer backgroundImage={CookBackground} gap="large">
+    <StyledCookContainer gap="large">
+      <Image
+        layout="fill"
+        objectFit="contain"
+        objectPosition="top"
+        src={CookBackground}
+        alt="Cook"
+      />
       <Header />
-      <Div spaceBetween percentWidth={70} percentHeight={58}>
+      <Div spaceBetween percentWidth={70} percentHeight={58} zIndex={10}>
         {isLoaded ? (
           recipes?.map(
             recipe =>
@@ -52,7 +59,7 @@ const CookHome = () => {
             <Skeleton height={22} width={200} />
           </Div>
         )}
-        <Image src={WizardPreparationIllustration} />
+        <Image src={WizardPreparationIllustration} alt="Preparation illustration" />
       </Div>
       <Div gap="medium" center>
         <Text color="text-lighter" size="regular">

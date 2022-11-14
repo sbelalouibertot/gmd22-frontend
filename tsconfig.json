@@ -37,5 +37,5 @@
     "**/*.ts",
     "**/*.tsx",
     "package.json"
-  ]
+, "src/pages/_document.js"  ]
 }

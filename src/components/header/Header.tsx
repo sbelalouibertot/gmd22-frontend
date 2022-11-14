@@ -23,12 +23,18 @@ export const Header: FC<THeader> = ({ title }) => {
   return (
     <Div row spaceBetween fullWidth>
       <Div percentWidth={10}>
-        <Image src={PreviousIcon} height={20} width={20} onClick={onPreviousIconClicked} />
+        <Image
+          src={PreviousIcon}
+          height={20}
+          width={20}
+          onClick={onPreviousIconClicked}
+          alt="Previous"
+        />
       </Div>
       {!!title && <Text weight="bold">{title}</Text>}
       <Div percentWidth={10}>
         <Link href="/home">
-          <Image src={HomeIcon} height={20} width={20} />
+          <Image src={HomeIcon} height={20} width={20} alt="Home" />
         </Link>
       </Div>
     </Div>

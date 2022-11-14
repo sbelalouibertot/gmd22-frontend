@@ -45,7 +45,6 @@ export const defaultState: TCookState = {
 }
 
 const cookReducer = (state: TCookState, action: TCookAction): TCookState => {
-  console.log('cookReducer', action.type, new Date(), new Date().getMilliseconds())
   switch (action.type) {
     case 'COOK_PREPARATION_UPDATE_INSTRUCTION_COMPLETION_STATUS': {
       const newState = { ...state }

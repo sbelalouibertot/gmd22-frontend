@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import Image from 'next/image'
 import { useMemo } from 'react'
 
 import CookBackground from '@src/../public/img/background/cook.svg'
@@ -38,7 +39,14 @@ const CookHome = () => {
   }, [completionDuration, recipes])
 
   return (
-    <StyledCookContainer backgroundImage={CookBackground} gap="large">
+    <StyledCookContainer gap="large">
+      <Image
+        layout="fill"
+        objectFit="contain"
+        objectPosition="top"
+        src={CookBackground}
+        alt="Cook"
+      />
       <Header />
       <Div percentWidth={85} percentHeight={58} center gap="large">
         <Div fullWidth gap="xsmall">

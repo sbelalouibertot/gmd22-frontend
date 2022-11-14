@@ -38,7 +38,7 @@ const DraggableDayEvent: FC<TDraggableDayEvent> = ({ formattedTime, id, onUpdate
       <StyledActionButton width={160} role="Handle" ref={drag}>
         <Text color="text-dark">Programmé pour</Text> <Text weight="bold">{formattedTime}</Text>
         <StyledIndicator>
-          <Image src={DragdAndDropIcon} />
+          <Image src={DragdAndDropIcon} alt="Drag and drop" />
         </StyledIndicator>
       </StyledActionButton>
     </Div>

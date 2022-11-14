@@ -10,13 +10,11 @@ export const StyledEventCard = styled.div<TStyledEventCardProps>`
   height: 175px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
   border-radius: ${p => p.theme.border.radius.large}px;
-  background-image: ${p => !!p.backgroundImage && `url(${p.backgroundImage.src})`};
-  background-color: ${p => p.theme.color['background-dark']};
-  background-size: cover;
-  background-repeat: no-repeat;
-  -webkit-background-position: 0px 100%;
-  background-position: bottom;
   position: relative;
+
+  > *:first-child {
+    border-radius: ${p => p.theme.border.radius.large}px;
+  }
 `
 
 export type TStyledCardSectionProps = {
