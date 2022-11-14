@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
+
 const variants = {
   in: {
     opacity: 1,
@@ -20,9 +21,8 @@ const variants = {
   },
 }
 
-const FadedPageWrapper = ({ children }: { children: ReactNode }) => {
+const FadedPageWrapper = ({ children }: { children?: ReactNode }) => {
   const router = useRouter()
-
   return (
     <AnimatePresence initial exitBeforeEnter>
       <motion.div key={router.route} variants={variants} animate="in" initial="out" exit="out">
@@ -31,5 +31,4 @@ const FadedPageWrapper = ({ children }: { children: ReactNode }) => {
     </AnimatePresence>
   )
 }
-
 export default FadedPageWrapper

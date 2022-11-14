@@ -14,7 +14,7 @@ const nextConfig = {
   publicRuntimeConfig: {
     PRODUCTION_HOST_IP: process.env.PRODUCTION_HOST_IP,
     PRODUCTION_API_PORT: process.env.PRODUCTION_API_PORT,
-  },
+   },
   images: {
     domains: ['assets.afcdn.com', 'i.ibb.co'],
   },
