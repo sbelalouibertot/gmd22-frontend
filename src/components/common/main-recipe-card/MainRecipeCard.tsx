@@ -17,7 +17,7 @@ import {
 type TMainRecipeCardProps = {
   title: string
   recipe: Pick<IRecipe, 'name' | 'preparationDuration' | 'cookingDuration'> | null
-  loading: boolean
+  loading?: boolean
   onClick?: VoidFunction
 }
 

@@ -11,23 +11,16 @@ import {
   ICurrentPeriodEventsQueryData,
   INextRecipeEventQueryData,
   IRecipe,
-  useCurrentPeriodEventsQuery,
-  useNextRecipeEventQuery,
-  useUserPreferencesQuery,
 } from '@src/generated/gmd22-api'
-import { initSkeletons } from '@src/utils/skeletons'
+import { TStaticHomeProps } from '@src/pages/home'
 
 import AnimatedButtonWrapper from '../common/animations/AnimatedButtonWrapper'
 import { Div } from '../common/div/Div.styled'
-import EventCard, { EventCardLoading } from '../common/event-card/EventCard'
+import EventCard from '../common/event-card/EventCard'
 import List from '../common/list/List'
 import MainRecipeCard from '../common/main-recipe-card/MainRecipeCard'
 import Section from '../common/section/Section'
-import { Skeleton } from '../common/skeleton/Skeleton.styled'
 import Text from '../common/text/Text'
-
-const eventsCardsSkeletons = initSkeletons(3)
-const preferencesSkeletons = initSkeletons(2)
 
 const formatNextRecipe = (
   nextRecipeEventData?: INextRecipeEventQueryData,
@@ -52,17 +45,13 @@ const formatCurrentPeriodEvents = (
   )
 }
 
-const Home: FC = () => {
-  const { loading: nextRecipeEventLoading, data: nextRecipeEventData } = useNextRecipeEventQuery()
+const Home: FC<TStaticHomeProps> = ({
+  nextRecipeEventData,
+  currentPeriodEventsData,
+  userPreferencesData,
+}) => {
   const nextRecipe = formatNextRecipe(nextRecipeEventData)
-
-  const {
-    loading: currentPeriodEventsLoading,
-    data: currentPeriodEventsData,
-  } = useCurrentPeriodEventsQuery()
   const currentPeriodEvents = formatCurrentPeriodEvents(currentPeriodEventsData)
-
-  const { loading: userPreferencesLoading, data: userPreferencesData } = useUserPreferencesQuery()
   const userPreferences = userPreferencesData?.userPreferences?.userPreferences
 
   const dayName = useMemo(
@@ -85,48 +74,32 @@ const Home: FC = () => {
       </Div>
       <AnimatedButtonWrapper>
         <Link {...(!!nextRecipe?.id && { href: `/recipes/${nextRecipe.id}` })}>
-          <MainRecipeCard
-            title="Prochaine recette"
-            recipe={nextRecipe}
-            loading={nextRecipeEventLoading}
-          />
+          <MainRecipeCard title="Prochaine recette" recipe={nextRecipe} />
         </Link>
       </AnimatedButtonWrapper>
       <Section title="Avancement" action={<Link href="/planning">Voir plus</Link>}>
         <List horizontal forceScrollVisibility verticalPadding>
-          {currentPeriodEventsLoading
-            ? eventsCardsSkeletons.map(id => <EventCardLoading key={id} index={id} />)
-            : currentPeriodEvents?.map(
-                event =>
-                  !!event && (
-                    <Link key={event.id} href={`/planning/event/${event.id}`}>
-                      <EventCard event={event} />
-                    </Link>
-                  ),
-              )}
+          {currentPeriodEvents?.map(
+            event =>
+              !!event && (
+                <Link key={event.id} href={`/planning/event/${event.id}`}>
+                  <EventCard event={event} />
+                </Link>
+              ),
+          )}
         </List>
       </Section>
       <Section title="Préférences">
         <List verticalPadding gap="small">
-          {userPreferencesLoading
-            ? preferencesSkeletons.map(id => (
-                <Div key={id} row spaceBetween>
-                  <Div row gap="small">
-                    <Skeleton width={20} />
-                    <Skeleton width={150} />
-                  </Div>
-                  <Skeleton width={35} />
+          {userPreferences?.map(
+            preference =>
+              !!preference?.type && (
+                <Div key={preference.id} row spaceBetween>
+                  <Text>{USER_PREFERENCES_LABELS[preference.type]}</Text>
+                  <Text weight="bold">{preference.value}</Text>
                 </Div>
-              ))
-            : userPreferences?.map(
-                preference =>
-                  !!preference?.type && (
-                    <Div key={preference.id} row spaceBetween>
-                      <Text>{USER_PREFERENCES_LABELS[preference.type]}</Text>
-                      <Text weight="bold">{preference.value}</Text>
-                    </Div>
-                  ),
-              )}
+              ),
+          )}
         </List>
       </Section>
     </>

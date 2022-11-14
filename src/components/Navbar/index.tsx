@@ -24,7 +24,7 @@ const Navbar: FC = () => {
         id: 'home',
         label: 'Accueil',
         icon: HomeIcon,
-        selected: router.route.includes('home') || router.route === '/',
+        selected: router.route.includes('home'),
         route: '/home',
       },
       {
