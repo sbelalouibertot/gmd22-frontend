@@ -36,9 +36,9 @@ const MainRecipeCard: FC<TMainRecipeCardProps> = ({ title, recipe, loading, onCl
           style={{ objectFit: 'none' }}
           src={FoodImg}
           alt="Food"
-          priority
           height={214}
           width={214}
+          placeholder="blur"
         />
       </Div>
       <StyledMainRecipeCard>
