@@ -45,8 +45,7 @@ const ListItem: FC<TListItemProps> = ({
               src={avatar}
               width={45}
               height={45}
-              objectFit="cover"
-              layout="fixed"
+              style={{ objectFit: 'cover' }}
               alt="Item picture"
             />
           )}

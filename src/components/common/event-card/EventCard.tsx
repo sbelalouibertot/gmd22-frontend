@@ -30,15 +30,15 @@ const EventCard: FC<TEventCardProps> = ({ event, onClick }) => {
   const eventImage = useMemo(() => {
     const _Image = ({ src }: { src?: Pick<ImageProps, 'src'> }) => (
       <Image
-        objectFit="cover"
-        layout="fill"
-        objectPosition="bottom"
+        style={{ objectFit: 'cover', objectPosition: 'bottom' }}
         src={src?.src ?? UnknownImg}
         alt="Event"
         priority
         sizes="(max-height: 153px) 153px,
         (max-width: 175px) 175px,
         249px"
+        height={175}
+        width={153}
       />
     )
     if (!event.type) {
@@ -73,16 +73,15 @@ export const EventCardLoading: FC<{ index: number }> = ({ index }) => {
   return (
     <StyledEventCard>
       <Image
-        objectFit="cover"
-        layout="fill"
-        objectPosition="bottom"
+        style={{ objectFit: 'cover', objectPosition: 'bottom' }}
         src={_LoadingImage}
-        blurDataURL={UnknownImg.blurDataURL}
         alt="Event"
         sizes="(max-height: 153px) 153px,
         (max-width: 175px) 175px,
         249px"
         priority
+        height={175}
+        width={153}
       />
       <StyledCardSection isCompleted>
         <StyledHeader>

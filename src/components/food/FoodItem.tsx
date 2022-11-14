@@ -75,8 +75,7 @@ const FoodItem: FC = () => {
               src={foodItem?.image ?? UnknownImg}
               width={140}
               height={140}
-              objectFit="cover"
-              layout="fixed"
+              style={{ objectFit: 'cover' }}
               alt="Food"
             />
           </Div>

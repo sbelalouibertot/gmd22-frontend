@@ -21,7 +21,7 @@ export const Header: FC<THeader> = ({ title }) => {
   }, [router])
 
   return (
-    <Div row spaceBetween fullWidth>
+    <Div row spaceBetween fullWidth zIndex={100}>
       <Div percentWidth={10}>
         <Image
           src={PreviousIcon}

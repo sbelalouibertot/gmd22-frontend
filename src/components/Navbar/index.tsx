@@ -24,7 +24,7 @@ const Navbar: FC = () => {
         id: 'home',
         label: 'Accueil',
         icon: HomeIcon,
-        selected: router.route.includes('home'),
+        selected: router.route.includes('home') || router.route === '/',
         route: '/home',
       },
       {
@@ -68,16 +68,10 @@ const Navbar: FC = () => {
             <Link href={route}>
               {main ? (
                 <StyledMainTabIconContainer center>
-                  <StyledTabIcon src={icon} selected={selected} layout="fixed" alt="Tab" />
+                  <StyledTabIcon src={icon} selected={selected} alt="Tab" />
                 </StyledMainTabIconContainer>
               ) : (
-                <StyledTabIcon
-                  src={icon}
-                  selected={selected}
-                  height={30}
-                  layout="fixed"
-                  alt="Tab"
-                />
+                <StyledTabIcon src={icon} selected={selected} height={30} alt="Tab" />
               )}
             </Link>
           </AnimatedButtonWrapper>

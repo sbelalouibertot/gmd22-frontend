@@ -7,7 +7,7 @@ const Link: FC<Omit<LinkProps, 'href'> & {
 }> = ({ children, href, ...rest }) =>
   !!href ? (
     <NextLink href={href} {...rest} passHref>
-      <a>{children}</a>
+      {children}
     </NextLink>
   ) : (
     <>{children}</>

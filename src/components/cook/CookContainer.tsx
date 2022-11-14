@@ -6,7 +6,7 @@ import { truthy } from '@src/utils/other'
 import { CookContext } from './_hooks/useCookContext'
 import { defaultState, useCookReducer } from './_hooks/useCookReducer'
 
-const CookContainer = ({ children }: { children?: ReactNode }) => {
+const CookContainer = ({ children }: { children?: ReactNode } = {}) => {
   const { loading, data } = useNextPreparationRecipesQuery()
   const recipes = data?.nextEvent?.event?.recipes
 

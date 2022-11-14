@@ -39,7 +39,7 @@ export const StyledSubtitle = styled.span`
 
 export const StyledDuration = styled.div`
   > * {
-    &:first-child {
+    &:first-of-type {
       font-size: ${p => p.theme.text.size['very-big']}px;
       font-weight: ${p => p.theme.text.weight.bold};
     }

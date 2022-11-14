@@ -36,14 +36,17 @@ const CookHome = () => {
   return (
     <StyledCookContainer gap="large">
       <Image
-        layout="fill"
-        objectFit="contain"
-        objectPosition="top"
+        style={{
+          objectFit: 'cover',
+          position: 'fixed',
+          width: '100%',
+          top: 0,
+        }}
         src={CookBackground}
         alt="Cook"
       />
       <Header />
-      <Div spaceBetween percentWidth={70} percentHeight={58} zIndex={10}>
+      <Div flexStart percentWidth={70} percentHeight={58} zIndex={10} gap="large">
         {isLoaded ? (
           recipes?.map(
             recipe =>
@@ -59,7 +62,12 @@ const CookHome = () => {
             <Skeleton height={22} width={200} />
           </Div>
         )}
-        <Image src={WizardPreparationIllustration} alt="Preparation illustration" />
+        <Image
+          src={WizardPreparationIllustration}
+          style={{ objectFit: 'contain' }}
+          width={260}
+          alt="Preparation illustration"
+        />
       </Div>
       <Div gap="medium" center>
         <Text color="text-lighter" size="regular">

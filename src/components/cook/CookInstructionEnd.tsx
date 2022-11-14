@@ -41,9 +41,7 @@ const CookHome = () => {
   return (
     <StyledCookContainer gap="large">
       <Image
-        layout="fill"
-        objectFit="contain"
-        objectPosition="top"
+        style={{ objectFit: 'contain', objectPosition: 'top' }}
         src={CookBackground}
         alt="Cook"
       />

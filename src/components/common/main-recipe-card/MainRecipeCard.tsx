@@ -33,7 +33,7 @@ const MainRecipeCard: FC<TMainRecipeCardProps> = ({ title, recipe, loading, onCl
     <StyledMainRecipeCardContainer onClick={onClick}>
       <Div flexStart fullWidth row absolute left={175} top={69}>
         <StyledImageBackground
-          objectFit="none"
+          style={{ objectFit: 'none' }}
           src={FoodImg}
           alt="Food"
           priority

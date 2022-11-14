@@ -12,7 +12,7 @@ export const StyledEventCard = styled.div<TStyledEventCardProps>`
   border-radius: ${p => p.theme.border.radius.large}px;
   position: relative;
 
-  > *:first-child {
+  > *:first-of-type {
     border-radius: ${p => p.theme.border.radius.large}px;
   }
 `
