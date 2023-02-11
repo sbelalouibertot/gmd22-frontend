@@ -3,6 +3,7 @@ import { FC, useMemo } from 'react'
 
 import CheckboxIcon from '@src/../public/img/icons/checkbox.svg'
 import { EVENT_TYPE_IMAGES, EVENT_TYPE_LABELS } from '@src/constants/events'
+import { UNKNOWN_BLURRED } from '@src/constants/images'
 import { IEvent } from '@src/generated/gmd22-api'
 import { getDiffDateDetails, isPastEvent } from '@src/utils/date'
 
@@ -36,6 +37,7 @@ const EventCard: FC<TEventCardProps> = ({ event, onClick }) => {
         height={175}
         width={153}
         placeholder="blur"
+        blurDataURL={UNKNOWN_BLURRED}
       />
     )
     if (!event.type) {

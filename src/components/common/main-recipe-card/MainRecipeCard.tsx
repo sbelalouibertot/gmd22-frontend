@@ -1,6 +1,7 @@
 import { FC, useMemo } from 'react'
 
 import FoodImg from '@src/../public/img/food.jpeg'
+import { FOOD_BLURRED } from '@src/constants/images'
 import { IRecipe } from '@src/generated/gmd22-api'
 
 import { Div } from '../div/Div.styled'
@@ -39,6 +40,7 @@ const MainRecipeCard: FC<TMainRecipeCardProps> = ({ title, recipe, loading, onCl
           height={214}
           width={214}
           placeholder="blur"
+          blurDataURL={FOOD_BLURRED}
         />
       </Div>
       <StyledMainRecipeCard>

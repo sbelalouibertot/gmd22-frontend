@@ -29,13 +29,13 @@ export const Header: FC<THeader> = ({ title }) => {
           width={20}
           onClick={onPreviousIconClicked}
           alt="Previous"
-          placeholder="blur"
+          placeholder="empty"
         />
       </Div>
       {!!title && <Text weight="bold">{title}</Text>}
       <Div percentWidth={10}>
         <Link href="/home">
-          <Image src={HomeIcon} height={20} width={20} alt="Home" placeholder="blur" />
+          <Image src={HomeIcon} height={20} width={20} alt="Home" placeholder="empty" />
         </Link>
       </Div>
     </Div>

@@ -67,10 +67,10 @@ const Home: FC<TStaticHomeProps> = ({
     <>
       <Div row spaceBetween fullWidth>
         <Div row center gap="large">
-          <Image src={SunIcon} height={20} width={20} alt="Sun" placeholder="blur" />
+          <Image src={SunIcon} height={20} width={20} alt="Sun" placeholder="empty" />
           <Text firstLetterUppercase>{dayName}</Text>
         </Div>
-        <Image src={AlertIcon} height={25} width={25} alt="Alert" placeholder="blur" />
+        <Image src={AlertIcon} height={25} width={25} alt="Alert" placeholder="empty" />
       </Div>
       <AnimatedButtonWrapper>
         <Link {...(!!nextRecipe?.id && { href: `/recipes/${nextRecipe.id}` })}>

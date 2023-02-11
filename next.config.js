@@ -1,9 +1,11 @@
-const withPlugins = require('next-compose-plugins')
+const nextComposePlugins = require('next-compose-plugins')
 const graphql = require('next-plugin-graphql')
 const withTranspileModule = require('next-transpile-modules')([])
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
+
+const { withPlugins } = nextComposePlugins.extend(() => ({}));
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
