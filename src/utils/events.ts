@@ -3,18 +3,25 @@ import { PERIOD_END_EMOJIS, PERIOD_START_EMOJIS } from '@src/constants/periods'
 import { SHOPPING_EMOJIS } from '@src/constants/shoppingList'
 import { IEventType } from '@src/generated/gmd22-api'
 
+const eventsMainEmoji: Record<IEventType, string> = {
+  PREPARATION: COOK_EMOJIS[0],
+  SHOPPING: SHOPPING_EMOJIS[0],
+  PERIOD_START: PERIOD_START_EMOJIS[0],
+  PERIOD_END: PERIOD_END_EMOJIS[0],
+}
+
 export const getEventsMainEmoji = (eventTypes: IEventType[]): string | undefined => {
-  if (eventTypes.includes('PREPARATION')) {
-    return COOK_EMOJIS[0]
-  }
-  if (eventTypes.includes('SHOPPING')) {
-    return SHOPPING_EMOJIS[0]
-  }
-  if (eventTypes.includes('PERIOD_START')) {
-    return PERIOD_START_EMOJIS[0]
-  }
-  if (eventTypes.includes('PERIOD_END')) {
-    return PERIOD_END_EMOJIS[0]
+  const orderedEventsToMatch: IEventType[] = [
+    'PREPARATION',
+    'SHOPPING',
+    'PERIOD_START',
+    'PERIOD_END',
+  ]
+
+  for (const event of orderedEventsToMatch) {
+    if (eventTypes.includes(event)) {
+      return eventsMainEmoji[event]
+    }
   }
 }
 

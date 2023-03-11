@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import pick from 'lodash/pick'
-import Image from 'next/image'
+import Image, { ImageProps } from 'next/image'
 import { FC, useMemo } from 'react'
 
 import AlertIcon from '@src/../public/img/icons/alert.svg'
@@ -21,6 +21,9 @@ import List from '../common/list/List'
 import MainRecipeCard from '../common/main-recipe-card/MainRecipeCard'
 import Section from '../common/section/Section'
 import Text from '../common/text/Text'
+
+const _SunIcon = SunIcon as ImageProps['src']
+const _AlertIcon = AlertIcon as ImageProps['src']
 
 const formatNextRecipe = (
   nextRecipeEventData?: INextRecipeEventQueryData,
@@ -67,10 +70,10 @@ const Home: FC<TStaticHomeProps> = ({
     <>
       <Div row spaceBetween fullWidth>
         <Div row center gap="large">
-          <Image src={SunIcon} height={20} width={20} alt="Sun" placeholder="empty" />
+          <Image src={_SunIcon} height={20} width={20} alt="Sun" placeholder="empty" />
           <Text firstLetterUppercase>{dayName}</Text>
         </Div>
-        <Image src={AlertIcon} height={25} width={25} alt="Alert" placeholder="empty" />
+        <Image src={_AlertIcon} height={25} width={25} alt="Alert" placeholder="empty" />
       </Div>
       <AnimatedButtonWrapper>
         <Link {...(!!nextRecipe?.id && { href: `/recipes/${nextRecipe.id}` })}>

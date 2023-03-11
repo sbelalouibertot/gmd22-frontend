@@ -3,7 +3,7 @@ import { ReactNode, useEffect } from 'react'
 import { useNextPreparationRecipesQuery } from '@src/generated/gmd22-api'
 import { truthy } from '@src/utils/other'
 
-import { CookContext } from './_hooks/useCookContext'
+import { CookContext, TCookState } from './_hooks/useCookContext'
 import { defaultState, useCookReducer } from './_hooks/useCookReducer'
 
 const CookContainer = ({ children }: { children?: ReactNode } = {}) => {
@@ -14,12 +14,13 @@ const CookContainer = ({ children }: { children?: ReactNode } = {}) => {
 
   useEffect(() => {
     const localStorageState = localStorage.getItem('cookPreparationState')
-    if (!!localStorageState) {
-      cookPreparationDispatch({
-        type: 'COOK_UPDATE_STATE_FROM_LOCAL_STORAGE',
-        payload: JSON.parse(localStorageState),
-      })
+    if (!localStorageState) {
+      return
     }
+    cookPreparationDispatch({
+      type: 'COOK_UPDATE_STATE_FROM_LOCAL_STORAGE',
+      payload: JSON.parse(localStorageState) as TCookState,
+    })
   }, [cookPreparationDispatch])
 
   useEffect(() => {
@@ -30,25 +31,26 @@ const CookContainer = ({ children }: { children?: ReactNode } = {}) => {
 
   useEffect(() => {
     const localStorageState = localStorage.getItem('cookPreparationState')
-    if (!loading && !!recipes && !cookPreparationState.isLoaded && !localStorageState) {
-      cookPreparationDispatch({
-        type: 'COOK_POPULATE_RECIPES',
-        payload: {
-          recipes: recipes.map(recipe => ({
-            id: recipe.id,
-            name: recipe.name,
-            preparationDuration: recipe.preparationDuration,
-            cookingDuration: recipe.cookingDuration,
-            instructions:
-              recipe.recipeInstructions?.filter(truthy).map(instruction => ({
-                id: instruction.id,
-                description: instruction?.description,
-                completionStatus: 'NOT_STARTED',
-              })) ?? [],
-          })),
-        },
-      })
+    if (loading || !recipes || cookPreparationState.isLoaded || !!localStorageState) {
+      return
     }
+    cookPreparationDispatch({
+      type: 'COOK_POPULATE_RECIPES',
+      payload: {
+        recipes: recipes.map(recipe => ({
+          id: recipe.id,
+          name: recipe.name,
+          preparationDuration: recipe.preparationDuration,
+          cookingDuration: recipe.cookingDuration,
+          instructions:
+            recipe.recipeInstructions?.filter(truthy).map(instruction => ({
+              id: instruction.id,
+              description: instruction?.description,
+              completionStatus: 'NOT_STARTED',
+            })) ?? [],
+        })),
+      },
+    })
   }, [
     cookPreparationDispatch,
     cookPreparationState.isLoaded,

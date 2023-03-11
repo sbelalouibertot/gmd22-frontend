@@ -18,24 +18,25 @@ const Food: FC = () => {
   const total = foodItemsData?.foodItems?.total ?? 0
 
   const onBottomReached = () => {
-    if (foodItems && foodItems.length < total && !loading) {
-      fetchMore({
-        variables: { pagination: { skip: foodItems.length } },
-        updateQuery: (previousResult, { fetchMoreResult }) => {
-          if (!fetchMoreResult?.foodItems || !previousResult?.foodItems?.foodItems) {
-            return previousResult
-          }
-          const previousFoodItems = previousResult.foodItems.foodItems
-          const nextFoodItems = fetchMoreResult.foodItems?.foodItems
-          return {
-            foodItems: {
-              total: fetchMoreResult.foodItems.total,
-              foodItems: previousFoodItems.concat(nextFoodItems),
-            },
-          }
-        },
-      })
+    if (!foodItems || foodItems.length >= total || loading) {
+      return
     }
+    void fetchMore({
+      variables: { pagination: { skip: foodItems.length } },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult?.foodItems || !previousResult?.foodItems?.foodItems) {
+          return previousResult
+        }
+        const previousFoodItems = previousResult.foodItems.foodItems
+        const nextFoodItems = fetchMoreResult.foodItems?.foodItems
+        return {
+          foodItems: {
+            total: fetchMoreResult.foodItems.total,
+            foodItems: previousFoodItems.concat(nextFoodItems),
+          },
+        }
+      },
+    })
   }
 
   return (
@@ -49,7 +50,8 @@ const Food: FC = () => {
           item =>
             !!item &&
             !!item.type &&
-            !!item.name && (
+            !!item.name &&
+            !!item.id && (
               <AnimatedListItemWrapper>
                 <ListItem
                   key={item.id}

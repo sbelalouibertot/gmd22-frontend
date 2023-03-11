@@ -9,7 +9,7 @@ import {
   INextRecipeEventQueryData,
   IUserPreferencesQueryData,
 } from '@src/generated/gmd22-api'
-import { MainLayout } from '@src/layouts/MainLayout'
+import { MainLayout } from '@src/layouts/main'
 import { getApolloClient } from '@src/utils/libs/apollo/client'
 
 export type TStaticHomeProps = {

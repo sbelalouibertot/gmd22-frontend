@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image, { ImageProps } from 'next/image'
 import { useCallback, useMemo } from 'react'
 
 import CookBackground from '@src/../public/img/background/cook.svg'
@@ -12,6 +12,9 @@ import Text from '../common/text/Text'
 import { Header } from '../header/Header'
 import { useCookContext } from './_hooks/useCookContext'
 import { StyledButton, StyledCookContainer } from './Cook.styled'
+
+const _CookBackground = CookBackground as ImageProps['src']
+const _WizardPreparationIllustration = WizardPreparationIllustration as ImageProps['src']
 
 const CookHome = () => {
   const { cookPreparationState, cookPreparationDispatch } = useCookContext()
@@ -42,7 +45,7 @@ const CookHome = () => {
           width: '100%',
           top: 0,
         }}
-        src={CookBackground}
+        src={_CookBackground}
         alt="Cook"
       />
       <Header />
@@ -63,7 +66,7 @@ const CookHome = () => {
           </Div>
         )}
         <Image
-          src={WizardPreparationIllustration}
+          src={_WizardPreparationIllustration}
           style={{ objectFit: 'contain' }}
           width={260}
           alt="Preparation illustration"

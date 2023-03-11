@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import Image from 'next/image'
+import Image, { StaticImageData } from 'next/image'
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { useDrag } from 'react-dnd'
 
@@ -26,6 +26,12 @@ import {
   StyledTimer,
 } from './Cook.styled'
 import CookInstructionCard, { DropResult } from './CookInstructionCard'
+
+const _CookBackground = CookBackground as StaticImageData
+const _ChronometerIcon = ChronometerIcon as StaticImageData
+const _DragdAndDropIcon = DragdAndDropIcon as StaticImageData
+const _PauseIcon = PauseIcon as StaticImageData
+const _RestartIcon = RestartIcon as StaticImageData
 
 const CookInstruction = () => {
   const { cookPreparationState, cookPreparationDispatch } = useCookContext()
@@ -64,7 +70,7 @@ const CookInstruction = () => {
   }))
 
   useEffect(() => {
-    setDuration(
+    const newDuration =
       (dayjs(new Date()).diff(cookPreparationState.startedAt, 'seconds') -
         cookPreparationState.pauses.reduce(
           (acc, pause) =>
@@ -72,20 +78,17 @@ const CookInstruction = () => {
             (pause.endTime !== null ? dayjs(pause.endTime).diff(pause.startTime, 'seconds') : 0),
           0,
         )) *
-        10,
-    )
+      10
+    setDuration(newDuration)
   }, [cookPreparationState.pauses, cookPreparationState.startedAt])
 
   useEffect(() => {
     const interval = setInterval(() => {
       setDuration(time => {
-        if (time !== null) {
-          if (isPauseActive) {
-            return time
-          }
-          return time + 10
+        if (time === null) {
+          return null
         }
-        return null
+        return time + (isPauseActive ? 0 : 10)
       })
     }, 1000)
 
@@ -165,7 +168,7 @@ const CookInstruction = () => {
     <StyledCookContainer gap="large">
       <Image
         style={{ objectFit: 'contain', objectPosition: 'top' }}
-        src={CookBackground}
+        src={_CookBackground}
         alt="Cook"
       />
       <Div row spaceBetween fullWidth gap="medium">
@@ -215,14 +218,14 @@ const CookInstruction = () => {
         ))}
       </Div>
       <StyledInstructionFooter>
-        <StyledActionButton icon={PauseIcon} onClick={onPauseClick} />
+        <StyledActionButton icon={_PauseIcon} onClick={onPauseClick} />
         <Link href={'/cook'}>
-          <StyledActionButton icon={RestartIcon} onClick={onRestartClick} />
+          <StyledActionButton icon={_RestartIcon} onClick={onRestartClick} />
         </Link>
         <Div ref={dragPreview} style={{ opacity: isDragging ? 0.5 : 1 }} relative>
-          <StyledActionButton icon={ChronometerIcon} role="Handle" ref={drag} />
+          <StyledActionButton icon={_ChronometerIcon} role="Handle" ref={drag} />
           <StyledIndicator>
-            <Image src={DragdAndDropIcon} alt="Drag and drop" />
+            <Image src={_DragdAndDropIcon} alt="Drag and drop" />
           </StyledIndicator>
         </Div>
         {preparationCompletionPercentage === 100 && (

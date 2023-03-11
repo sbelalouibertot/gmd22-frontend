@@ -91,15 +91,11 @@ export const useGeneratedMutation = <TData, TVars>(
   }
 
   useEffect(() => {
-    if (data && !loading) {
-      if (onSuccess) {
-        onSuccess<TData>(data)
-      }
+    if (data && !loading && !!onSuccess) {
+      onSuccess<TData>(data)
     }
-    if (error && !loading) {
-      if (onError) {
-        onError()
-      }
+    if (error && !loading && !!onError) {
+      onError()
     }
     /** @deprecated */
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -113,9 +109,7 @@ export const useMutationWithError = <TData, TVars>(
   graphql: DocumentNode,
   options?: MutationHookOptions<TData, TVars>,
   toastOptions: ToastOptions = DEFAULT_TOAST_OPTIONS,
-): MutationTuple<TData, TVars> => {
-  return useMutation<TData, TVars>(graphql, options, toastOptions)
-}
+): MutationTuple<TData, TVars> => useMutation<TData, TVars>(graphql, options, toastOptions)
 
 export const useGeneratedQueryWithError = <TData, TVars>(
   query: QueryResult<TData, TVars>,

@@ -26,32 +26,29 @@ const AllRecipes: FC = () => {
   const debouncedQuery = useDebounce(searchQuery, QUERY_DEBOUNCE_DURATION)
 
   useEffect(() => {
-    if (!!debouncedQuery) {
-      refetch({ filters: { searchQuery: debouncedQuery } })
-      return
-    }
-    refetch({ filters: {} })
+    void refetch({ filters: !!debouncedQuery ? { searchQuery: debouncedQuery } : {} })
   }, [debouncedQuery, refetch])
 
   const onBottomReached = () => {
-    if (recipes && recipes.length < total && !loading) {
-      fetchMore({
-        variables: { pagination: { skip: recipes.length } },
-        updateQuery: (previousResult, { fetchMoreResult }) => {
-          if (!fetchMoreResult?.recipes || !previousResult?.recipes?.recipes) {
-            return previousResult
-          }
-          const previousRecipes = previousResult.recipes.recipes
-          const nextRecipes = fetchMoreResult.recipes?.recipes
-          return {
-            recipes: {
-              total: fetchMoreResult.recipes.total,
-              recipes: previousRecipes.concat(nextRecipes),
-            },
-          }
-        },
-      })
+    if (!recipes || recipes.length >= total || loading) {
+      return
     }
+    void fetchMore({
+      variables: { pagination: { skip: recipes.length } },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult?.recipes || !previousResult?.recipes?.recipes) {
+          return previousResult
+        }
+        const previousRecipes = previousResult.recipes.recipes
+        const nextRecipes = fetchMoreResult.recipes?.recipes
+        return {
+          recipes: {
+            total: fetchMoreResult.recipes.total,
+            recipes: previousRecipes.concat(nextRecipes),
+          },
+        }
+      },
+    })
   }
 
   return (

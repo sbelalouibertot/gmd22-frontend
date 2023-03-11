@@ -88,7 +88,7 @@ const FoodItem: FC = () => {
                   key={recipe?.id}
                   onClick={() => {
                     if (!!recipe.id) {
-                      router.push(`/recipes/${recipe.id}`)
+                      void router.push(`/recipes/${recipe.id}`)
                     }
                   }}
                   {...(recipe.isCurrent && { color: 'success' })}

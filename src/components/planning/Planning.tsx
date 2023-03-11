@@ -67,11 +67,12 @@ const Planning: FC = () => {
 
   const updateSelectedDay = useCallback(
     (dayIndex: number, options: { force: boolean } = { force: true }) => {
-      if (options.force || (selectedDayIndex === null && routerDayIndex === undefined)) {
-        setSelectedDayIndex(dayIndex)
-        if (!routerEventId) {
-          router.push(`/planning/${dayIndex}`)
-        }
+      if (!options.force && (selectedDayIndex !== null || routerDayIndex !== undefined)) {
+        return
+      }
+      setSelectedDayIndex(dayIndex)
+      if (!routerEventId) {
+        void router.push(`/planning/${dayIndex}`)
       }
     },
     [router, routerDayIndex, routerEventId, selectedDayIndex],
@@ -111,13 +112,14 @@ const Planning: FC = () => {
   }, [data?.events.events, loading])
 
   useEffect(() => {
-    if (!loading && !!data?.events?.events && !!days) {
-      const dayIndex = days.findIndex(day =>
-        !!routerEventId ? day.events.find(event => event.id === routerEventId) : isToday(day.date),
-      )
-      if (dayIndex !== -1) {
-        updateSelectedDay(dayIndex, { force: false })
-      }
+    if (loading || !data?.events?.events || !days) {
+      return
+    }
+    const dayIndex = days.findIndex(day =>
+      !!routerEventId ? day.events.find(event => event.id === routerEventId) : isToday(day.date),
+    )
+    if (dayIndex !== -1) {
+      updateSelectedDay(dayIndex, { force: false })
     }
   }, [data?.events?.events, days, loading, routerEventId, updateSelectedDay])
 
@@ -127,17 +129,18 @@ const Planning: FC = () => {
       block: 'center',
       inline: 'center',
     })
-    if (!!days && selectedDayIndex !== null && days.length > selectedDayIndex) {
-      setSelectedDayEvents(
-        days[selectedDayIndex].events.map(event => ({
-          formattedTime: dayjs
-            .utc(event.date)
-            .add(2, 'hours') // Local time
-            .format('hh[h]mm'),
-          ...pick(event, ['id', 'recipes', 'shoppingList', 'type', 'date', 'title', 'description']),
-        })),
-      )
+    if (!days || selectedDayIndex === null || days.length <= selectedDayIndex) {
+      return
     }
+    setSelectedDayEvents(
+      days[selectedDayIndex].events.map(event => ({
+        formattedTime: dayjs
+          .utc(event.date)
+          .add(2, 'hours') // Local time
+          .format('hh[h]mm'),
+        ...pick(event, ['id', 'recipes', 'shoppingList', 'type', 'date', 'title', 'description']),
+      })),
+    )
   }, [days, router, selectedDayIndex])
 
   const isDragging = useDragLayer(monitor => monitor.isDragging())
@@ -147,7 +150,7 @@ const Planning: FC = () => {
   })
 
   const onUpdateEventDate = ({ date, id }: { date: Date; id: string }) => {
-    updateEventDate({ variables: { updateEventDateId: id, date } })
+    void updateEventDate({ variables: { updateEventDateId: id, date } })
     const dayIndex = days.findIndex(day => dayjs.utc(day.date).isSame(date, 'day'))
     if (dayIndex < 0) {
       return

@@ -53,13 +53,13 @@ const cookReducer = (state: TCookState, action: TCookAction): TCookState => {
       const recipeIndex = newState.recipes.findIndex(recipe => recipe.id === recipeId)
 
       if (recipeIndex === -1) {
-        return state
+        return newState
       }
       const instructionIndex = newState.recipes[recipeIndex].instructions.findIndex(
         instruction => instruction.id === instructionId,
       )
       if (instructionIndex === -1) {
-        return state
+        return newState
       }
       const instruction = newState.recipes[recipeIndex].instructions[instructionIndex]
       instruction.completionStatus = completionStatus
@@ -117,16 +117,17 @@ const cookReducer = (state: TCookState, action: TCookAction): TCookState => {
         recipe.instructions.find(instruction => instruction.id === instructionId),
       )
       if (recipeIndex === -1) {
-        return state
+        return newState
       }
       const instructionIndex = newState.recipes[recipeIndex].instructions.findIndex(
         instruction => instruction.id === instructionId,
       )
       if (instructionIndex === -1) {
-        return state
+        return newState
       }
       newState.recipes[recipeIndex].instructions[instructionIndex].timer = timer
       newState.recipes[recipeIndex].instructions[instructionIndex].timerInitDate = new Date()
+
       return { ...newState, lastUpdate: new Date() }
     }
 

@@ -2,8 +2,8 @@ import { Page } from 'utils/libs/nextjs/types'
 
 import CookContainer from '@src/components/cook/CookContainer'
 import CookInstruction from '@src/components/cook/CookInstruction'
-import { FullScreenLayout } from '@src/layouts/FullScreenLayout'
-import { MainLayout } from '@src/layouts/MainLayout'
+import { FullScreenLayout } from '@src/layouts/full-screen'
+import { MainLayout } from '@src/layouts/main'
 
 type Props = {}
 

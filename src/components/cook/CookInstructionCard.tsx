@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import Image from 'next/image'
+import Image, { ImageProps } from 'next/image'
 import { FC, memo, RefObject, useEffect, useRef, useState } from 'react'
 import { useDrop } from 'react-dnd'
 
@@ -15,6 +15,8 @@ import {
   StyledCardHeader,
   StyledInstructionCard,
 } from './CookInstructionCard.styled'
+
+const _CheckboxIcon = CheckboxIcon as ImageProps['src']
 
 type TCookInstructionCard = {
   description: string
@@ -44,6 +46,7 @@ const calculateTimer = ({
   const ratio =
     (monitorOffset - cardRef.current.getBoundingClientRect().x) / cardRef.current.clientWidth
   const seconds = Math.floor(60 * 30 * ratio)
+
   return 1000 * seconds
 }
 
@@ -101,20 +104,21 @@ const CookInstructionCard: FC<TCookInstructionCard> = ({
     }
   })
   useEffect(() => {
-    if (isOver) {
-      setTimerHoverDisplay(() => {
-        if (
-          offset === null ||
-          !cardRef?.current?.clientWidth ||
-          !cardRef?.current?.offsetLeft ||
-          !isOver
-        ) {
-          return null
-        }
-        const miliseconds = calculateTimer({ monitorOffset: offset.x, cardRef })
-        return dayjs(miliseconds).format('mm:ss')
-      })
+    if (!isOver) {
+      return
     }
+    setTimerHoverDisplay(() => {
+      if (
+        offset === null ||
+        !cardRef?.current?.clientWidth ||
+        !cardRef?.current?.offsetLeft ||
+        !isOver
+      ) {
+        return null
+      }
+      const miliseconds = calculateTimer({ monitorOffset: offset.x, cardRef })
+      return dayjs(miliseconds).format('mm:ss')
+    })
   }, [isOver, offset])
 
   return (
@@ -142,7 +146,7 @@ const CookInstructionCard: FC<TCookInstructionCard> = ({
           >
             {COMPLETION_STATUS_TO_STR[completionStatus]}
           </Text>
-          <Image src={CheckboxIcon} width={20} height={20} alt="Checkbox" />
+          <Image src={_CheckboxIcon} width={20} height={20} alt="Checkbox" />
         </StyledCardFooter>
       </Div>
     </StyledInstructionCard>

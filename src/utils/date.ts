@@ -34,9 +34,8 @@ export const getDiffDateDetails = (date: Date | string): string => {
   }
   if (daysDifference > 1) {
     return `Dans ${daysDifference} jours`
-  } else {
-    return 'Date inconnue'
   }
+  return 'Date inconnue'
 }
 
 export const getStartOfDay = (date: Date | string = new Date()): Date =>
@@ -56,12 +55,9 @@ export const generateDays = (
   if (!daysNb || daysNb > maxDaysNb) {
     return []
   }
-  const days = [...Array(daysNb).keys()].map(dayIndex => {
-    return {
-      date: _startDate.add(dayIndex, 'days').toDate(),
-    }
-  })
-  return days
+  return [...Array(daysNb).keys()].map(dayIndex => ({
+    date: _startDate.add(dayIndex, 'days').toDate(),
+  }))
 }
 
 export const isToday = (date: Date | string) => dayjs.utc(date).isSame(new Date(), 'day')

@@ -18,7 +18,7 @@ const AnimatedListItemWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   const [MotionDiv, setMotionDiv] = useState<ElementType | null>(null)
 
   useEffect(() => {
-    import('framer-motion').then(a => setMotionDiv(a.motion.div))
+    void import('framer-motion').then(a => setMotionDiv(a.motion.div))
   }, [])
 
   return !!MotionDiv ? (

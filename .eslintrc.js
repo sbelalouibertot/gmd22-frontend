@@ -3,7 +3,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
-    project: 'tsconfig.json',
+    project: './tsconfig.eslint.json',
     tsconfigRootDir: __dirname,
     extraFileExtensions: [".json"],
   },
@@ -52,6 +52,7 @@ module.exports = {
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['warn'],
     'no-console': 'warn',
+    '@typescript-eslint/no-floating-promises': ['error'],
     'no-nested-ternary': 'error',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'error',
@@ -120,7 +121,7 @@ module.exports = {
         },
       ],
     ],
-    'jsx-expressions/strict-logical-expressions': 'error'
+    'jsx-expressions/strict-logical-expressions': 'error',
   },
   ignorePatterns: ['src/generated/'],
 }

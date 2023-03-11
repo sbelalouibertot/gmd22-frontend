@@ -1,3 +1,4 @@
+import { ImageProps } from 'next/image'
 import { useRouter } from 'next/router'
 import { FC, useMemo } from 'react'
 
@@ -23,21 +24,21 @@ const Navbar: FC = () => {
       {
         id: 'home',
         label: 'Accueil',
-        icon: HomeIcon,
+        icon: HomeIcon as ImageProps['src'],
         selected: router.route.includes('home'),
         route: '/home',
       },
       {
         id: 'recipes',
         label: 'Recettes',
-        icon: FishIcon,
+        icon: FishIcon as ImageProps['src'],
         selected: router.route.includes('recipes'),
         route: '/recipes',
       },
       {
         id: 'cook',
         label: 'Commencer la prochaine recette',
-        icon: PlayIcon,
+        icon: PlayIcon as ImageProps['src'],
         selected: router.route.includes('cook'),
         route: '/cook',
         main: true,
@@ -45,14 +46,14 @@ const Navbar: FC = () => {
       {
         id: 'planning',
         label: 'Planning',
-        icon: CalendarIcon,
+        icon: CalendarIcon as ImageProps['src'],
         selected: router.route.includes('planning'),
         route: '/planning',
       },
       {
         id: 'shoppingList',
         label: 'Liste de courses',
-        icon: ShoppingCartIcon,
+        icon: ShoppingCartIcon as ImageProps['src'],
         selected: router.route.includes('shoppingList'),
         route: '/shoppingList',
       },

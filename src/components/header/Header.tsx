@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image, { ImageProps } from 'next/image'
 import { useRouter } from 'next/router'
 import { FC, useCallback } from 'react'
 
@@ -8,6 +8,9 @@ import Link from '@src/components/common/link/Link'
 
 import { Div } from '../common/div/Div.styled'
 import Text from '../common/text/Text'
+
+const _PreviousIcon = PreviousIcon as ImageProps['src']
+const _HomeIcon = HomeIcon as ImageProps['src']
 
 type THeader = {
   title?: string
@@ -24,7 +27,7 @@ export const Header: FC<THeader> = ({ title }) => {
     <Div row spaceBetween fullWidth zIndex={100}>
       <Div percentWidth={10}>
         <Image
-          src={PreviousIcon}
+          src={_PreviousIcon}
           height={20}
           width={20}
           onClick={onPreviousIconClicked}
@@ -35,7 +38,7 @@ export const Header: FC<THeader> = ({ title }) => {
       {!!title && <Text weight="bold">{title}</Text>}
       <Div percentWidth={10}>
         <Link href="/home">
-          <Image src={HomeIcon} height={20} width={20} alt="Home" placeholder="empty" />
+          <Image src={_HomeIcon} height={20} width={20} alt="Home" placeholder="empty" />
         </Link>
       </Div>
     </Div>
